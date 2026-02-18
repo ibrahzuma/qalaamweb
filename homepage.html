@@ -1,0 +1,273 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - QALAAM</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
+    <style>
+        :root {
+            --primary-color: #006b5d;
+            --secondary-color: #effcf9;
+            --accent-color: #ffd700;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: #f8f9fa;
+        }
+
+        .navbar {
+            background-color: var(--primary-color);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar-brand,
+        .nav-link {
+            color: white !important;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        .btn-primary:hover {
+            background-color: #005a4e;
+            border-color: #005a4e;
+        }
+
+        .section-title {
+            border-bottom: 3px solid var(--primary-color);
+            display: inline-block;
+            margin-bottom: 2rem;
+            padding-bottom: 0.5rem;
+        }
+
+        footer {
+            background-color: #212529;
+            color: #ccc;
+            padding: 3rem 0;
+            margin-top: 5rem;
+        }
+
+        .hover-opacity-100:hover {
+            opacity: 1 !important;
+        }
+    </style>
+    
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg sticky-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="/">QALAAM</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-link"><a class="nav-link" href="/fatwa/">Fatwa</a></li>
+                    <li class="nav-link"><a class="nav-link" href="/articles/">Articles</a></li>
+                    <li class="nav-link"><a class="nav-link" href="/content/quran/">Holy Quran</a></li>
+                    <li class="nav-link"><a class="nav-link" href="/content/kids/">Kids</a></li>
+                    <li class="nav-link"><a class="nav-link" href="/content/audio/">Media</a></li>
+                    <li class="nav-link"><a class="nav-link" href="/content/books/">Library</a></li>
+                </ul>
+                <form class="d-flex w-25">
+                    <input class="form-control me-2 rounded-pill" type="search" placeholder="Search...">
+                </form>
+                <a href="/fatwa/ask/" class="btn btn-warning rounded-pill ms-3">Ask Fatwa</a>
+            </div>
+        </div>
+    </nav>
+
+    
+<div class="bg-dark text-white py-5"
+    style="background: linear-gradient(rgba(0,107,93,0.8), rgba(0,107,93,0.8)), url('https://images.unsplash.com/photo-1542810634-71277d95dcbb?auto=format&fit=crop&q=80&w=2070') center/cover;">
+    <div class="container py-5 text-center">
+        <h1 class="display-4 fw-bold mb-4">Prophetic Knowledge for the Modern World</h1>
+        <p class="lead mb-4">Explore thousands of verified Fatawa, Articles, and Multimedia content.</p>
+        <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+            <a href="/fatwa/" class="btn btn-warning btn-lg px-4 gap-3 rounded-pill">Explore
+                Fatawa</a>
+            <a href="/fatwa/ask/" class="btn btn-outline-light btn-lg px-4 rounded-pill">Ask a
+                Question</a>
+        </div>
+    </div>
+</div>
+
+
+    <div class="container my-5">
+        
+<div class="row g-4 mb-5">
+    <div class="col-md-8">
+        <h3 class="section-title">Latest Articles</h3>
+        <div class="row g-4">
+            
+            <p>No articles found.</p>
+            
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card border-0 shadow-sm bg-primary text-white mb-4">
+            <div class="card-body p-4">
+                <h4 class="mb-3">Featured Fatwa</h4>
+                
+            </div>
+        </div>
+
+        <h4 class="mb-3">Recent Fatawa</h4>
+        <div class="list-group list-group-flush shadow-sm rounded">
+            
+        </div>
+    </div>
+</div>
+
+<div class="row g-4">
+    <div class="col-md-6">
+        <h3 class="section-title">Latest Audio</h3>
+        <div class="row g-3">
+            
+            <div class="col-12">
+                <div class="d-flex align-items-center p-3 bg-white shadow-sm rounded">
+                    <div class="flex-shrink-0 bg-success text-white rounded-circle p-2"
+                        style="width: 45px; height: 45px; display: flex; align-items: center; justify-content: center;">
+                        <i class="bi bi-play-fill"></i>+
+                    </div>
+                    <div class="flex-grow-1 ms-3">
+                        <h6 class="mb-0">Al-Fatiha</h6>
+                        <small class="text-muted">Mishar</small>
+                    </div>
+                    <a href="#" class="btn btn-outline-success btn-sm rounded-pill">Listen</a>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    <div class="col-md-6">
+        <h3 class="section-title">New Books</h3>
+        <div class="row g-3">
+            
+            <div class="col-6">
+                <div class="card h-100 border-0 shadow-sm">
+                    
+                    <img src="/media/books/covers/Riyad-Us-Saliheen-eng.webp" class="card-img-top" alt="Riyad as-Salihin">
+                    
+                    <div class="card-body p-2 text-center">
+                        <h6 class="small mb-1">Riyad as-Salihin</h6>
+                        <small class="text-muted">Sharhu Riyadis Saliheen</small>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="text-white pt-5 pb-4" style="background-color: #002d62;">
+        <div class="container text-md-start">
+            <div class="row">
+                <!-- Categories -->
+                <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
+                    <h5 class="text-uppercase mb-4 font-weight-bold">Categories</h5>
+                    <p><a href="/articles/"
+                            class="text-white text-decoration-none opacity-75 hover-opacity-100">Articles</a></p>
+                    <p><a href="/fatwa/"
+                            class="text-white text-decoration-none opacity-75 hover-opacity-100">Fatwa</a></p>
+                    <p><a href="/content/kids/"
+                            class="text-white text-decoration-none opacity-75 hover-opacity-100">Kids</a></p>
+                    <div class="mt-4">
+                        <span style="font-size: 1.5rem; letter-spacing: 2px;">Tákalám</span>
+                        <div class="text-danger" style="margin-top: -10px; font-size: 1.2rem;">...</div>
+                    </div>
+                </div>
+
+                <!-- Multimedia -->
+                <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
+                    <h5 class="text-uppercase mb-4 font-weight-bold">Multimedia</h5>
+                    <p><a href="/content/quran/"
+                            class="text-white text-decoration-none opacity-75 hover-opacity-100">Quran
+                            Recitations</a></p>
+                    <p><a href="/content/audio/"
+                            class="text-white text-decoration-none opacity-75 hover-opacity-100">Lectures</a></p>
+                    <p><a href="#" class="text-white text-decoration-none opacity-75 hover-opacity-100">Athan</a></p>
+                    <p><a href="/duas/"
+                            class="text-white text-decoration-none opacity-75 hover-opacity-100">Duaa</a></p>
+                    <p><a href="#" class="text-white text-decoration-none opacity-75 hover-opacity-100">Islamic
+                            Songs</a></p>
+                </div>
+
+                <!-- Special Folders -->
+                <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
+                    <h5 class="text-uppercase mb-4 font-weight-bold">Special Folders</h5>
+                    <p><a href="#" class="text-white text-decoration-none opacity-75 hover-opacity-100">Women</a></p>
+                    <p><a href="#" class="text-white text-decoration-none opacity-75 hover-opacity-100">Ramadan</a></p>
+                    <p><a href="#" class="text-white text-decoration-none opacity-75 hover-opacity-100">Hajj & Umrah</a>
+                    </p>
+                    <p><a href="#" class="text-white text-decoration-none opacity-75 hover-opacity-100">Xmas & New
+                            Year's</a></p>
+                    <p><a href="#" class="text-white text-decoration-none opacity-75 hover-opacity-100">Sacred
+                            Months</a></p>
+                </div>
+
+                <!-- Services -->
+                <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
+                    <h5 class="text-uppercase mb-4 font-weight-bold">Services</h5>
+                    <p><a href="#" class="text-white text-decoration-none opacity-75 hover-opacity-100">Inheritance</a>
+                    </p>
+                    <p><a href="/services/prayer-times/"
+                            class="text-white text-decoration-none opacity-75 hover-opacity-100">Prayer Times</a></p>
+                    <p><a href="/services/calendar/"
+                            class="text-white text-decoration-none opacity-75 hover-opacity-100">Calendar</a></p>
+                </div>
+            </div>
+
+            <hr class="mb-4">
+
+            <div class="row align-items-center">
+                <div class="col-md-7 col-lg-8">
+                    <p class="small text-white-50">
+                        © 2026 QALAAM. All rights reserved.
+                        Dedicated to providing authentic Islamic knowledge.
+                    </p>
+                </div>
+                <div class="col-md-5 col-lg-4">
+                    <div class="text-md-end">
+                        <ul class="list-unstyled list-inline mb-0">
+                            <li class="list-inline-item">
+                                <a href="#" class="btn-floating btn-sm text-white" style="font-size: 23px;"><i
+                                        class="bi bi-facebook"></i></a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a href="#" class="btn-floating btn-sm text-white" style="font-size: 23px;"><i
+                                        class="bi bi-twitter-x"></i></a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a href="#" class="btn-floating btn-sm text-white" style="font-size: 23px;"><i
+                                        class="bi bi-youtube"></i></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+</body>
+
+</html>

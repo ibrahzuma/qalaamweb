@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ fatwa.title }} - QALAAM{% endblock %}
+
+{% block content %}
+<nav aria-label="breadcrumb" class="mb-4">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'home' %}" class="text-success">Home</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'fatwa:fatwa_list' %}" class="text-success">Fatwa</a></li>
+        <li class="breadcrumb-item active">{{ fatwa.category.name }}</li>
+    </ol>
+</nav>
+
+<div class="row">
+    <div class="col-md-9 mx-auto">
+        <div class="card border-0 shadow-sm mb-4">
+            <div class="card-body p-4 p-md-5">
+                <div class="mb-4">
+                    <span class="badge bg-success mb-2">{{ fatwa.category.name }}</span>
+                    <h1 class="h2 fw-bold">{{ fatwa.title }}</h1>
+                    <small class="text-muted">Published on {{ fatwa.created_at|date:"F d, Y" }} | {{ fatwa.view_count }}
+                        Views</small>
+                </div>
+
+                <div class="mb-5">
+                    <h5 class="fw-bold text-success"><i class="bi bi-question-circle"></i> Question:</h5>
+                    <div class="bg-light p-4 rounded border-start border-4 border-success">
+                        {{ fatwa.question|linebreaks }}
+                    </div>
+                </div>
+
+                <div>
+                    <h5 class="fw-bold text-success"><i class="bi bi-check-circle"></i> Answer:</h5>
+                    <div class="answer-content mt-3">
+                        {{ fatwa.answer|safe }}
+                    </div>
+                </div>
+
+                <hr class="my-5">
+
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <button class="btn btn-outline-secondary btn-sm me-2"><i class="bi bi-share"></i> Share</button>
+                        <button class="btn btn-outline-secondary btn-sm"><i class="bi bi-printer"></i> Print</button>
+                    </div>
+                    <a href="{% url 'fatwa:fatwa_list' %}" class="text-success fw-bold text-decoration-none">Back to
+                        list &rarr;</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,75 @@
+{% extends 'dashboard/base.html' %}
+
+{% block page_title %}Manage Fatawa{% endblock %}
+
+{% block main %}
+<div class="card card-glass border-0 shadow-sm">
+    <div class="card-header bg-transparent border-0 pt-4 px-4 d-flex justify-content-between align-items-center">
+        <h5 class="mb-0 fw-bold">All Fatawa</h5>
+        <a href="{% url 'dashboard:fatwa_create' %}" class="btn btn-sm btn-success rounded-pill px-3">
+            <i class="bi bi-plus-lg"></i> New Fatwa
+        </a>
+    </div>
+    <div class="card-body p-4">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Title</th>
+                        <th>Category</th>
+                        <th>Status</th>
+                        <th>Views</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for fatwa in fatawa %}
+                    <tr>
+                        <td>#{{ fatwa.id }}</td>
+                        <td>
+                            <div class="fw-bold">{{ fatwa.title|truncatechars:50 }}</div>
+                            <small class="text-muted">Added: {{ fatwa.created_at|date:"M d, Y" }}</small>
+                        </td>
+                        <td>{{ fatwa.category.name }}</td>
+                        <td>
+                            {% if fatwa.status == 'answered' %}
+                            <span class="badge bg-success-subtle text-success">Answered</span>
+                            {% else %}
+                            <span class="badge bg-warning-subtle text-warning">Pending</span>
+                            {% endif %}
+                        </td>
+                        <td>{{ fatwa.view_count }}</td>
+                        <td>
+                            <a href="{% url 'dashboard:fatwa_edit' fatwa.pk %}"
+                                class="btn btn-sm btn-outline-primary"><i class="bi bi-pencil"></i></a>
+                            <a href="{% url 'dashboard:fatwa_delete' fatwa.pk %}"
+                                class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="6" class="text-center py-4 text-muted">No fatawa found.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        {% if is_paginated %}
+        <nav class="mt-4">
+            <ul class="pagination pagination-sm justify-content-center">
+                {% if page_obj.has_previous %}
+                <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+                </li>
+                {% endif %}
+                <li class="page-item active"><span class="page-link">{{ page_obj.number }}</span></li>
+                {% if page_obj.has_next %}
+                <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

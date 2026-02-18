@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block title %}Articles - QALAAM{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12 mb-5">
+        <h2 class="section-title">Latest Articles</h2>
+        <div class="row g-4">
+            {% for article in articles %}
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm overflow-hidden">
+                    {% if article.main_image %}
+                    <img src="{{ article.main_image.url }}" class="card-img-top" alt="{{ article.title }}"
+                        style="height: 200px; object-fit: cover;">
+                    {% else %}
+                    <div class="bg-success bg-opacity-10 d-flex align-items-center justify-content-center"
+                        style="height: 200px;">
+                        <i class="bi bi-card-image text-success display-4"></i>
+                    </div>
+                    {% endif %}
+                    <div class="card-body">
+                        <small class="text-success fw-bold">{{ article.category.name }}</small>
+                        <h5 class="card-title my-2">{{ article.title }}</h5>
+                        <p class="card-text text-muted small">{{ article.content|striptags|truncatewords:25 }}</p>
+                    </div>
+                    <div class="card-footer bg-white border-0 pb-3">
+                        <a href="{% url 'articles:article_detail' article.pk %}"
+                            class="btn btn-sm btn-success rounded-pill w-100">Read More</a>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12">
+                <div class="alert alert-info">No articles found.</div>
+            </div>
+            {% endfor %}
+        </div>
+
+        {% if is_paginated %}
+        <nav class="mt-5">
+            <ul class="pagination justify-content-center">
+                {% if page_obj.has_previous %}
+                <li class="page-item"><a class="page-link text-success"
+                        href="?page={{ page_obj.previous_page_number }}">Previous</a></li>
+                {% endif %}
+                <li class="page-item active"><span class="page-link bg-success border-success">{{ page_obj.number
+                        }}</span></li>
+                {% if page_obj.has_next %}
+                <li class="page-item"><a class="page-link text-success"
+                        href="?page={{ page_obj.next_page_number }}">Next</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

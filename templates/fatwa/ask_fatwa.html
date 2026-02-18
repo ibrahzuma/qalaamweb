@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Ask a Question - QALAAM{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-6 mx-auto">
+        <div class="card border-0 shadow-sm">
+            <div class="card-body p-4 p-md-5 text-center">
+                <h2 class="section-title">Ask a Fatwa</h2>
+                <p class="text-muted mb-4">Please submit your question below. Our scholars will review and provide an
+                    answer as soon as possible.</p>
+
+                <form method="post" class="text-start">
+                    {% csrf_token %}
+                    {{ form|crispy }}
+                    <div class="d-grid mt-4">
+                        <button type="submit" class="btn btn-primary btn-lg rounded-pill">Submit Question</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="card border-0 bg-info bg-opacity-10 mt-4">
+            <div class="card-body">
+                <h6 class="fw-bold"><i class="bi bi-info-circle"></i> Note:</h6>
+                <p class="small mb-0">Due to the high volume of questions, it may take 2-3 days for an answer. You can
+                    check the status of your question in your dashboard (coming soon).</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

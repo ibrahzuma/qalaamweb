@@ -1,0 +1,218 @@
+{% extends 'base.html' %}
+
+{% block title %}Kids Corner - QALAAM{% endblock %}
+
+{% block content %}
+<!-- Header Section -->
+<div class="row mb-4">
+    <div class="col-12 text-center py-5"
+        style="background: linear-gradient(135deg, #ff9800 0%, #f44336 100%); border-radius: 30px; color: white; position: relative; overflow: hidden; box-shadow: 0 10px 30px rgba(255,152,0,0.3);">
+        <div style="position: absolute; top: -10%; left: -5%; opacity: 0.2;">
+            <i class="bi bi-stars" style="font-size: 12rem;"></i>
+        </div>
+        <div style="position: absolute; bottom: -10%; right: -5%; opacity: 0.2;">
+            <i class="bi bi-palette" style="font-size: 10rem;"></i>
+        </div>
+        <h1 class="display-3 fw-bold mb-2" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.2);">Kids Corner! 🎈</h1>
+        <p class="lead fw-bold opacity-90">Learning is fun with QALAAM Kids!</p>
+    </div>
+</div>
+
+<!-- Search & Fun Filters -->
+<div class="row mb-5">
+    <div class="col-12">
+        <div class="card border-0 shadow rounded-5 p-4" style="background-color: #fff9c4;">
+            <form method="GET" class="row g-3 align-items-center">
+                <div class="col-md-5">
+                    <div class="input-group">
+                        <span class="input-group-text bg-white border-end-0 rounded-start-pill"><i
+                                class="bi bi-search text-warning"></i></span>
+                        <input type="text" name="q" class="form-control border-start-0 rounded-end-pill"
+                            placeholder="Find something fun..." value="{{ query|default:'' }}">
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <select name="category" class="form-select rounded-pill" onchange="this.form.submit()">
+                        <option value="">All Adventures</option>
+                        {% for cat in kids_categories %}
+                        <option value="{{ cat.slug }}" {% if cat.slug == current_category %}selected{% endif %}>{{
+                            cat.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-warning w-100 rounded-pill fw-bold text-white shadow-sm"
+                        style="background: #ffc107;">Go! 🚀</button>
+                </div>
+            </form>
+
+            <!-- Fun Category Pills -->
+            <div class="mt-4 d-flex flex-wrap gap-2">
+                <a href="{% url 'content:kids_list' %}"
+                    class="btn btn-sm {% if not current_category %}btn-info text-white{% else %}btn-outline-info{% endif %} rounded-pill px-4 fw-bold shadow-sm">All
+                    Fun</a>
+                {% for cat in kids_categories %}
+                <a href="?category={{ cat.slug }}{% if query %}&q={{ query }}{% endif %}"
+                    class="btn btn-sm {% if current_category == cat.slug %}btn-info text-white{% else %}btn-outline-info{% endif %} rounded-pill px-4 fw-bold shadow-sm">
+                    {{ cat.name }}
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Kids Content Tabs -->
+<ul class="nav nav-pills mb-4 justify-content-center gap-3" id="kidsTab" role="tablist">
+    <li class="nav-item" role="presentation">
+        <button class="nav-link active rounded-pill px-4 fw-bold shadow-sm" id="audio-tab" data-bs-toggle="pill"
+            data-bs-target="#audio-content" type="button" role="tab"
+            style="background-color: #4caf50; color: white;">Audio Stories & Songs 🎧</button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link rounded-pill px-4 fw-bold shadow-sm" id="books-tab" data-bs-toggle="pill"
+            data-bs-target="#books-content" type="button" role="tab"
+            style="background-color: #2196f3; color: white;">Picture Books 📚</button>
+    </li>
+</ul>
+
+<div class="tab-content" id="kidsTabContent">
+    <!-- Audio Section -->
+    <div class="tab-pane fade show active" id="audio-content" role="tabpanel">
+        <div class="row g-4">
+            {% for audio in audios %}
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100 border-0 shadow-sm rounded-4 kids-card overflow-hidden">
+                    <div class="bg-success py-3 text-center">
+                        <i class="bi bi-music-note-beamed text-white fs-1"></i>
+                    </div>
+                    <div class="card-body p-4">
+                        <span class="badge rounded-pill bg-light text-success mb-2 border border-success">{{
+                            audio.category.name }}</span>
+                        <h5 class="fw-bold mb-1">{{ audio.title }}</h5>
+                        <p class="text-muted small mb-4">By {{ audio.speaker }}</p>
+
+                        <div class="audio-player-kids bg-light p-2 rounded-pill mb-3">
+                            <audio controls class="w-100" style="height: 35px;">
+                                <source src="{{ audio.file.url }}" type="audio/mpeg">
+                            </audio>
+                        </div>
+
+                        <div class="d-grid">
+                            <a href="{{ audio.file.url }}" download class="btn btn-outline-success btn-sm rounded-pill">
+                                <i class="bi bi-play-fill me-1"></i> Keep for later
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12 text-center py-5">
+                <i class="bi bi-emoji-smile display-1 text-muted opacity-25"></i>
+                <h3 class="fw-bold text-muted mt-3">No audio stories here yet!</h3>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Books Section -->
+    <div class="tab-pane fade" id="books-content" role="tabpanel">
+        <div class="row g-4">
+            {% for book in books %}
+            <div class="col-md-6 col-lg-3">
+                <div class="card h-100 border-0 shadow-sm rounded-4 kids-card text-center p-3">
+                    {% if book.cover_image %}
+                    <div class="kids-book-cover mb-3 mx-auto" style="width: 150px; height: 200px;">
+                        <img src="{{ book.cover_image.url }}" class="img-fluid rounded shadow-sm" alt="{{ book.title }}"
+                            style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    {% endif %}
+
+                    <div class="card-body p-0 d-flex flex-column">
+                        <span class="badge rounded-pill bg-info text-white mb-2 align-self-center">{{ book.category.name
+                            }}</span>
+                        <h6 class="fw-bold mb-1">{{ book.title }}</h6>
+                        <p class="text-muted small mb-3">By {{ book.author }}</p>
+
+                        <div class="mt-auto d-grid gap-2">
+                            <a href="{% url 'content:book_reader' book.pk %}"
+                                class="btn btn-primary btn-sm rounded-pill shadow-sm">Reading Time! 📖</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12 text-center py-5">
+                <i class="bi bi-book display-1 text-muted opacity-25"></i>
+                <h3 class="fw-bold text-muted mt-3">No picture books here yet!</h3>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<!-- Pagination -->
+{% if is_paginated %}
+<div class="row mt-5">
+    <div class="col-12">
+        <nav>
+            <ul class="pagination justify-content-center">
+                {% if page_obj.has_previous %}
+                <li class="page-item">
+                    <a class="page-link rounded-circle mx-1"
+                        href="?page={{ page_obj.previous_page_number }}{% if query %}&q={{ query }}{% endif %}{% if current_category %}&category={{ current_category }}{% endif %}">
+                        <i class="bi bi-chevron-left"></i>
+                    </a>
+                </li>
+                {% endif %}
+                <li class="page-item active"><span class="page-link rounded-circle mx-1"
+                        style="background-color: #ff9800; border-color: #ff9800;">{{ page_obj.number }}</span></li>
+                {% if page_obj.has_next %}
+                <li class="page-item">
+                    <a class="page-link rounded-circle mx-1"
+                        href="?page={{ page_obj.next_page_number }}{% if query %}&q={{ query }}{% endif %}{% if current_category %}&category={{ current_category }}{% endif %}">
+                        <i class="bi bi-chevron-right"></i>
+                    </a>
+                </li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+</div>
+{% endif %}
+
+<style>
+    .kids-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .kids-card:hover {
+        transform: translateY(-10px) rotate(1deg);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1) !important;
+    }
+
+    .nav-pills .nav-link.active {
+        transform: scale(1.1);
+        transition: transform 0.3s ease;
+    }
+
+    .page-link {
+        width: 45px;
+        height: 45px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #ff9800;
+        border: 1px solid #ff9800;
+    }
+
+    .kids-book-cover img {
+        border: 5px solid #fff;
+        transition: transform 0.3s ease;
+    }
+
+    .kids-card:hover .kids-book-cover img {
+        transform: scale(1.05);
+    }
+</style>
+{% endblock %}

@@ -1,0 +1,230 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ book.title }} - Interactive Reader{% endblock %}
+
+{% block extra_css %}
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        background-color: #2c3e50;
+        overflow: hidden;
+    }
+
+    .reader-container {
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 1050;
+        background: radial-gradient(circle, #34495e 0%, #2c3e50 100%);
+    }
+
+    .flip-book {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        display: none;
+        /* Hidden until loaded */
+        background: #fff;
+    }
+
+    .page {
+        padding: 0;
+        background-color: white;
+        overflow: hidden;
+        border: 1px solid #ddd;
+    }
+
+    .page canvas {
+        width: 100%;
+        height: 100%;
+        display: block;
+    }
+
+    .reader-controls {
+        position: absolute;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(0, 0, 0, 0.7);
+        padding: 10px 25px;
+        border-radius: 50px;
+        display: flex;
+        gap: 20px;
+        align-items: center;
+        z-index: 1100;
+        backdrop-filter: blur(5px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .control-btn {
+        color: white;
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+        transition: transform 0.2s, color 0.2s;
+    }
+
+    .control-btn:hover {
+        color: #ffd700;
+        transform: scale(1.1);
+    }
+
+    .page-num {
+        color: white;
+        font-family: 'Outfit', sans-serif;
+        font-weight: 600;
+        min-width: 80px;
+        text-align: center;
+    }
+
+    .loading-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #2c3e50;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        z-index: 1200;
+    }
+
+    .spinner-border {
+        width: 3rem;
+        height: 3rem;
+        color: #ffd700;
+    }
+
+    /* Hide base navbar and footer in reader */
+    nav,
+    footer {
+        display: none !important;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="reader-container">
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="spinner-border mb-3" role="status"></div>
+        <h4 class="fw-bold">Preparing Your Book...</h4>
+        <p class="opacity-75">Spiritual knowledge is loading</p>
+    </div>
+
+    <div id="flipbook" class="flip-book">
+        <!-- Pages will be injected here -->
+    </div>
+
+    <div class="reader-controls">
+        <button class="control-btn" id="prevBtn"><i class="bi bi-arrow-left-circle-fill"></i></button>
+        <div class="page-num">
+            Page <span id="currentPage">1</span> / <span id="totalPages">0</span>
+        </div>
+        <button class="control-btn" id="nextBtn"><i class="bi bi-arrow-right-circle-fill"></i></button>
+        <div class="vr mx-2 text-white"></div>
+        <a href="{% url 'content:book_list' %}" class="control-btn" title="Close Reader">
+            <i class="bi bi-x-circle-fill"></i>
+        </a>
+    </div>
+</div>
+
+<!-- Libraries -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/page-flip/dist/js/page-flip.browser.js"></script>
+
+<script>
+    const pdfUrl = "{{ book.pdf_file.url }}";
+    const container = document.getElementById('flipbook');
+    const loadingOverlay = document.getElementById('loadingOverlay');
+    const currentPageSpan = document.getElementById('currentPage');
+    const totalPagesSpan = document.getElementById('totalPages');
+
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.worker.min.js';
+
+    let pdfDoc = null;
+    let pageFlip = null;
+
+    async function initReader() {
+        try {
+            pdfDoc = await pdfjsLib.getDocument(pdfUrl).promise;
+            const totalPages = pdfDoc.numPages;
+            totalPagesSpan.textContent = totalPages;
+
+            // Calculate dimensions based on viewport
+            const viewportHeight = window.innerHeight * 0.85;
+            const tempPage = await pdfDoc.getPage(1);
+            const tempViewport = tempPage.getViewport({ scale: 1 });
+            const ratio = tempViewport.width / tempViewport.height;
+            const pageWidth = Math.min(window.innerWidth / 2.2, viewportHeight * ratio);
+            const pageHeight = pageWidth / ratio;
+
+            // Render all pages as canvases
+            for (let i = 1; i <= totalPages; i++) {
+                const page = await pdfDoc.getPage(i);
+                const viewport = page.getViewport({ scale: (pageHeight / tempViewport.height) * 2 }); // Double for sharpness
+
+                const pageDiv = document.createElement('div');
+                pageDiv.className = 'page';
+
+                const canvas = document.createElement('canvas');
+                const context = canvas.getContext('2d');
+                canvas.height = viewport.height;
+                canvas.width = viewport.width;
+
+                const renderContext = {
+                    canvasContext: context,
+                    viewport: viewport
+                };
+
+                await page.render(renderContext).promise;
+                pageDiv.appendChild(canvas);
+                container.appendChild(pageDiv);
+            }
+
+            // Initialize PageFlip
+            pageFlip = new St.PageFlip(container, {
+                width: pageWidth,
+                height: pageHeight,
+                size: "fixed",
+                minWidth: 315,
+                maxWidth: 1000,
+                minHeight: 420,
+                maxHeight: 1350,
+                maxShadowOpacity: 0.5,
+                showCover: true,
+                mobileScrollSupport: false
+            });
+
+            pageFlip.loadFromHTML(document.querySelectorAll('.page'));
+
+            // Events
+            pageFlip.on('flip', (e) => {
+                currentPageSpan.textContent = e.data + 1;
+            });
+
+            document.getElementById('prevBtn').addEventListener('click', () => pageFlip.flipPrev());
+            document.getElementById('nextBtn').addEventListener('click', () => pageFlip.flipNext());
+
+            // Show UI
+            loadingOverlay.style.display = 'none';
+            container.style.display = 'block';
+
+        } catch (error) {
+            console.error('Error loading PDF:', error);
+            loadingOverlay.innerHTML = `<h4 class="text-danger">Failed to load book</h4><p>${error.message}</p>`;
+        }
+    }
+
+    window.onload = initReader;
+</script>
+{% endblock %}

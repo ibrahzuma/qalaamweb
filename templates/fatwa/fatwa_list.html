@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+{% block title %}Fatawa - QALAAM{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-3">
+        <h4 class="mb-4">Categories</h4>
+        <div class="list-group shadow-sm">
+            <a href="{% url 'fatwa:fatwa_list' %}"
+                class="list-group-item list-group-item-action {% if not request.GET.category %}active{% endif %}">All
+                Categories</a>
+            <!-- Category tree would go here -->
+            <p class="p-3 text-muted small">Expand categories in the admin to see them here.</p>
+        </div>
+    </div>
+    <div class="col-md-9">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="section-title mb-0">Browse Fatawa</h2>
+            <a href="{% url 'fatwa:ask_fatwa' %}" class="btn btn-warning rounded-pill">Ask a Question</a>
+        </div>
+
+        <div class="row g-4">
+            {% for fatwa in fatawa %}
+            <div class="col-12">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <small class="text-success fw-bold">{{ fatwa.category.name }}</small>
+                            <small class="text-muted">{{ fatwa.created_at|date:"M d, Y" }}</small>
+                        </div>
+                        <h5 class="card-title my-2"><a href="{% url 'fatwa:fatwa_detail' fatwa.pk %}"
+                                class="text-decoration-none text-dark">{{ fatwa.title }}</a></h5>
+                        <p class="card-text text-muted small">{{ fatwa.question|truncatewords:30 }}</p>
+                        <div class="d-flex align-items-center">
+                            <span class="badge bg-light text-dark me-3"><i class="bi bi-eye"></i> {{ fatwa.view_count }}
+                                Views</span>
+                            <a href="{% url 'fatwa:fatwa_detail' fatwa.pk %}"
+                                class="btn btn-sm btn-outline-success rounded-pill">View Answer</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12">
+                <div class="alert alert-info">No fatawa available at the moment.</div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Pagination -->
+        {% if is_paginated %}
+        <nav class="mt-5">
+            <ul class="pagination justify-content-center">
+                {% if page_obj.has_previous %}
+                <li class="page-item"><a class="page-link text-success"
+                        href="?page={{ page_obj.previous_page_number }}">Previous</a></li>
+                {% endif %}
+                <li class="page-item active"><span class="page-link bg-success border-success">{{ page_obj.number
+                        }}</span></li>
+                {% if page_obj.has_next %}
+                <li class="page-item"><a class="page-link text-success"
+                        href="?page={{ page_obj.next_page_number }}">Next</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

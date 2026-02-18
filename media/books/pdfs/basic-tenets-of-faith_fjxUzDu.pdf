@@ -1,0 +1,730 @@
+	<!doctype html>
+	<html dir="rtl" lang="ar">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name='robots' content='noindex, follow' />
+
+	<!-- This site is optimized with the Yoast SEO plugin v26.8 - https://yoast.com/product/yoast-seo-wordpress/ -->
+	<meta property="og:locale" content="ar_AR" />
+	<meta property="og:title" content="Page not found - Muslim Library" />
+	<meta property="og:site_name" content="Muslim Library" />
+	<script type="application/ld+json" class="yoast-schema-graph">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://www.muslim-library.com/#website","url":"https://www.muslim-library.com/","name":"Muslim Library","description":"","potentialAction":[{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://www.muslim-library.com/?s={search_term_string}"},"query-input":{"@type":"PropertyValueSpecification","valueRequired":true,"valueName":"search_term_string"}}],"inLanguage":"ar"}]}</script>
+	<!-- / Yoast SEO plugin. -->
+
+
+<link rel='dns-prefetch' href='//secure.gravatar.com' />
+<link rel='dns-prefetch' href='//stats.wp.com' />
+<link rel='dns-prefetch' href='//v0.wordpress.com' />
+<style id='wp-img-auto-sizes-contain-inline-css' type='text/css'>
+img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
+/*# sourceURL=wp-img-auto-sizes-contain-inline-css */
+</style>
+<style id='wp-emoji-styles-inline-css' type='text/css'>
+
+	img.wp-smiley, img.emoji {
+		display: inline !important;
+		border: none !important;
+		box-shadow: none !important;
+		height: 1em !important;
+		width: 1em !important;
+		margin: 0 0.07em !important;
+		vertical-align: -0.1em !important;
+		background: none !important;
+		padding: 0 !important;
+	}
+/*# sourceURL=wp-emoji-styles-inline-css */
+</style>
+<style id='classic-theme-styles-inline-css' type='text/css'>
+/*! This file is auto-generated */
+.wp-block-button__link{color:#fff;background-color:#32373c;border-radius:9999px;box-shadow:none;text-decoration:none;padding:calc(.667em + 2px) calc(1.333em + 2px);font-size:1.125em}.wp-block-file__button{background:#32373c;color:#fff;text-decoration:none}
+/*# sourceURL=/wp-includes/css/classic-themes.min.css */
+</style>
+<style id='global-styles-inline-css' type='text/css'>
+:root{--wp--preset--aspect-ratio--square: 1;--wp--preset--aspect-ratio--4-3: 4/3;--wp--preset--aspect-ratio--3-4: 3/4;--wp--preset--aspect-ratio--3-2: 3/2;--wp--preset--aspect-ratio--2-3: 2/3;--wp--preset--aspect-ratio--16-9: 16/9;--wp--preset--aspect-ratio--9-16: 9/16;--wp--preset--color--black: #000000;--wp--preset--color--cyan-bluish-gray: #abb8c3;--wp--preset--color--white: #ffffff;--wp--preset--color--pale-pink: #f78da7;--wp--preset--color--vivid-red: #cf2e2e;--wp--preset--color--luminous-vivid-orange: #ff6900;--wp--preset--color--luminous-vivid-amber: #fcb900;--wp--preset--color--light-green-cyan: #7bdcb5;--wp--preset--color--vivid-green-cyan: #00d084;--wp--preset--color--pale-cyan-blue: #8ed1fc;--wp--preset--color--vivid-cyan-blue: #0693e3;--wp--preset--color--vivid-purple: #9b51e0;--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple: linear-gradient(135deg,rgb(6,147,227) 0%,rgb(155,81,224) 100%);--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan: linear-gradient(135deg,rgb(122,220,180) 0%,rgb(0,208,130) 100%);--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange: linear-gradient(135deg,rgb(252,185,0) 0%,rgb(255,105,0) 100%);--wp--preset--gradient--luminous-vivid-orange-to-vivid-red: linear-gradient(135deg,rgb(255,105,0) 0%,rgb(207,46,46) 100%);--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray: linear-gradient(135deg,rgb(238,238,238) 0%,rgb(169,184,195) 100%);--wp--preset--gradient--cool-to-warm-spectrum: linear-gradient(135deg,rgb(74,234,220) 0%,rgb(151,120,209) 20%,rgb(207,42,186) 40%,rgb(238,44,130) 60%,rgb(251,105,98) 80%,rgb(254,248,76) 100%);--wp--preset--gradient--blush-light-purple: linear-gradient(135deg,rgb(255,206,236) 0%,rgb(152,150,240) 100%);--wp--preset--gradient--blush-bordeaux: linear-gradient(135deg,rgb(254,205,165) 0%,rgb(254,45,45) 50%,rgb(107,0,62) 100%);--wp--preset--gradient--luminous-dusk: linear-gradient(135deg,rgb(255,203,112) 0%,rgb(199,81,192) 50%,rgb(65,88,208) 100%);--wp--preset--gradient--pale-ocean: linear-gradient(135deg,rgb(255,245,203) 0%,rgb(182,227,212) 50%,rgb(51,167,181) 100%);--wp--preset--gradient--electric-grass: linear-gradient(135deg,rgb(202,248,128) 0%,rgb(113,206,126) 100%);--wp--preset--gradient--midnight: linear-gradient(135deg,rgb(2,3,129) 0%,rgb(40,116,252) 100%);--wp--preset--font-size--small: 13px;--wp--preset--font-size--medium: 20px;--wp--preset--font-size--large: 36px;--wp--preset--font-size--x-large: 42px;--wp--preset--spacing--20: 0.44rem;--wp--preset--spacing--30: 0.67rem;--wp--preset--spacing--40: 1rem;--wp--preset--spacing--50: 1.5rem;--wp--preset--spacing--60: 2.25rem;--wp--preset--spacing--70: 3.38rem;--wp--preset--spacing--80: 5.06rem;--wp--preset--shadow--natural: 6px 6px 9px rgba(0, 0, 0, 0.2);--wp--preset--shadow--deep: 12px 12px 50px rgba(0, 0, 0, 0.4);--wp--preset--shadow--sharp: 6px 6px 0px rgba(0, 0, 0, 0.2);--wp--preset--shadow--outlined: 6px 6px 0px -3px rgb(255, 255, 255), 6px 6px rgb(0, 0, 0);--wp--preset--shadow--crisp: 6px 6px 0px rgb(0, 0, 0);}:where(.is-layout-flex){gap: 0.5em;}:where(.is-layout-grid){gap: 0.5em;}body .is-layout-flex{display: flex;}.is-layout-flex{flex-wrap: wrap;align-items: center;}.is-layout-flex > :is(*, div){margin: 0;}body .is-layout-grid{display: grid;}.is-layout-grid > :is(*, div){margin: 0;}:where(.wp-block-columns.is-layout-flex){gap: 2em;}:where(.wp-block-columns.is-layout-grid){gap: 2em;}:where(.wp-block-post-template.is-layout-flex){gap: 1.25em;}:where(.wp-block-post-template.is-layout-grid){gap: 1.25em;}.has-black-color{color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-color{color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-color{color: var(--wp--preset--color--white) !important;}.has-pale-pink-color{color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-color{color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-color{color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-color{color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-color{color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-color{color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-color{color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-color{color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-color{color: var(--wp--preset--color--vivid-purple) !important;}.has-black-background-color{background-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-background-color{background-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-background-color{background-color: var(--wp--preset--color--white) !important;}.has-pale-pink-background-color{background-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-background-color{background-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-background-color{background-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-background-color{background-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-background-color{background-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-background-color{background-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-background-color{background-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-background-color{background-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-background-color{background-color: var(--wp--preset--color--vivid-purple) !important;}.has-black-border-color{border-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-border-color{border-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-border-color{border-color: var(--wp--preset--color--white) !important;}.has-pale-pink-border-color{border-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-border-color{border-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-border-color{border-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-border-color{border-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-border-color{border-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-border-color{border-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-border-color{border-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-border-color{border-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-border-color{border-color: var(--wp--preset--color--vivid-purple) !important;}.has-vivid-cyan-blue-to-vivid-purple-gradient-background{background: var(--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple) !important;}.has-light-green-cyan-to-vivid-green-cyan-gradient-background{background: var(--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan) !important;}.has-luminous-vivid-amber-to-luminous-vivid-orange-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange) !important;}.has-luminous-vivid-orange-to-vivid-red-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-orange-to-vivid-red) !important;}.has-very-light-gray-to-cyan-bluish-gray-gradient-background{background: var(--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray) !important;}.has-cool-to-warm-spectrum-gradient-background{background: var(--wp--preset--gradient--cool-to-warm-spectrum) !important;}.has-blush-light-purple-gradient-background{background: var(--wp--preset--gradient--blush-light-purple) !important;}.has-blush-bordeaux-gradient-background{background: var(--wp--preset--gradient--blush-bordeaux) !important;}.has-luminous-dusk-gradient-background{background: var(--wp--preset--gradient--luminous-dusk) !important;}.has-pale-ocean-gradient-background{background: var(--wp--preset--gradient--pale-ocean) !important;}.has-electric-grass-gradient-background{background: var(--wp--preset--gradient--electric-grass) !important;}.has-midnight-gradient-background{background: var(--wp--preset--gradient--midnight) !important;}.has-small-font-size{font-size: var(--wp--preset--font-size--small) !important;}.has-medium-font-size{font-size: var(--wp--preset--font-size--medium) !important;}.has-large-font-size{font-size: var(--wp--preset--font-size--large) !important;}.has-x-large-font-size{font-size: var(--wp--preset--font-size--x-large) !important;}
+/*# sourceURL=global-styles-inline-css */
+</style>
+
+<link rel='stylesheet' id='taqyeem-style-css' href='https://www.muslim-library.com/wp-content/themes/mawthuq/includes/plugins/taqyeem/style.css?ver=6.9.1' type='text/css' media='all' />
+<link rel='stylesheet' id='books-library-count-style-css' href='https://www.muslim-library.com/wp-content/themes/mawthuq/includes/plugins/book-count/count-style.css?ver=6.9.1' type='text/css' media='all' />
+<link rel='stylesheet' id='mawthuq-bootstrap-css-css' href='https://www.muslim-library.com/wp-content/themes/mawthuq/css/bootstrap.rtl.min.css?ver=5.3.3' type='text/css' media='all' />
+<link rel='stylesheet' id='mawthuq-font-awesome-css' href='https://www.muslim-library.com/wp-content/themes/mawthuq/css/all.min.css?ver=6.4.2' type='text/css' media='all' />
+<link rel='stylesheet' id='mawthuq-theme-style-css' href='https://www.muslim-library.com/wp-content/themes/mawthuq/style.css?ver=3.26' type='text/css' media='all' />
+<link rel='stylesheet' id='mawthuq-home-style-css' href='https://www.muslim-library.com/wp-content/themes/mawthuq/css/home.css?ver=3.26' type='text/css' media='all' />
+<link rel='stylesheet' id='mawthuq-theme-style-rtl-css' href='https://www.muslim-library.com/wp-content/themes/mawthuq/rtl.css?ver=3.26' type='text/css' media='all' />
+<link rel='stylesheet' id='saddle-brown-css' href='https://www.muslim-library.com/wp-content/themes/mawthuq/css/theme/saddle-brown.css?ver=3.26' type='text/css' media='all' />
+<script type="a3e7aa34343bd347463200a9-text/javascript" src="https://www.muslim-library.com/wp-includes/js/jquery/jquery.min.js?ver=3.7.1" id="jquery-core-js"></script>
+<script type="a3e7aa34343bd347463200a9-text/javascript" src="https://www.muslim-library.com/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.4.1" id="jquery-migrate-js"></script>
+<script type="a3e7aa34343bd347463200a9-text/javascript" src="https://www.muslim-library.com/wp-content/themes/mawthuq/includes/plugins/taqyeem/js/tie.js?ver=6.9.1" id="taqyeem-main-js"></script>
+<script type="a3e7aa34343bd347463200a9-text/javascript" src="https://www.muslim-library.com/wp-content/themes/mawthuq/js/generator.js?ver=3.0" id="social-share-js"></script>
+<link rel="https://api.w.org/" href="https://www.muslim-library.com/wp-json/" /><link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://www.muslim-library.com/xmlrpc.php?rsd" />
+<meta name="generator" content="WordPress 6.9.1" />
+	<style>img#wpstats{display:none}</style>
+		<script type="a3e7aa34343bd347463200a9-text/javascript">
+/* <![CDATA[ */
+var taqyeem = {"ajaxurl":"https://www.muslim-library.com/wp-admin/admin-ajax.php" , "your_rating":"Your Rating"};
+/* ]]> */
+</script>
+<style type="text/css" media="screen">
+
+</style>
+<style>
+.entry-content h2{font-size:20px; color:#f88c00;}
+.top-nav .navbar-nav>li>a { padding: 5px;}
+.top-social li { margin: 0 1px !important; }
+</style>
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-22417760-8" type="a3e7aa34343bd347463200a9-text/javascript"></script>
+<script type="a3e7aa34343bd347463200a9-text/javascript">
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-22417760-8');
+</script>
+
+<meta name="apple-itunes-app" content="app-id=943147311"><link rel="shortcut icon" href="https://www.muslim-library.com/wp-content/uploads/2017/10/logox.png?r=571" type="image/png"><link rel="icon" href="https://www.muslim-library.com/wp-content/uploads/2017/10/logox.png?r=571" type="image/png"><link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;900&display=swap" rel="stylesheet">	<style>
+		body {
+			font-family: 'Tajawal' , 'Tahoma', 'Arial', sans-serif;		}
+	</style>
+<script type="application/ld+json">{"@context": "https://schema.org","@type": "Organization","url": "https://www.muslim-library.com/","logo": "https://www.muslim-library.com/wp-content/uploads/2017/10/logo.png","sameAs" : ["https://www.facebook.com/MuslimLibrary","https://muslim-library.tumblr.com/","https://twitter.com/MuslimLibrary"]}</script>						<title>Page not found - Muslim Library</title>
+				</head>
+	<body class="rtl error404 wp-theme-mawthuq mawthuq-body-saddle-brown">
+
+		
+	
+<div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasMenu" aria-labelledby="offcanvasMenuLabel"><div class="offcanvas-header"><h5 class="offcanvas-title" id="offcanvasMenuLabel">القائمة الرئيسية</h5><button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="إغلاق"></button></div><div class="offcanvas-body"><ul class="list-inline flags-top"><li class="list-inline-item flagitem"><a class="nav-link" href="https://www.muslim-library.com/?lang=Arabic"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/ar.png" alt="اللغة العربية"></a></li><li class="list-inline-item flagitem"><a class="nav-link" href="https://www.muslim-library.com/?lang=English"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/en.png" alt="English"></a></li><li class="list-inline-item flagitem"><a class="nav-link" href="https://www.muslim-library.com/?lang=Spanish"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/es.png" alt="Spanish"></a></li><li class="list-inline-item flagitem"><a class="nav-link" href="https://www.muslim-library.com/?lang=Deutsch"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/de.png" alt="Deutsch"></a></li><li class="list-inline-item flagitem"><a class="nav-link" href="https://www.muslim-library.com/?lang=French"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/fr.png" alt="French"></a></li><li class="list-inline-item flagitem"><a class="nav-link" href="https://www.muslim-library.com/?lang=Hindi"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/hi.png" alt="Hindi"></a></li><li class="list-inline-item flagitem"><a class="nav-link" href="https://www.muslim-library.com/?lang=Italian"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/it.png" alt="Italian"></a></li><li class="list-inline-item flagitem"><a class="nav-link" href="https://www.muslim-library.com/?lang=Chinese"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/cn.png" alt="Chinese"></a></li><li class="list-inline-item ps-2"><a data-bs-toggle="modal" class="nav-link" href="#myModal"><i class="fas fa-chevron-down" aria-hidden="true"></i></a></li></ul><ul id="menu-top" class="navbar-nav top-menu"><li><a class="nav-link" href="https://www.muslim-library.com/?lang=English">Home</a></li><li><a class="nav-link" href="https://www.muslim-library.com/book-categories/?lang=English">Categories</a></li><li><a class="nav-link" href="https://www.muslim-library.com/wordpress-plugins/?lang=English">WP Plugin</a></li><li><a class="nav-link" href="https://www.muslim-library.com/copyrights/?lang=English">Copyrights</a></li><li><a class="nav-link" href="https://www.muslim-library.com/about-us/?lang=English">About</a></li><li><a class="nav-link" href="https://www.muslim-library.com/contact-us/?lang=English">Contact</a></li></ul><ul class="link-list" id="libarchive-top"><li class="toplevel"><a href="https://www.muslim-library.com/category/english/islam/?lang=English">Islam</a> <a class="accordion-toggle" data-bs-toggle="collapse" data-bs-parent="#libarchive" href="#books_categories_90"><i class="fas fa-plus pull-right"></i></a><ul id="books_categories_90" class="accordion-body collapse"><li><a href="https://www.muslim-library.com/category/english/islam/prophet-muhammad/?lang=English">Prophet Muhammad</a></li><li><a href="https://www.muslim-library.com/category/english/islam/biography-of-the-prophet/?lang=English">Biography of the Prophet</a></li><li><a href="https://www.muslim-library.com/category/english/islam/the-sublime-quran/?lang=English">The Sublime Quran</a></li><li><a href="https://www.muslim-library.com/category/english/islam/miracles-of-the-quran/?lang=English">Miracles of the Quran</a></li><li><a href="https://www.muslim-library.com/category/english/islam/sayings-of-the-prophet/?lang=English">Sayings of the Prophet</a></li><li><a href="https://www.muslim-library.com/category/english/islam/muslim-history/?lang=English">Muslim History</a></li><li><a href="https://www.muslim-library.com/category/english/islam/non-muslims/?lang=English">Non-Muslims</a></li><li><a href="https://www.muslim-library.com/category/english/islam/islam-the-west/?lang=English">Islam and the West</a></li><li><a href="https://www.muslim-library.com/category/english/islam/reverts-stories/?lang=English">Reverts Stories</a></li><li><a href="https://www.muslim-library.com/category/english/islam/comparative-religion/?lang=English">Comparative Religion</a></li><li><a href="https://www.muslim-library.com/category/english/islam/apologetics/?lang=English">Apologetics</a></li><li><a href="https://www.muslim-library.com/category/english/islam/women-in-islam/?lang=English">Women in Islam</a></li><li><a href="https://www.muslim-library.com/category/english/islam/orientalism/?lang=English">Orientalism</a></li><li><a href="https://www.muslim-library.com/category/english/islam/other-religions/?lang=English">Other Religions</a></li><li><a href="https://www.muslim-library.com/category/english/islam/deedat-library/?lang=English">Deedat Library</a></li><li><a href="https://www.muslim-library.com/category/english/islam/youth-section/?lang=English">Youth Section</a></li><li><a href="https://www.muslim-library.com/category/english/islam/islamic-magazines/?lang=English">Islamic Magazines</a></li></ul></li><li class="toplevel"><a href="https://www.muslim-library.com/category/english/christianity/?lang=English">Christianity</a> <a class="accordion-toggle" data-bs-toggle="collapse" data-bs-parent="#libarchive" href="#books_categories_91"><i class="fas fa-plus pull-right"></i></a><ul id="books_categories_91" class="accordion-body collapse"><li><a href="https://www.muslim-library.com/category/english/christianity/the-bible/?lang=English">The Bible</a></li><li><a href="https://www.muslim-library.com/category/english/christianity/jesus/?lang=English">Jesus</a></li><li><a href="https://www.muslim-library.com/category/english/christianity/christian-history/?lang=English">Christian History</a></li><li><a href="https://www.muslim-library.com/category/english/christianity/christian-beliefs/?lang=English">Christian Beliefs</a></li><li><a href="https://www.muslim-library.com/category/english/christianity/archeology/?lang=English">Archeology</a></li></ul></li><li class="toplevel"><a href="https://www.muslim-library.com/category/english/ipc-publications/?lang=English">IPC Publications</a></li><li class="toplevel"><a href="https://www.muslim-library.com/category/english/edc-publications/?lang=English">EDC Publications</a></li><li class="toplevel"><a href="https://www.muslim-library.com/category/english/translations-of-sunnah-books/?lang=English">Translations of Sunnah Books</a></li><li class="toplevel"><a href="https://www.muslim-library.com/category/english/contemporary-issues/?lang=English">Contemporary Issues</a></li><li class="toplevel"><a href="https://www.muslim-library.com/category/english/discover-islam/?lang=English">Discover Islam</a></li><li class="toplevel"><a href="https://www.muslim-library.com/category/english/translations-of-the-quran/?lang=English">Translations of the Quran</a></li><li class="toplevel"><a href="https://www.muslim-library.com/category/english/social-media-reports/?lang=English">Social Media Reports</a></li><li class="toplevel"><a href="https://www.muslim-library.com/category/english/acts-of-worship/?lang=English">Acts of Worship</a> <a class="accordion-toggle" data-bs-toggle="collapse" data-bs-parent="#libarchive" href="#books_categories_7543"><i class="fas fa-plus pull-right"></i></a><ul id="books_categories_7543" class="accordion-body collapse"><li><a href="https://www.muslim-library.com/category/english/acts-of-worship/prayer/?lang=English">Prayer</a></li><li><a href="https://www.muslim-library.com/category/english/acts-of-worship/hajj/?lang=English">Hajj</a></li><li><a href="https://www.muslim-library.com/category/english/acts-of-worship/fasting/?lang=English">Fasting</a></li><li><a href="https://www.muslim-library.com/category/english/acts-of-worship/zakah/?lang=English">Zakah</a></li></ul></li><li class="toplevel"><a href="https://www.muslim-library.com/category/english/researches-and-studies/?lang=English">Researches and Studies</a></li></ul><div class="top-social m-auto"><ul class="list-inline"><li class="list-inline-item"><a target="_blank" title="Facebook" href="https://www.facebook.com/MuslimLibrary" style="color:#3b5998;" rel="nofollow"><i class="fab fa-facebook"></i></a></li><li class="list-inline-item"><a target="_blank" title="Tumblr" href="https://muslim-library.tumblr.com/" style="color:#56BC8B;" rel="nofollow"><i class="fab fa-tumblr"></i></a></li><li class="list-inline-item"><a target="_blank" title="Twitter" href="https://twitter.com/MuslimLibrary" style="color:#1da1f2;" rel="nofollow"><i class="fab fa-twitter"></i></a></li><li class="list-inline-item"><a target="_blank" href="https://www.plurk.com/MuslimLibrary" rel="nofollow"><img class="no-icon" src="data:image/webp;base64,UklGRuoBAABXRUJQVlA4TN4BAAAvGoAGEDfkIJIkRardk3H+3dEzznTZYNi2bST23X/guwpyJEmSomhkQX+9YPfFfXW5gkaSmqFaQRfmEfG0MP/fhzB6jH4/f28JBkYMDWAR5SshMJRp+fmyAZS0CSGEgjEtr/ewfSftS0mb8u0DZGyP/0KpftKP8ngX4Pz/CcIRQQjl0xNQPj0JCgDDwogyW8omwL+Pso0IxNdLvS8FKAB9FOhDQk9dqqCMBb2hKws9CnCUGA0sGBYBKA5iKAQQZQMUhYEhBFBAjG779gLWe+xLBzBBK4MxAhQQtm07nozZ/rJrGcvWMvYi27Y174d/et7qD3zPV0T/GbltG4lCr7P6Fb7QzgoXaXM74guvUiKWuRrdoQTP396hTCRI95cJno65Kqv1q3BNnBHcYASv3Uk2qORuJMi4rC3GAhXbKTMU7jhQfNfvSaxtrKs3mmoSRBSM3i96/x/6JRGFk6/HJ+aLJ19EydzX0/PT92yRiIyWng7EvuY0EfaU9FTELMP+owv9IWc7wJEp5eapyynrvdCX3TozMqxu3DN/qK906vP6RtPVEQF+0NDdEtGP6+xEGoRp12UtHriFsA31JqvKG6YvIevbmiV/PB4sAIfuRjT79yJCZyvoi+xvcpHW9gJ+" alt="plurk"></a></li></ul></div><form class="d-flex" method="get" id="searchform" action="https://www.muslim-library.com/"><input type="hidden" name="lang" value="English"><input value="" class="form-control top-search" type="text" name="s" id="s" placeholder="ابحث" aria-label="Search" required><button type="submit" class="btn btn-outline-success my-2 my-lg-0 top-search-submit" type="submit"><i class="fas fa-search"></i></button></form></div></div><header class="header-book-container">
+		<nav class="navbar navbar-expand-lg navbar-light bg-light top-nav">
+		<div class="container">
+
+			<a class="navbar-brand navbar-brand-custom" href="https://www.muslim-library.com/?lang=English"><img src="https://www.muslim-library.com/wp-content/uploads/2017/10/logox.png" alt="Muslim Library | The Comprehensive Muslim e-Library"></a>
+
+			<button class="navbar-toggler" type="button"data-bs-toggle="offcanvas" data-bs-target="#offcanvasMenu" aria-controls="offcanvasMenu">
+				<span class="fas fa-bars"></span>
+			</button>
+
+			
+			<div class="collapse navbar-collapse top-menu-bar" id="navbarCollapse">
+				<ul id="menu-top" class="navbar-nav top-menu"><li><a class="nav-link" href="https://www.muslim-library.com/?lang=English">Home</a></li><li><a class="nav-link" href="https://www.muslim-library.com/book-categories/?lang=English">Categories</a></li><li><a class="nav-link" href="https://www.muslim-library.com/wordpress-plugins/?lang=English">WP Plugin</a></li><li><a class="nav-link" href="https://www.muslim-library.com/copyrights/?lang=English">Copyrights</a></li><li><a class="nav-link" href="https://www.muslim-library.com/about-us/?lang=English">About</a></li><li><a class="nav-link" href="https://www.muslim-library.com/contact-us/?lang=English">Contact</a></li><li class="nav-item flagitem"><a class="nav-link" href="https://www.muslim-library.com/?lang=Arabic"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/ar.png" alt="اللغة العربية"></a></li><li class="nav-item flagitem"><a class="nav-link" href="https://www.muslim-library.com/?lang=English"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/en.png" alt="English"></a></li><li class="nav-item flagitem"><a class="nav-link" href="https://www.muslim-library.com/?lang=Spanish"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/es.png" alt="Spanish"></a></li><li class="nav-item flagitem"><a class="nav-link" href="https://www.muslim-library.com/?lang=Deutsch"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/de.png" alt="Deutsch"></a></li><li><a data-bs-toggle="modal" class="nav-link" href="#myModal"><i class="fas fa-chevron-down" aria-hidden="true"></i></a></li></ul><div class="top-social m-auto"><ul class="list-inline"><li class="list-inline-item"><a target="_blank" title="Facebook" href="https://www.facebook.com/MuslimLibrary" style="color:#3b5998;" rel="nofollow"><i class="fab fa-facebook"></i></a></li><li class="list-inline-item"><a target="_blank" title="Tumblr" href="https://muslim-library.tumblr.com/" style="color:#56BC8B;" rel="nofollow"><i class="fab fa-tumblr"></i></a></li><li class="list-inline-item"><a target="_blank" title="Twitter" href="https://twitter.com/MuslimLibrary" style="color:#1da1f2;" rel="nofollow"><i class="fab fa-twitter"></i></a></li><li class="list-inline-item"><a target="_blank" href="https://www.plurk.com/MuslimLibrary" rel="nofollow"><img class="no-icon" src="data:image/webp;base64,UklGRuoBAABXRUJQVlA4TN4BAAAvGoAGEDfkIJIkRardk3H+3dEzznTZYNi2bST23X/guwpyJEmSomhkQX+9YPfFfXW5gkaSmqFaQRfmEfG0MP/fhzB6jH4/f28JBkYMDWAR5SshMJRp+fmyAZS0CSGEgjEtr/ewfSftS0mb8u0DZGyP/0KpftKP8ngX4Pz/CcIRQQjl0xNQPj0JCgDDwogyW8omwL+Pso0IxNdLvS8FKAB9FOhDQk9dqqCMBb2hKws9CnCUGA0sGBYBKA5iKAQQZQMUhYEhBFBAjG779gLWe+xLBzBBK4MxAhQQtm07nozZ/rJrGcvWMvYi27Y174d/et7qD3zPV0T/GbltG4lCr7P6Fb7QzgoXaXM74guvUiKWuRrdoQTP396hTCRI95cJno65Kqv1q3BNnBHcYASv3Uk2qORuJMi4rC3GAhXbKTMU7jhQfNfvSaxtrKs3mmoSRBSM3i96/x/6JRGFk6/HJ+aLJ19EydzX0/PT92yRiIyWng7EvuY0EfaU9FTELMP+owv9IWc7wJEp5eapyynrvdCX3TozMqxu3DN/qK906vP6RtPVEQF+0NDdEtGP6+xEGoRp12UtHriFsA31JqvKG6YvIevbmiV/PB4sAIfuRjT79yJCZyvoi+xvcpHW9gJ+" alt="plurk"></a></li></ul></div><form class="d-flex" method="get" id="searchform" action="https://www.muslim-library.com/"><input type="hidden" name="lang" value="English"><input value="" class="form-control top-search" type="text" name="s" id="s" placeholder="ابحث" aria-label="Search" required><button type="submit" class="btn btn-outline-success my-2 my-lg-0 top-search-submit" type="submit"><i class="fas fa-search"></i></button></form>			</div>
+		</div>
+	</nav>
+		<div class="logo-nav">
+		<div class="container">
+			<div class="row g-0">
+				<div class="col-12 col-sm-12 col-md-4 col-lg-3"><a href="https://www.muslim-library.com/?lang=English"><img src="https://www.muslim-library.com/wp-content/uploads/2017/10/logo.png" alt="Muslim Library | The Comprehensive Muslim e-Library" class="mw-100"></a></div><div class="col-12 col-sm-12 col-md-8 col-lg-9"><div class="text-end mt-2 mb-4">
+<a href="https://itunes.apple.com/us/app/islam-for-christians/id1166885924?ls=1&amp;mt=8" target="_blank"><img src="https://www.muslim-library.com/wp-content/uploads/2017/04/i4christians-en.png" alt="APP" class="mw-100"></a>
+</div></div>			</div>
+		</div>
+	</div>
+
+	</header>
+<div class="last-updated"><div class="container"><div class="row g-3"><div class="col-6 col-md-3"><i class="fas fa-sync"></i> آخر تحديث  </div><div class="col-6 col-md-3"><i class="fas fa-clock"></i> السبت, 14 فبراير 2026</div><div class="col-6 col-md-3"><i class="fas fa-calendar"></i> شعبان 26, 1447</div><div class="col-6 col-md-3"><i class="fas fa-book"></i> Number of Books 10414</div></div></div></div><div class="my-3 text-center"><a href="http://bit.ly/459EpNn" target="_blank"><img src="https://www.mawthuq.net/wp-content/uploads/2025/07/quran-uni-banner.png" loading="lazy" class="mw-100" alt="قناة الجامع لعلوم القرآن - Al-Jami&#039; Channel for Quranic Sciences"></a></div><div class="cat-title breadcrumb-type-2"><div class="container"><div class="row g-3 row_breadcrumb"><div class="col-12 col-md-8"><h1>الصفحة غير موجودة</h1></div><div class="col-12 col-md-4"><nav aria-label="breadcrumb"><ol class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList"><li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><a itemprop="item" href="https://www.muslim-library.com?lang=English"><span itemprop="name"><i class="fas fa-home"></i> الرئيسية</span></a><meta itemprop="position" content="1"></li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem" class="breadcrumb-item active" aria-current="page"><span itemprop="name">الصفحة غير موجودة</span></li></ol></nav></div></div></div></div>
+<main class="container not_found_404" aria-label="Main content" role="main">
+	<div class="blog-posts">
+		<div class="post-box">
+			<div class="post-title">
+				<h2>الصفحة غير موجودة</h2>
+			</div>
+			<div class="entry-content" itemprop="articleBody">
+
+				<div class="card text-center search_form_404 mb-3">
+					<div class="card-body">
+						<form method="get" id="searchform" action="https://www.muslim-library.com/">	<label for="s" class="assistive-text">ابحث</label>	<input type="text" class="field" name="s" value="" id="s" placeholder="ابحث" />	<input type="submit" class="submit" name="submit" id="searchsubmit" value="ابحث" /></form>					</div>
+				</div>
+
+				<div class="row g-3">
+					<div class="col-md-8">
+						<div class="home-books-container"><div class="latest-books_main_header"><h3>Latest Books</h3></div><div class="home-books-body"><div class="row g-3"><div class="col-6 col-md-3"><div class="books-container-tpl-3 cuadro_intro_hover"><a href="https://www.muslim-library.com/arabic/%d9%85%d8%ac%d9%84%d8%a7%d8%aa-%d9%88%d8%af%d9%88%d8%b1%d9%8a%d8%a7%d8%aa/%d9%85%d8%ac%d9%84%d8%a9-%d8%a3%d9%88%d9%82%d8%a7%d9%81/awqaf-magazine-no-49/?lang=English"><img src="https://www.muslim-library.com/wp-content/uploads/2026/01/Awqaf-Magazine-No.-49-200x300.jpg" alt="Awqaf Magazine No. 49" class="w-100" loading="lazy"></a><div class="books-container-tpl-body-3"><div class="caption">
+			<div class="blur"></div>
+			<div class="caption-text"><p><a href="https://www.muslim-library.com/arabic/%d9%85%d8%ac%d9%84%d8%a7%d8%aa-%d9%88%d8%af%d9%88%d8%b1%d9%8a%d8%a7%d8%aa/%d9%85%d8%ac%d9%84%d8%a9-%d8%a3%d9%88%d9%82%d8%a7%d9%81/awqaf-magazine-no-49/?lang=English">Awqaf Magazine No. 49</a></p><p><i class="fas fa-user"></i> <a itemprop="name" href="https://www.muslim-library.com/books-author-en/?author_id=6800&#038;lang=English">kuwait awqaf public foundation</a></p><p><i class="fas fa-globe"></i> English</p></div></div></div></div></div><div class="col-6 col-md-3"><div class="books-container-tpl-3 cuadro_intro_hover"><a href="https://www.muslim-library.com/english/concerning-taraaweeh-fatawaa/?lang=English"><img src="https://www.muslim-library.com/wp-content/uploads/2013/12/1613.png" alt="Concerning Taraaweeh   … Fatawaa" class="w-100" loading="lazy"></a><div class="books-container-tpl-body-3"><div class="caption">
+			<div class="blur"></div>
+			<div class="caption-text"><p><a href="https://www.muslim-library.com/english/concerning-taraaweeh-fatawaa/?lang=English">Concerning Taraaweeh   … Fatawaa</a></p><p><i class="fas fa-user"></i> <a itemprop="name" href="https://www.muslim-library.com/books-author-en/?author_id=557&#038;lang=English">Sheikh Abdul-azeez bin Baaz</a></p><p><i class="fas fa-globe"></i> English</p></div></div></div></div></div><div class="col-6 col-md-3"><div class="books-container-tpl-3 cuadro_intro_hover"><a href="https://www.muslim-library.com/bosnian/islam-bosnian/the-ten-given-glad-tidings-of-paradise/?lang=English"><img src="https://www.muslim-library.com/wp-content/uploads/2025/09/The-Ten-Given-Glad-Tidings-of-Paradise-200x300.jpg" alt="The Ten Given Glad Tidings of Paradise" class="w-100" loading="lazy"></a><div class="books-container-tpl-body-3"><div class="caption">
+			<div class="blur"></div>
+			<div class="caption-text"><p><a href="https://www.muslim-library.com/bosnian/islam-bosnian/the-ten-given-glad-tidings-of-paradise/?lang=English">The Ten Given Glad Tidings of Paradise</a></p><p><i class="fas fa-user"></i> <a itemprop="name" href="https://www.muslim-library.com/books-author-en/?author_id=7242&#038;lang=English">Hassan Ashmawy</a></p><p><i class="fas fa-globe"></i> Discover Islam</p></div></div></div></div></div><div class="col-6 col-md-3"><div class="books-container-tpl-3 cuadro_intro_hover"><a href="https://www.muslim-library.com/english/the-tangible-proofs-for-allahs-existence/?lang=English"><img src="https://www.muslim-library.com/wp-content/uploads/2025/08/The-Tangible-Proofs-for-Allahs-Existence-200x300.jpg" alt="The Tangible Proofs for Allah’s Existence" class="w-100" loading="lazy"></a><div class="books-container-tpl-body-3"><div class="caption">
+			<div class="blur"></div>
+			<div class="caption-text"><p><a href="https://www.muslim-library.com/english/the-tangible-proofs-for-allahs-existence/?lang=English">The Tangible Proofs for Allah’s Existence</a></p><p><i class="fas fa-user"></i> <a itemprop="name" href="https://www.muslim-library.com/books-author-en/?author_id=7306&#038;lang=English">Muhammad Metwalli al-Sha'rawi</a></p><p><i class="fas fa-globe"></i> English</p></div></div></div></div></div><div class="col-6 col-md-3"><div class="books-container-tpl-3 cuadro_intro_hover"><a href="https://www.muslim-library.com/english/30-tips-guilt-free-ramadan/?lang=English"><img src="https://www.muslim-library.com/wp-content/uploads/2018/02/30-Tips-For-A-Guilt-Free-Ramadan-200x300.jpg" alt="30 Tips for a Guilt-Free Ramadan" class="w-100" loading="lazy"></a><div class="books-container-tpl-body-3"><div class="caption">
+			<div class="blur"></div>
+			<div class="caption-text"><p><a href="https://www.muslim-library.com/english/30-tips-guilt-free-ramadan/?lang=English">30 Tips for a Guilt-Free Ramadan</a></p><p><i class="fas fa-globe"></i> English</p></div></div></div></div></div><div class="col-6 col-md-3"><div class="books-container-tpl-3 cuadro_intro_hover"><a href="https://www.muslim-library.com/english/100-hadith-on-fasting-and-ramadan/?lang=English"><img src="https://www.muslim-library.com/wp-content/uploads/2015/06/100-Hadith-on-Fasting-and-Ramadan.jpg" alt="100+ Hadith on Fasting and Ramadan" class="w-100" loading="lazy"></a><div class="books-container-tpl-body-3"><div class="caption">
+			<div class="blur"></div>
+			<div class="caption-text"><p><a href="https://www.muslim-library.com/english/100-hadith-on-fasting-and-ramadan/?lang=English">100+ Hadith on Fasting and Ramadan</a></p><p><i class="fas fa-user"></i> <a itemprop="name" href="https://www.muslim-library.com/books-author-en/?author_id=164&#038;lang=English">E-Da`wah Committee (EDC)</a></p><p><i class="fas fa-globe"></i> EDC Publications</p></div></div></div></div></div><div class="col-6 col-md-3"><div class="books-container-tpl-3 cuadro_intro_hover"><a href="https://www.muslim-library.com/english/fasting-tips-for-new-muslims/?lang=English"><img src="https://www.muslim-library.com/wp-content/uploads/2014/07/fasting-tips-for-new-muslim-1.jpg" alt="Fasting Tips for New Muslims" class="w-100" loading="lazy"></a><div class="books-container-tpl-body-3"><div class="caption">
+			<div class="blur"></div>
+			<div class="caption-text"><p><a href="https://www.muslim-library.com/english/fasting-tips-for-new-muslims/?lang=English">Fasting Tips for New Muslims</a></p><p><i class="fas fa-user"></i> <a itemprop="name" href="https://www.muslim-library.com/books-author-en/?author_id=164&#038;lang=English">E-Da`wah Committee (EDC)</a></p><p><i class="fas fa-globe"></i> EDC Publications</p></div></div></div></div></div><div class="col-6 col-md-3"><div class="books-container-tpl-3 cuadro_intro_hover"><a href="https://www.muslim-library.com/english/all-about-ramadan-2/?lang=English"><img src="https://www.muslim-library.com/wp-content/uploads/2014/11/English-All-About-Ramadan.png" alt="All About Ramadan" class="w-100" loading="lazy"></a><div class="books-container-tpl-body-3"><div class="caption">
+			<div class="blur"></div>
+			<div class="caption-text"><p><a href="https://www.muslim-library.com/english/all-about-ramadan-2/?lang=English">All About Ramadan</a></p><p><i class="fas fa-user"></i> <a itemprop="name" href="https://www.muslim-library.com/books-author-en/?author_id=465&#038;lang=English">Onislam</a></p><p><i class="fas fa-globe"></i> English</p></div></div></div></div></div><div class="col-6 col-md-3"><div class="books-container-tpl-3 cuadro_intro_hover"><a href="https://www.muslim-library.com/english/a-brief-guide-to-ramadan-and-fasting/?lang=English"><img src="https://www.muslim-library.com/wp-content/uploads/2015/06/en_A_Brief_Guide_to_Ramadan_and_Fasting.jpg" alt="A Brief Guide to Ramadan and Fasting" class="w-100" loading="lazy"></a><div class="books-container-tpl-body-3"><div class="caption">
+			<div class="blur"></div>
+			<div class="caption-text"><p><a href="https://www.muslim-library.com/english/a-brief-guide-to-ramadan-and-fasting/?lang=English">A Brief Guide to Ramadan and Fasting</a></p><p><i class="fas fa-user"></i> <a itemprop="name" href="https://www.muslim-library.com/books-author-en/?author_id=164&#038;lang=English">E-Da`wah Committee (EDC)</a></p><p><i class="fas fa-globe"></i> EDC Publications</p></div></div></div></div></div><div class="col-6 col-md-3"><div class="books-container-tpl-3 cuadro_intro_hover"><a href="https://www.muslim-library.com/english/the-daily-muslim-prayers/?lang=English"><img src="https://www.muslim-library.com/wp-content/uploads/2013/12/0731.png" alt="The daily muslim prayers" class="w-100" loading="lazy"></a><div class="books-container-tpl-body-3"><div class="caption">
+			<div class="blur"></div>
+			<div class="caption-text"><p><a href="https://www.muslim-library.com/english/the-daily-muslim-prayers/?lang=English">The daily muslim prayers</a></p><p><i class="fas fa-globe"></i> English</p></div></div></div></div></div><div class="col-6 col-md-3"><div class="books-container-tpl-3 cuadro_intro_hover"><a href="https://www.muslim-library.com/english/woman-in-islam/?lang=English"><img src="https://www.muslim-library.com/wp-content/uploads/2013/12/0599.png" alt="Woman In Islam" class="w-100" loading="lazy"></a><div class="books-container-tpl-body-3"><div class="caption">
+			<div class="blur"></div>
+			<div class="caption-text"><p><a href="https://www.muslim-library.com/english/woman-in-islam/?lang=English">Woman In Islam</a></p><p><i class="fas fa-user"></i> <a itemprop="name" href="https://www.muslim-library.com/books-author-en/?author_id=137&#038;lang=English">B. Aisha Lemu and Fatima Heeren</a></p><p><i class="fas fa-globe"></i> English</p></div></div></div></div></div><div class="col-6 col-md-3"><div class="books-container-tpl-3 cuadro_intro_hover"><a href="https://www.muslim-library.com/english/was-muhammad-p-b-u-h-merciful/?lang=English"><img src="https://www.muslim-library.com/wp-content/uploads/2013/12/0597.png" alt="Was Muhammad (P.B.U.H.) Merciful?" class="w-100" loading="lazy"></a><div class="books-container-tpl-body-3"><div class="caption">
+			<div class="blur"></div>
+			<div class="caption-text"><p><a href="https://www.muslim-library.com/english/was-muhammad-p-b-u-h-merciful/?lang=English">Was Muhammad (P.B.U.H.) Merciful?</a></p><p><i class="fas fa-user"></i> <a itemprop="name" href="https://www.muslim-library.com/books-author-en/?author_id=390&#038;lang=English">Muhammad Hussam Uddin Al-Khateeb</a></p><p><i class="fas fa-globe"></i> English</p></div></div></div></div></div></div></div></div>					</div>
+					<div class="col-md-4">
+						<div class="container_box_9">
+							<div class="main-block">
+								<div class="block-default">
+									<div class="block-heading"><h2>الأوسمة</h2></div>
+									<div class="block-body">
+										<div class="tags"><ul class="mb-0"><li><a href="https://www.muslim-library.com/tag/latest/">latest</a></li><li><a href="https://www.muslim-library.com/tag/%d8%aa%d8%ad%d9%85%d9%8a%d9%84-%d9%83%d8%aa%d8%a8-%d8%a7%d8%b3%d9%84%d8%a7%d9%85%d9%8a%d8%a9/">تحميل كتب اسلامية</a></li><li><a href="https://www.muslim-library.com/tag/%d8%aa%d8%ad%d9%85%d9%8a%d9%84-%d9%83%d8%aa%d8%a8-%d8%a5%d8%b3%d9%84%d8%a7%d9%85%d9%8a%d8%a9-%d8%a7%d9%84%d9%83%d8%aa%d8%b1%d9%88%d9%86%d9%8a%d8%a9-%d9%85%d8%ac%d8%a7%d9%86%d9%8a%d8%a9/">تحميل كتب إسلامية الكترونية مجانية</a></li><li><a href="https://www.muslim-library.com/tag/%d9%83%d8%aa%d8%a8-%d8%a7%d8%b3%d9%84%d8%a7%d9%85%d9%8a%d8%a9-pdf/">كتب اسلامية PDF</a></li><li><a href="https://www.muslim-library.com/tag/%d9%83%d8%aa%d8%a8-%d8%a7%d8%b3%d9%84%d8%a7%d9%85%d9%8a%d8%a9/">كتب اسلامية</a></li><li><a href="https://www.muslim-library.com/tag/%d8%aa%d8%ad%d9%85%d9%8a%d9%84-%d9%83%d8%aa%d8%a8-%d8%a7%d8%b3%d9%84%d8%a7%d9%85%d9%8a%d8%a9-%d9%85%d8%ac%d8%a7%d9%86%d8%a7/">تحميل كتب اسلامية مجانا</a></li><li><a href="https://www.muslim-library.com/tag/%d8%aa%d8%ad%d9%85%d9%8a%d9%84-%d9%83%d8%aa%d8%a8-%d8%a5%d8%b3%d9%84%d8%a7%d9%85%d9%8a%d8%a9-%d9%85%d9%86-%d9%86%d9%88%d8%b9-pdf/">تحميل كتب إسلامية من نوع pdf</a></li><li><a href="https://www.muslim-library.com/tag/%d9%83%d8%aa%d8%a8-%d8%a7%d8%b3%d9%84%d8%a7%d9%85%d9%8a%d8%a9-%d9%84%d9%84%d8%aa%d8%ad%d9%85%d9%8a%d9%84/">كتب اسلامية للتحميل</a></li><li><a href="https://www.muslim-library.com/tag/%d9%83%d8%aa%d8%a8-%d8%a7%d8%b3%d9%84%d8%a7%d9%85%d9%8a%d8%a9-%d8%a7%d9%84%d9%83%d8%aa%d8%b1%d9%88%d9%86%d9%8a%d8%a9/">كتب اسلامية الكترونية</a></li><li><a href="https://www.muslim-library.com/tag/featured/">featured</a></li><li><a href="https://www.muslim-library.com/tag/islamic-books-pdf/">islamic books pdf</a></li><li><a href="https://www.muslim-library.com/tag/islamic-books-library/">islamic books library</a></li><li><a href="https://www.muslim-library.com/tag/free-islamic-books/">free islamic books</a></li><li><a href="https://www.muslim-library.com/tag/download-islamic-books/">download Islamic books</a></li><li><a href="https://www.muslim-library.com/tag/islamic-books/">islamic books</a></li></ul></div>									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</main>
+
+<footer class="mauthuq-footer">
+	<div class="container">
+		<h3 class="footer_title">E-Da`wah Committee Sites</h3>
+		<div class="row g-3">
+			<div class="col-12 col-md-8">
+				<div class="row g-3">
+					<div class="col-12 col-md-4 footer-widget-1">
+						<aside id="text-footer_url_1" class="widget widget_text"><h3 class="widget-title">Da`wah Portals</h3><div class="textwidget"><ul><li><a target="_blank" href="https://edc.org.kw">E-Da`wah Committee (EDC)</a></li><li><a target="_blank" href="https://www.islam.com.kw/">Kuwait Da`wah Portal</a></li><li><a target="_blank" href="https://www.truthseekerway.com/">Truth Seeker Portal</a></li><li><a target="_blank" href="https://ecards.mawthuq.net/en/">Da`wah E-Cards</a></li></ul></div></aside>												<div class="clearfix"></div><ul class="bottom-social"><li class="list-inline-item"><a target="_blank" title="Facebook" href="https://www.facebook.com/MuslimLibrary" style="background-color:#3b5998; color: #fff;" rel="nofollow"><i class="fab fa-facebook"></i></a></li><li class="list-inline-item"><a target="_blank" title="Tumblr" href="https://muslim-library.tumblr.com/" style="background-color:#56BC8B; color: #fff;" rel="nofollow"><i class="fab fa-tumblr"></i></a></li><li class="list-inline-item"><a target="_blank" title="Twitter" href="https://twitter.com/MuslimLibrary" style="background-color:#1da1f2; color: #fff;" rel="nofollow"><i class="fab fa-twitter"></i></a></li></ul>					</div>
+					<div class="col-12 col-md-4 footer-widget-2">
+						<aside id="text-footer_url_2" class="widget widget_text"><h3 class="widget-title">Discover Islam Sites</h3><div class="textwidget"><ul><li><a target="_blank" href="https://www.islamforchristians.com/">Islam for Christians</a></li><li><a target="_blank" href="https://www.truth-seeker.info/">Truth Seeker</a></li><li><a target="_blank" href="https://www.islam-hinduism.com">Islam for Hindus</a></li><li><a target="_blank" href="https://www.the-faith.com/">The Faith</a></li><li><a target="_blank" href="https://www.lastmiracle.com/">Last Miracle</a></li><li><a target="_blank" href="https://www.chatonfaith.com/">Chat on Faith</a></li></ul></div></aside>					</div>
+					<div class="col-12 col-md-4 footer-widget-3">
+						<aside id="text-footer_url_3" class="widget widget_text"><h3 class="widget-title">New Muslims' Education Sites</h3><div class="textwidget"><ul><li><a target="_blank" href="https://sabeeli.academy">Sabeeli Academy</a></li><li><a target="_blank" href="https://www.newmuslim.net/">New Muslims</a></li><li><a target="_blank" href="https://www.prayerinislam.com/">Prayer in Islam</a></li><li><a target="_blank" href="https://www.learning-quran.com/">Learn the Qur'an</a></li></ul></div></aside>					</div>
+				</div>
+			</div>
+			<div class="col-12 col-sm-12 col-md-4">
+				<div class="row g-3">
+					<div class="col-12 col-md-6 footer-widget-4">
+						<aside id="text-footer_url_4" class="widget widget_text"><h3 class="widget-title">Publishing and Teaching the Quran</h3><div class="textwidget"><ul><li><a target="_blank" href="https://www.quran-uni.com">Al-Jami` for the Sciences of Qur’an</a></li><li><a target="_blank" href="https://sunnah.global">The Sunnah of the Prophet and its sciences</a></li><li><a target="_blank" href="https://www.qurantranslations.net/">MP3 Qur'an Translations</a></li></ul></div></aside>					</div>
+					<div class="col-12 col-md-6 footer-widget-5">
+						<aside id="text-footer_url_5" class="widget widget_text"><h3 class="widget-title">Developing Da`wah Skills Sites</h3><div class="textwidget"><ul><li><a target="_blank" href="https://www.dawahskills.com/">Da`wah Skills</a></li><li><a target="_blank" href="https://www.muslim-library.com/">Comprehensive Muslim e-Library</a></li></ul></div></aside>					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+    <div class="low-footer">
+	<div class="container">
+			<ul id="menu-footer" class="navbar-nav footer-menu "><li  id="menu-item-55840" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home nav-item nav-item-55840"><a href="https://www.muslim-library.com/" class="nav-link ">الرئيسية</a></li>
+<li  id="menu-item-55842" class="menu-item menu-item-type-post_type menu-item-object-page nav-item nav-item-55842"><a href="https://www.muslim-library.com/book-categories/" class="nav-link ">تصنيفات الكتب</a></li>
+<li  id="menu-item-55843" class="menu-item menu-item-type-post_type menu-item-object-page nav-item nav-item-55843"><a href="https://www.muslim-library.com/copyright-ar/" class="nav-link ">حقوق النشر</a></li>
+<li  id="menu-item-55844" class="menu-item menu-item-type-post_type menu-item-object-page nav-item nav-item-55844"><a href="https://www.muslim-library.com/about-us-ar/" class="nav-link ">من نحن</a></li>
+<li  id="menu-item-55841" class="menu-item menu-item-type-post_type menu-item-object-page nav-item nav-item-55841"><a href="https://www.muslim-library.com/contact-us-ar/" class="nav-link ">اتصل بنا</a></li>
+</ul>			<span class="footer-span">Copyright &copy; 2026 — <a href="https://www.muslim-library.com">Muslim Library | The Comprehensive Muslim e-Library</a>. All Rights Reserved</span>
+		</div>
+    </div>
+</footer>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Select Language</h4>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body"><div class="row"><div class="col-6 col-sm-3 col-md-2"><div class="container-flag"><a href="https://www.muslim-library.com/?lang=Afar"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/afar.png" alt="Afar"> Afar</a></div><div class="container-flag"><a href="https://www.muslim-library.com/?lang=Afrikaans"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/za.png" alt="Afrikaans"> Afrikaans</a></div><div class="container-flag"><a href="https://www.muslim-library.com/?lang=Akan"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/akan.png" alt="Akan"> Akan</a></div><div class="container-flag"><a href="https://www.muslim-library.com/?lang=Albanian"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/al.png" alt="Albanian"> Albanian</a></div><div class="container-flag"><a href="https://www.muslim-library.com/?lang=Amharic"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/amharic.png" alt="Amharic"> Amharic</a></div><div class="container-flag"><a href="https://www.muslim-library.com/?lang=Arabic"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/ar.png" alt="Arabic"> Arabic</a></div><div class="container-flag"><a href="https://www.muslim-library.com/?lang=Armenian"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/am.png" alt="Armenian"> Armenian</a></div><div class="container-flag"><a href="https://www.muslim-library.com/?lang=Assamese"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/assamese.png" alt="Assamese"> Assamese</a></div><div class="container-flag"><a href="https://www.muslim-library.com/?lang=Avari"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/awari.png" alt="Avari"> Avari</a></div><div class="container-flag"><a href="https://www.muslim-library.com/?lang=Azerbaijani"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/az.png" alt="Azerbaijani"> Azerbaijani</a></div><div class="container-flag"><a href="https://www.muslim-library.com/?lang=Basaa"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/cm.png" alt="Basaa"> Basaa</a></div><div class="container-flag"><a href="https://www.muslim-library.com/?lang=Bengali"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/bn.png" alt="Bengali"> Bengali</a></div><div class="container-flag"><a href="https://www.muslim-library.com/?lang=Bosnian"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/ba.png" alt="Bosnian"> Bosnian</a></div><div class="container-flag"><a href="https://www.muslim-library.com/?lang=Brahui"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/Brahui.png" alt="Brahui"> Brahui</a></div><div class="container-flag"><a href="https://www.muslim-library.com/?lang=Bulgarian"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/bg.png" alt="Bulgarian"> Bulgarian</a></div><div class="container-flag"><a href="https://www.muslim-library.com/?lang=Burmese"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/mm.png" alt="Burmese"> Burmese</a></div><div class="container-flag"><a href="https://www.muslim-library.com/?lang=Catalan"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/Catalan.png" alt="Catalan"> Catalan</a></div></div><div class="col-6 col-sm-3 col-md-2"><div class="container-flag"><a href="https://www.muslim-library.com/?lang=Chami"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/co.png" alt="Chami"> Chami</a></div><div class="container-flag"><a href="https://www.muslim-library.com/?lang=Chechen"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/cc.png" alt="Chechen"> Chechen</a></div><div class="container-flag"><a href="https://www.muslim-library.com/?lang=Chichewa"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/Chichewa.png" alt="Chichewa"> Chichewa</a></div><div class="container-flag"><a href="https://www.muslim-library.com/?lang=Chinese"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/cn.png" alt="Chinese"> Chinese</a></div><div class="container-flag"><a href="https://www.muslim-library.com/?lang=Circassian"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/circassian.png" alt="Circassian"> Circassian</a></div><div class="container-flag"><a href="https://www.muslim-library.com/?lang=Comorian"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/comorian.png" alt="Comorian"> Comorian</a></div><div class="container-flag"><a href="https://www.muslim-library.com/?lang=Czech"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/cs.png" alt="Czech"> Czech</a></div><div class="container-flag"><a href="https://www.muslim-library.com/?lang=Danish"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/dk.png" alt="Danish"> Danish</a></div><div class="container-flag"><a href="https://www.muslim-library.com/?lang=Deutsch"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/de.png" alt="Deutsch"> Deutsch</a></div><div class="container-flag"><a href="https://www.muslim-library.com/?lang=Dutch"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/nl.png" alt="Dutch"> Dutch</a></div><div class="container-flag container-flag-current"><a href="https://www.muslim-library.com/?lang=English"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/en.png" alt="English"> English</a></div><div class="container-flag"><a href="https://www.muslim-library.com/?lang=Estonian"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/ee.png" alt="Estonian"> Estonian</a></div><div class="container-flag"><a href="https://www.muslim-library.com/?lang=Falatia"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/za.png" alt="Falatia"> Falatia</a></div><div class="container-flag"><a href="https://www.muslim-library.com/?lang=Finnish"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/fi.png" alt="Finnish"> Finnish</a></div><div class="container-flag"><a href="https://www.muslim-library.com/?lang=French"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/fr.png" alt="French"> French</a></div><div class="container-flag"><a href="https://www.muslim-library.com/?lang=Fulani"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/fulani.png" alt="Fulani"> Fulani</a></div><div class="container-flag"><a href="https://www.muslim-library.com/?lang=Georgian"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/ge.png" alt="Georgian"> Georgian</a></div></div><div class="col-6 col-sm-3 col-md-2"><div class="container-flag"><a href="https://www.muslim-library.com/?lang=Greek"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/gr.png" alt="Greek"> Greek</a></div><div class="container-flag"><a href="https://www.muslim-library.com/?lang=Gujarati"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/gujrati.png" alt="Gujarati"> Gujarati</a></div><div class="container-flag"><a href="https://www.muslim-library.com/?lang=Hausa"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/hausa.png" alt="Hausa"> Hausa</a></div><div class="container-flag"><a href="https://www.muslim-library.com/?lang=Hebrew"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/il.png" alt="Hebrew"> Hebrew</a></div><div class="container-flag"><a href="https://www.muslim-library.com/?lang=Hindi"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/hi.png" alt="Hindi"> Hindi</a></div><div class="container-flag"><a href="https://www.muslim-library.com/?lang=Hungarian"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/hu.png" alt="Hungarian"> Hungarian</a></div><div class="container-flag"><a href="https://www.muslim-library.com/?lang=Icelandic"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/ax.png" alt="Icelandic"> Icelandic</a></div><div class="container-flag"><a href="https://www.muslim-library.com/?lang=Indonesian"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/id.png" alt="Indonesian"> Indonesian</a></div><div class="container-flag"><a href="https://www.muslim-library.com/?lang=Ingush"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/ingush.png" alt="Ingush"> Ingush</a></div><div class="container-flag"><a href="https://www.muslim-library.com/?lang=Italian"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/it.png" alt="Italian"> Italian</a></div><div class="container-flag"><a href="https://www.muslim-library.com/?lang=Japanese"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/jp.png" alt="Japanese"> Japanese</a></div><div class="container-flag"><a href="https://www.muslim-library.com/?lang=Jawla"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/jawla.png" alt="Jawla"> Jawla</a></div><div class="container-flag"><a href="https://www.muslim-library.com/?lang=Kannada"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/kannada.png" alt="Kannada"> Kannada</a></div><div class="container-flag"><a href="https://www.muslim-library.com/?lang=Kashmiri"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/Kashmiri.png" alt="Kashmiri"> Kashmiri</a></div><div class="container-flag"><a href="https://www.muslim-library.com/?lang=Katlaniyah"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/katlaniyah.png" alt="Katlaniyah"> Katlaniyah</a></div><div class="container-flag"><a href="https://www.muslim-library.com/?lang=Kazakh"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/kz.png" alt="Kazakh"> Kazakh</a></div><div class="container-flag"><a href="https://www.muslim-library.com/?lang=Khmer"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/kh.png" alt="Khmer"> Khmer</a></div></div><div class="col-6 col-sm-3 col-md-2"><div class="container-flag"><a href="https://www.muslim-library.com/?lang=Kinyarwanda"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/kinyarwanda.png" alt="Kinyarwanda"> Kinyarwanda</a></div><div class="container-flag"><a href="https://www.muslim-library.com/?lang=Korean"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/kr.png" alt="Korean"> Korean</a></div><div class="container-flag"><a href="https://www.muslim-library.com/?lang=Kurdish"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/kd.png" alt="Kurdish"> Kurdish</a></div><div class="container-flag"><a href="https://www.muslim-library.com/?lang=Kyrgyz"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/kg.png" alt="Kyrgyz"> Kyrgyz</a></div><div class="container-flag"><a href="https://www.muslim-library.com/?lang=Latvian"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/lv.png" alt="Latvian"> Latvian</a></div><div class="container-flag"><a href="https://www.muslim-library.com/?lang=Luganda"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/ug.png" alt="Luganda"> Luganda</a></div><div class="container-flag"><a href="https://www.muslim-library.com/?lang=Macedonian"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/mk.png" alt="Macedonian"> Macedonian</a></div><div class="container-flag"><a href="https://www.muslim-library.com/?lang=Malagasy"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/mg.png" alt="Malagasy"> Malagasy</a></div><div class="container-flag"><a href="https://www.muslim-library.com/?lang=Malay"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/my.png" alt="Malay"> Malay</a></div><div class="container-flag"><a href="https://www.muslim-library.com/?lang=Malayalam"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/hi.png" alt="Malayalam"> Malayalam</a></div><div class="container-flag"><a href="https://www.muslim-library.com/?lang=Maldivian"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/mv.png" alt="Maldivian"> Maldivian</a></div><div class="container-flag"><a href="https://www.muslim-library.com/?lang=Maranao"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/marano.png" alt="Maranao"> Maranao</a></div><div class="container-flag"><a href="https://www.muslim-library.com/?lang=Mongolian"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/mongolia.png" alt="Mongolian"> Mongolian</a></div><div class="container-flag"><a href="https://www.muslim-library.com/?lang=Nko"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/nko.png" alt="N'ko"> N'ko</a></div><div class="container-flag"><a href="https://www.muslim-library.com/?lang=Nepali"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/ne.png" alt="Nepali"> Nepali</a></div><div class="container-flag"><a href="https://www.muslim-library.com/?lang=Norwegian"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/bv.png" alt="Norwegian"> Norwegian</a></div><div class="container-flag"><a href="https://www.muslim-library.com/?lang=Oromo"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/Oromo.png" alt="Oromo"> Oromo</a></div></div><div class="col-6 col-sm-3 col-md-2"><div class="container-flag"><a href="https://www.muslim-library.com/?lang=Pashto"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/poshto.png" alt="Pashto"> Pashto</a></div><div class="container-flag"><a href="https://www.muslim-library.com/?lang=Persian"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/ir.png" alt="Persian"> Persian</a></div><div class="container-flag"><a href="https://www.muslim-library.com/?lang=Polish"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/pl.png" alt="Polish"> Polish</a></div><div class="container-flag"><a href="https://www.muslim-library.com/?lang=Portuguese"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/pt.png" alt="Portuguese"> Portuguese</a></div><div class="container-flag"><a href="https://www.muslim-library.com/?lang=Romani-gypsy"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/romani.png" alt="Romani - gypsy"> Romani - gypsy</a></div><div class="container-flag"><a href="https://www.muslim-library.com/?lang=Romanian"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/ro.png" alt="Romanian"> Romanian</a></div><div class="container-flag"><a href="https://www.muslim-library.com/?lang=Russian"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/ru.png" alt="Russian"> Russian</a></div><div class="container-flag"><a href="https://www.muslim-library.com/?lang=Serbian"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/serbian.png" alt="Serbian"> Serbian</a></div><div class="container-flag"><a href="https://www.muslim-library.com/?lang=Sindhi"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/sindhi.png" alt="Sindhi"> Sindhi</a></div><div class="container-flag"><a href="https://www.muslim-library.com/?lang=Sinhalese"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/si.png" alt="Sinhalese"> Sinhalese</a></div><div class="container-flag"><a href="https://www.muslim-library.com/?lang=Slovak"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/sk.png" alt="Slovak"> Slovak</a></div><div class="container-flag"><a href="https://www.muslim-library.com/?lang=Slovenian"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/slovenian.png" alt="Slovenian"> Slovenian</a></div><div class="container-flag"><a href="https://www.muslim-library.com/?lang=Somali"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/so.png" alt="Somali"> Somali</a></div><div class="container-flag"><a href="https://www.muslim-library.com/?lang=Spanish"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/es.png" alt="Spanish"> Spanish</a></div><div class="container-flag"><a href="https://www.muslim-library.com/?lang=Swahili"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/swahili.png" alt="Swahili"> Swahili</a></div><div class="container-flag"><a href="https://www.muslim-library.com/?lang=Swedish"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/se.png" alt="Swedish"> Swedish</a></div><div class="container-flag"><a href="https://www.muslim-library.com/?lang=Tagalog"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/ph.png" alt="Tagalog"> Tagalog</a></div></div><div class="col-6 col-sm-3 col-md-2"><div class="container-flag"><a href="https://www.muslim-library.com/?lang=Tajik"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/tj.png" alt="Tajik"> Tajik</a></div><div class="container-flag"><a href="https://www.muslim-library.com/?lang=Tamazight"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/tamazight.png" alt="Tamazight"> Tamazight</a></div><div class="container-flag"><a href="https://www.muslim-library.com/?lang=Tamil"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/hi.png" alt="Tamil"> Tamil</a></div><div class="container-flag"><a href="https://www.muslim-library.com/?lang=Tashamiya"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/tashmanai.png" alt="Tashamiya"> Tashamiya</a></div><div class="container-flag"><a href="https://www.muslim-library.com/?lang=Tatar"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/tt.png" alt="Tatar"> Tatar</a></div><div class="container-flag"><a href="https://www.muslim-library.com/?lang=Telugu"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/hi.png" alt="Telugu"> Telugu</a></div><div class="container-flag"><a href="https://www.muslim-library.com/?lang=Thai"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/th.png" alt="Thai"> Thai</a></div><div class="container-flag"><a href="https://www.muslim-library.com/?lang=Tigrinya"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/tigrinya.png" alt="Tigrinya"> Tigrinya</a></div><div class="container-flag"><a href="https://www.muslim-library.com/?lang=Turkish"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/tr.png" alt="Turkish"> Turkish</a></div><div class="container-flag"><a href="https://www.muslim-library.com/?lang=Turkmen"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/tk.png" alt="Turkmen"> Turkmen</a></div><div class="container-flag"><a href="https://www.muslim-library.com/?lang=Ukrainian"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/ua.png" alt="Ukrainian"> Ukrainian</a></div><div class="container-flag"><a href="https://www.muslim-library.com/?lang=Urdu"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/pk.png" alt="Urdu"> Urdu</a></div><div class="container-flag"><a href="https://www.muslim-library.com/?lang=Uyghur"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/uyghur.png" alt="Uyghur"> Uyghur</a></div><div class="container-flag"><a href="https://www.muslim-library.com/?lang=Uzbek"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/uz.png" alt="Uzbek"> Uzbek</a></div><div class="container-flag"><a href="https://www.muslim-library.com/?lang=Vietnamese"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/vn.png" alt="Vietnamese"> Vietnamese</a></div><div class="container-flag"><a href="https://www.muslim-library.com/?lang=Yoruba"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/yo.png" alt="Yoruba"> Yoruba</a></div><div class="container-flag"><a href="https://www.muslim-library.com/?lang=Zulu"><img src="https://www.muslim-library.com/wp-content/themes/mawthuq/images/flags/zulu.png" alt="Zulu"> Zulu</a></div></div></div></div>
+        <div class="modal-footer"><button type="button" class="btn btn-default" data-bs-dismiss="modal"><i class="fas fa-remove"></i></button></div>
+      </div>
+
+    </div>
+  </div><script type="speculationrules">
+{"prefetch":[{"source":"document","where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":["/wp-*.php","/wp-admin/*","/wp-content/uploads/*","/wp-content/*","/wp-content/plugins/*","/wp-content/themes/mawthuq/*","/*\\?(.+)"]}},{"not":{"selector_matches":"a[rel~=\"nofollow\"]"}},{"not":{"selector_matches":".no-prefetch, .no-prefetch a"}}]},"eagerness":"conservative"}]}
+</script>
+<script type="a3e7aa34343bd347463200a9-text/javascript">
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '1668755149815290',
+      xfbml      : true,
+      version    : 'v2.10'
+    });
+    FB.AppEvents.logPageView();
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+</script>	<script type="a3e7aa34343bd347463200a9-text/javascript">
+		function GetArabicNumber(number) {
+			var charIndex = 0;
+			var NumericArabic = "";
+
+			while (charIndex < number.length) {
+				switch (number[(charIndex)]) {
+					case '.':
+						NumericArabic += ".";
+						break;
+					case '0':
+						NumericArabic += "٠";
+						break;
+					case '1':
+						NumericArabic += "١";
+						break;
+					case '2':
+						NumericArabic += "٢";
+						break;
+					case '3':
+						NumericArabic += "٣";
+						break;
+					case '4':
+						NumericArabic += "٤";
+						break;
+					case '5':
+						NumericArabic += "٥";
+						break;
+					case '6':
+						NumericArabic += "٦";
+						break;
+					case '7':
+						NumericArabic += "٧";
+						break;
+					case '8':
+						NumericArabic += "٨";
+						break;
+					case '9':
+						NumericArabic += "٩";
+						break;
+					default:
+						NumericArabic += number[(charIndex)];
+						break;
+				}
+
+				charIndex++;
+			}
+
+			return NumericArabic;
+		}
+
+		jQuery(document).ready(function($) {
+			jQuery("#quranic-researcher").click(function() {
+				var text = $('input[name=quranic-researcher-text]').val();
+				var page = $('input[name=quranic-researcher-page]').val();
+
+				request = {
+					text: text,
+					resultPage: page
+				};
+
+				var json_url = 'https://www.muslim-library.com/quranic-researcher/';
+
+				$.ajax({
+					type: "GET",
+					url: json_url,
+					dataType: "json",
+					data: request,
+					beforeSend: function() {
+						if (text != '') {
+							jQuery('#quranic-researcher-area').html('<div class="mt-3 spinner-border" role="status"><span class="visually-hidden">تحميل</span></div>');
+							jQuery('#result-text-number').css('display', 'none');
+							jQuery('#quranic-researcher-area').css('height', '50px');
+						}
+					},
+					success: function(data) {
+						if (data.status == 'success') {
+							var result = data.result;
+							var total_results = data.total_results;
+							var current_page = data.current_page;
+							var total_pages = data.total_pages;
+							var query = data.query;
+							var html;
+
+							$('#quranic-researcher-pagination').html('');
+
+							html = '';
+
+							if (result == null) {
+								var resultCount = 0;
+								jQuery('#quranic-researcher-area').css('height', '1px');
+							} else {
+								var resultCount = result.length;
+							}
+
+							if (total_results > 0) {
+								jQuery('#quranic-researcher-area').attr('class', 'overflow-auto');
+								jQuery('#result-text-number').css('display', 'block');
+								jQuery('#result-count').html(total_results);
+								jQuery('#result-page').html(current_page);
+								jQuery('#quranic-researcher-area').css('height', '300px');
+
+								if (total_pages == 1) {
+									jQuery('.currenPage').hide();
+								} else {
+									jQuery('.currenPage').show();
+								}
+							}
+
+							$.each(result, function(index, value) {
+								var highlighted = value.highlighted;
+								var text = value.text;
+
+								if (highlighted != "") {
+									text = highlighted;
+								}
+
+								//html += '<div class="mb-2 card"><div class="card-body"><a target="_blank" href="' + value.a_url + '">' + value.t + '</a> [<a target="_blank" href="' + value.s_url + '">' + value.s + '</a> <a target="_blank" href="' + value.a_url + '">' + value.a + '</a>]</div></div>';
+								html += '<div class="mb-2 card"><div class="card-body"><a target="_blank" href="' + value.ayah_url + '"><span class="quran-font ayah-text">' + text + '</span></a> <a target="_blank" href="' + value.surah_url + '"><span class="quran-font surah-name">' + value.surah_name + '</span></a> <a target="_blank" href="' + value.ayah_url + '"><span class="quran-font ayah-number">‏‏‎﴿' + GetArabicNumber(value.ayah_id_ar) + '﴾‏</span></a></div></div>';
+
+								if (index > 9) {
+									//return false;
+								}
+							});
+
+							jQuery('#quranic-researcher-area').html(html);
+
+
+							if (total_pages > 1) {
+								var pagination;
+								var p;
+
+								pagination = '<div class="mt-3 mb-3 bg-white p-3">';
+								pagination += '<input type="hidden" name="query" value="' + query + '">';
+								pagination += '<div class="row g-3">';
+								for (p = 1; p <= total_pages; ++p) {
+									pagination += '<div class="col-1 text-center">';
+									pagination += '<p class="go-page">' + p + '</p>';
+									pagination += '</div>';
+								}
+								pagination += '</div>';
+								pagination += '</div>';
+
+								jQuery('#quranic-researcher-pagination').html(pagination);
+							}
+						} else {
+							jQuery('#rquranic-researcher-area').html('<div class="mt-2 alert alert-warning">' + data.msg + '</div>');
+						}
+					}
+				});
+			});
+
+			jQuery(document).on('click', '.go-page', function() {
+				var text = jQuery('input[name=query]').val();
+				var page = jQuery(this).text();
+				jQuery(".go-page").removeClass('go-page-active');
+				jQuery(this).addClass('go-page-active');
+
+				request = {
+					text: text,
+					resultPage: page
+				};
+
+				var json_url = 'https://www.muslim-library.com/quranic-researcher/';
+
+				$.ajax({
+					type: "GET",
+					url: json_url,
+					dataType: "json",
+					data: request,
+					beforeSend: function() {
+						if (text != '') {
+							jQuery('#quranic-researcher-area').html('<div class="mt-3 spinner-border" role="status"><span class="visually-hidden">Loading</span></div>');
+							jQuery('#result-text-number').css('display', 'none');
+							jQuery('#quranic-researcher-area').css('height', '50px');
+						}
+					},
+					success: function(data) {
+						if (data.status == 'success') {
+							var result = data.result;
+							var total_results = data.total_results;
+							var current_page = data.current_page;
+							var total_pages = data.total_pages;
+							var query = data.query;
+
+							var html;
+
+							html = '';
+
+							if (result == null) {
+								jQuery('#quranic-researcher-area').html('<div class="mt-2 alert alert-warning">' + data.msg + '</div>');
+								jQuery('#quranic-researcher-area').css('height', '1px');
+								jQuery('#quranic-researcher-pagination').html('');
+							}
+
+							if (total_results > 0) {
+								jQuery('#quranic-researcher-area').attr('class', 'overflow-auto');
+								jQuery('#result-text-number').css('display', 'block');
+								jQuery('#result-count').html(total_results);
+								jQuery('#result-page').html(current_page);
+								if (total_pages == 1) {
+									jQuery('.currenPage').hide();
+								} else {
+									jQuery('.currenPage').show();
+								}
+								jQuery('#quranic-researcher-area').css('height', '600px');
+							}
+
+							console.log(current_page);
+
+							$.each(result, function(index, value) {
+								var highlighted = value.highlighted;
+								var text = value.text;
+
+								if (highlighted != "") {
+									text = highlighted;
+								}
+
+								html += '<div class="mb-2 card"><div class="card-body"><a target="_blank" href="' + value.ayah_url + '"><span class="quran-font ayah-text">' + text + '</span></a> <a target="_blank" href="' + value.surah_url + '"><span class="quran-font surah-name">' + value.surah_name + '</span></a> <a target="_blank" href="' + value.ayah_url + '"><span class="quran-font ayah-number">‏‏‎﴿' + GetArabicNumber(value.ayah_id_ar) + '﴾‏</span></a></div></div>';
+								if (index > 9) {
+									//return false;
+								}
+							});
+
+							jQuery('#quranic-researcher-area').html(html);
+						} else {
+							jQuery('#quranic-researcher-area').attr('class', '');
+							jQuery('#quranic-researcher-area').html('<div class="mt-2 alert alert-warning">' + data.msg + '</div>');
+							jQuery('#quranic-researcher-pagination').html('');
+						}
+					}
+				});
+			});
+
+			$("#quranic-researcher-input").keydown(e => {
+				if (e.which === 13) {
+					$("#quranic-researcher").triggerHandler("click");
+					e.preventDefault();
+				}
+			});
+		});
+	</script>
+		<script type="a3e7aa34343bd347463200a9-text/javascript">
+		jQuery(document).ready(function($) {
+			$('#doSearch').attr("disabled", true);
+			$("#keyword").keyup(function() {
+				var btnSubmit = $("#doSearch");
+				if ($(this).val().trim() != "") {
+					if (this.value.length > 2) {
+						btnSubmit.removeAttr("disabled");
+					} else {
+						btnSubmit.attr("disabled", "disabled");
+					}
+				} else {
+					btnSubmit.attr("disabled", "disabled");
+				}
+			});
+		});
+
+		jQuery(document).ready(function($) {
+			$('#type_authors, #type_publishers, #type_checkers').click(function() {
+				$('#matching').attr("disabled", true);
+				$('#advanced').attr("disabled", true);
+			});
+			$('#type_books, #type_radios').click(function() {
+				$('#matching').removeAttr("disabled");
+				$('#advanced').removeAttr("disabled");
+			});
+			$('body').on('click', '#load-more', function() {
+				var keyword = $('#keyword').val();
+				var offset = Number($('#offset').val());
+				var allcount = Number($('.all').val());
+				var row_per_page = Number($('.row_per_page').val());
+				var load_more_data = Number($("input[name='load_more_data']").val());
+				var label = $('#load-more');
+
+				offset = offset + row_per_page;
+
+				$.ajaxSetup({
+					async: true,
+					timeout: 0,
+					crossDomain: true
+				});
+
+				if (offset <= allcount) {
+					$("#offset").val(offset);
+					$.ajax({
+						type: 'POST',
+						dataType: 'json',
+						url: 'https://www.muslim-library.com/wp-admin/admin-ajax.php',
+						data: {
+							'action': 'qs_search_fetch',
+							'keyword': keyword,
+							'allcount': allcount,
+							'offset': offset,
+							'row_per_page': row_per_page,
+							'load_more_data': load_more_data,
+							'type': $("input:radio[name=type]:checked").val(),
+							'advanced': $("input:radio[name=advanced]:checked").val()
+						},
+						beforeSend: function() {
+							label.attr("disabled", true);
+							label.append(' <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>');
+						},
+						success: function(response) {
+
+							if (keyword.trim() == "") {
+								$('#load-more-content').append('Keyword is empty');
+							} else {
+								if (response.status == 'success') {
+									label.removeAttr("disabled");
+									label.text(label.text().replace(' <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>', ''));
+									$('#load-more-content').append(response.msg);
+								} else {
+									$('#load-more-content').append('Not Found');
+								}
+							}
+
+							var rowno = offset + row_per_page;
+
+							if (rowno > allcount) {
+								label.remove();
+								$("#offset").remove();
+								$(".all").remove();
+								$(".row_per_page").remove();
+							}
+
+						}
+					});
+				} else {
+					label.attr("disabled", true);
+					label.append('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>');
+
+					setTimeout(function() {
+						$("#offset").val(0);
+						label.removeAttr("disabled");
+						var label = $('#load-more');
+						label.text(label.text().replace(' <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>', ''));
+					}, 2000);
+				}
+			});
+		});
+
+		function ajax_submit() {
+			jQuery(document).ready(function($) {
+				var keyword = $('#keyword').val();
+				var offset = Number($('#offset').val());
+				var allcount = Number($('.all').val());
+				var row_per_page = Number($('.row_per_page').val());
+
+				offset = offset + row_per_page;
+
+				$.ajaxSetup({
+					async: true,
+					timeout: 0,
+					crossDomain: true
+				});
+
+				$("#offset").val(offset);
+				$.ajax({
+					type: 'POST',
+					dataType: 'json',
+					url: 'https://www.muslim-library.com/wp-admin/admin-ajax.php',
+					data: {
+						'action': 'qs_search_fetch',
+						'keyword': keyword,
+						'allcount': allcount,
+						'offset': offset,
+						'row_per_page': row_per_page,
+						'type': $("input:radio[name=type]:checked").val(),
+						'advanced': $("input:radio[name=advanced]:checked").val()
+					},
+					beforeSend: function() {
+						$('#load-more').remove();
+						$("#view_search_result").html('<div class="spinner-border mt-2" role="status"><span class="visually-hidden">Loading...</span></div>');
+					},
+					success: function(response) {
+						if (keyword.trim() == "") {
+							$("#view_search_result").html('Keyword is empty');
+						} else {
+							if (response.status == 'success') {
+								$("#view_search_result").html(response.msg);
+							} else {
+								$("#view_search_result").val('Not Found');
+							}
+						}
+					}
+				});
+			});
+		}
+	</script>
+	<script type="a3e7aa34343bd347463200a9-text/javascript">
+		(function($) {
+			$('.btn-like-post .like, .btn-like-post .liked').on('click', function() {
+				el = $(this);
+
+				actionType = el.hasClass('liked') ? 'remove_like' : 'like';
+
+				var data = {
+					action: 'like_post',
+					action_type: actionType,
+					like_id: el.attr('data-lid'),
+					post_id: el.attr('data-pid'),
+					user_id: el.attr('data-uid'),
+					label: el.text(),
+					nonce: '70fcc12d28'
+				};
+				console.log(data);
+
+				$.ajax({
+						url: 'https://www.muslim-library.com/wp-admin/admin-ajax.php',
+						type: 'POST',
+						data: data,
+						dataType: 'json',
+						beforeSend: function() {
+							el.addClass('liking');
+						}
+					})
+					.fail(function(xhr, status, error) {
+						alert('هناك خطأ ما');
+						el.removeClass('liking');
+					})
+					.done(function(r, status, xhr) {
+
+						if (r.error != '') {
+							alert(r.error);
+							return false;
+						}
+
+						if (actionType == 'like') {
+							el.stop().attr('data-lid', r.id).removeClass('like').addClass('liked');
+							el.find('i').removeClass('fa-heart');
+							el.find('i').addClass('fa-heart');
+							el.find('i').addClass('color-like');
+
+						} else if (actionType == 'remove_like') {
+							el.stop().removeAttr('data-lid').removeClass('liked').addClass('like');
+							el.find('i').removeClass('fa-heart');
+							el.find('i').removeClass('color-like');
+							el.find('i').addClass('fa-heart');
+
+						}
+
+						$('.like-count').each(function() {
+							var count = $(this);
+							if (count.attr('data-pid') == el.attr('data-pid'))
+								$(count).text(r.likes);
+						});
+
+						el.removeClass('liking').find('.label').text(r.label);
+					})
+					.always(function(xhr, status) {
+						//console.log('always');
+						//console.log(xhr);
+						//console.log(status);
+					});
+
+				return false;
+			});
+		})(jQuery);
+	</script>
+<script type="a3e7aa34343bd347463200a9-text/javascript" src="https://www.muslim-library.com/wp-content/themes/mawthuq/js/bootstrap.bundle.min.js?ver=5.3.3" id="mawthuq-bootstrap-bundle-js"></script>
+<script type="a3e7aa34343bd347463200a9-text/javascript" src="https://www.muslim-library.com/wp-content/themes/mawthuq/js/custom-script.js?ver=3.26" id="mawthuq-custom-script-js"></script>
+<script type="a3e7aa34343bd347463200a9-text/javascript" id="jetpack-stats-js-before">
+/* <![CDATA[ */
+_stq = window._stq || [];
+_stq.push([ "view", {"v":"ext","blog":"58260965","post":"0","tz":"3","srv":"www.muslim-library.com","arch_err":"/dl/books/English_THE_THREE_FUNDAMENTAL_PRINCIPLES.pdf","j":"1:15.4"} ]);
+_stq.push([ "clickTrackerInit", "58260965", "0" ]);
+//# sourceURL=jetpack-stats-js-before
+/* ]]> */
+</script>
+<script type="a3e7aa34343bd347463200a9-text/javascript" src="https://stats.wp.com/e-202607.js" id="jetpack-stats-js" defer="defer" data-wp-strategy="defer"></script>
+<script id="wp-emoji-settings" type="application/json">
+{"baseUrl":"https://s.w.org/images/core/emoji/17.0.2/72x72/","ext":".png","svgUrl":"https://s.w.org/images/core/emoji/17.0.2/svg/","svgExt":".svg","source":{"concatemoji":"https://www.muslim-library.com/wp-includes/js/wp-emoji-release.min.js?ver=6.9.1"}}
+</script>
+<script type="a3e7aa34343bd347463200a9-module">
+/* <![CDATA[ */
+/*! This file is auto-generated */
+const a=JSON.parse(document.getElementById("wp-emoji-settings").textContent),o=(window._wpemojiSettings=a,"wpEmojiSettingsSupports"),s=["flag","emoji"];function i(e){try{var t={supportTests:e,timestamp:(new Date).valueOf()};sessionStorage.setItem(o,JSON.stringify(t))}catch(e){}}function c(e,t,n){e.clearRect(0,0,e.canvas.width,e.canvas.height),e.fillText(t,0,0);t=new Uint32Array(e.getImageData(0,0,e.canvas.width,e.canvas.height).data);e.clearRect(0,0,e.canvas.width,e.canvas.height),e.fillText(n,0,0);const a=new Uint32Array(e.getImageData(0,0,e.canvas.width,e.canvas.height).data);return t.every((e,t)=>e===a[t])}function p(e,t){e.clearRect(0,0,e.canvas.width,e.canvas.height),e.fillText(t,0,0);var n=e.getImageData(16,16,1,1);for(let e=0;e<n.data.length;e++)if(0!==n.data[e])return!1;return!0}function u(e,t,n,a){switch(t){case"flag":return n(e,"\ud83c\udff3\ufe0f\u200d\u26a7\ufe0f","\ud83c\udff3\ufe0f\u200b\u26a7\ufe0f")?!1:!n(e,"\ud83c\udde8\ud83c\uddf6","\ud83c\udde8\u200b\ud83c\uddf6")&&!n(e,"\ud83c\udff4\udb40\udc67\udb40\udc62\udb40\udc65\udb40\udc6e\udb40\udc67\udb40\udc7f","\ud83c\udff4\u200b\udb40\udc67\u200b\udb40\udc62\u200b\udb40\udc65\u200b\udb40\udc6e\u200b\udb40\udc67\u200b\udb40\udc7f");case"emoji":return!a(e,"\ud83e\u1fac8")}return!1}function f(e,t,n,a){let r;const o=(r="undefined"!=typeof WorkerGlobalScope&&self instanceof WorkerGlobalScope?new OffscreenCanvas(300,150):document.createElement("canvas")).getContext("2d",{willReadFrequently:!0}),s=(o.textBaseline="top",o.font="600 32px Arial",{});return e.forEach(e=>{s[e]=t(o,e,n,a)}),s}function r(e){var t=document.createElement("script");t.src=e,t.defer=!0,document.head.appendChild(t)}a.supports={everything:!0,everythingExceptFlag:!0},new Promise(t=>{let n=function(){try{var e=JSON.parse(sessionStorage.getItem(o));if("object"==typeof e&&"number"==typeof e.timestamp&&(new Date).valueOf()<e.timestamp+604800&&"object"==typeof e.supportTests)return e.supportTests}catch(e){}return null}();if(!n){if("undefined"!=typeof Worker&&"undefined"!=typeof OffscreenCanvas&&"undefined"!=typeof URL&&URL.createObjectURL&&"undefined"!=typeof Blob)try{var e="postMessage("+f.toString()+"("+[JSON.stringify(s),u.toString(),c.toString(),p.toString()].join(",")+"));",a=new Blob([e],{type:"text/javascript"});const r=new Worker(URL.createObjectURL(a),{name:"wpTestEmojiSupports"});return void(r.onmessage=e=>{i(n=e.data),r.terminate(),t(n)})}catch(e){}i(n=f(s,u,c,p))}t(n)}).then(e=>{for(const n in e)a.supports[n]=e[n],a.supports.everything=a.supports.everything&&a.supports[n],"flag"!==n&&(a.supports.everythingExceptFlag=a.supports.everythingExceptFlag&&a.supports[n]);var t;a.supports.everythingExceptFlag=a.supports.everythingExceptFlag&&!a.supports.flag,a.supports.everything||((t=a.source||{}).concatemoji?r(t.concatemoji):t.wpemoji&&t.twemoji&&(r(t.twemoji),r(t.wpemoji)))});
+//# sourceURL=https://www.muslim-library.com/wp-includes/js/wp-emoji-loader.min.js
+/* ]]> */
+</script>
+<script src="/cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js" data-cf-settings="a3e7aa34343bd347463200a9-|49" defer></script></body></html>

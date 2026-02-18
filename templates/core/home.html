@@ -1,0 +1,131 @@
+{% extends 'base.html' %}
+
+{% block title %}Home - QALAAM{% endblock %}
+
+{% block hero %}
+<div class="bg-dark text-white py-5"
+    style="background: linear-gradient(rgba(0,107,93,0.8), rgba(0,107,93,0.8)), url('https://images.unsplash.com/photo-1542810634-71277d95dcbb?auto=format&fit=crop&q=80&w=2070') center/cover;">
+    <div class="container py-5 text-center">
+        <h1 class="display-4 fw-bold mb-4">Prophetic Knowledge for the Modern World</h1>
+        <p class="lead mb-4">Explore thousands of verified Fatawa, Articles, and Multimedia content.</p>
+        <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+            <a href="{% url 'fatwa:fatwa_list' %}" class="btn btn-warning btn-lg px-4 gap-3 rounded-pill">Explore
+                Fatawa</a>
+            <a href="{% url 'fatwa:ask_fatwa' %}" class="btn btn-outline-light btn-lg px-4 rounded-pill">Ask a
+                Question</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="row g-4 mb-5">
+    <div class="col-md-8">
+        <h3 class="section-title">Latest Articles</h3>
+        <div class="row g-4">
+            {% for article in latest_articles %}
+            <div class="col-md-6">
+                <div class="card h-100 border-0 shadow-sm">
+                    {% if article.main_image %}
+                    <img src="{{ article.main_image.url }}" class="card-img-top" alt="{{ article.title }}">
+                    {% endif %}
+                    <div class="card-body">
+                        <small class="text-success fw-bold">{{ article.category.name }}</small>
+                        <h5 class="card-title mt-2">{{ article.title }}</h5>
+                        <p class="card-text text-muted small">{{ article.content|striptags|truncatewords:20 }}</p>
+                        <a href="{% url 'articles:article_detail' article.pk %}"
+                            class="btn btn-sm btn-link p-0 text-success fw-bold">Read More &rarr;</a>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <p>No articles found.</p>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card border-0 shadow-sm bg-primary text-white mb-4">
+            <div class="card-body p-4">
+                <h4 class="mb-3">Featured Fatwa</h4>
+                {% if featured_fatawa %}
+                {% with featured_fatawa|first as fatwa %}
+                <h5>{{ fatwa.title }}</h5>
+                <p class="small opacity-75">{{ fatwa.question|truncatewords:25 }}</p>
+                <a href="{% url 'fatwa:fatwa_detail' fatwa.pk %}" class="btn btn-light btn-sm rounded-pill mt-2">View
+                    Answer</a>
+                {% endwith %}
+                {% endif %}
+            </div>
+        </div>
+
+        <h4 class="mb-3">Recent Fatawa</h4>
+        <div class="list-group list-group-flush shadow-sm rounded">
+            {% for fatwa in featured_fatawa %}
+            <a href="{% url 'fatwa:fatwa_detail' fatwa.pk %}" class="list-group-item list-group-item-action py-3">
+                <div class="d-flex w-100 justify-content-between">
+                    <h6 class="mb-1 text-truncate">{{ fatwa.title }}</h6>
+                </div>
+                <small class="text-muted">{{ fatwa.created_at|date:"F d, Y" }}</small>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<!-- Kids Corner Highlight -->
+<div class="row mb-5">
+    <div class="col-12">
+        <a href="{% url 'content:kids_list' %}" class="text-decoration-none">
+            <div class="card border-0 rounded-4 overflow-hidden shadow-sm"
+                style="background: linear-gradient(135deg, #ff9800 0%, #f44336 100%); transition: transform 0.3s ease;">
+                <div class="card-body p-5 text-center text-white">
+                    <h2 class="display-5 fw-bold mb-3">Explore the Kids Corner! 🎈</h2>
+                    <p class="lead mb-4">Discover fun stories, songs, and books just for children.</p>
+                    <span class="btn btn-warning btn-lg rounded-pill px-5 fw-bold shadow">Visit Now 🚀</span>
+                </div>
+            </div>
+        </a>
+    </div>
+</div>
+
+<div class="row g-4">
+    <div class="col-md-6">
+        <h3 class="section-title">Latest Audio</h3>
+        <div class="row g-3">
+            {% for audio in latest_audio %}
+            <div class="col-12">
+                <div class="d-flex align-items-center p-3 bg-white shadow-sm rounded">
+                    <div class="flex-shrink-0 bg-success text-white rounded-circle p-2"
+                        style="width: 45px; height: 45px; display: flex; align-items: center; justify-content: center;">
+                        <i class="bi bi-play-fill"></i>+
+                    </div>
+                    <div class="flex-grow-1 ms-3">
+                        <h6 class="mb-0">{{ audio.title }}</h6>
+                        <small class="text-muted">{{ audio.speaker }}</small>
+                    </div>
+                    <a href="#" class="btn btn-outline-success btn-sm rounded-pill">Listen</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="col-md-6">
+        <h3 class="section-title">New Books</h3>
+        <div class="row g-3">
+            {% for book in latest_books %}
+            <div class="col-6">
+                <div class="card h-100 border-0 shadow-sm">
+                    {% if book.cover_image %}
+                    <img src="{{ book.cover_image.url }}" class="card-img-top" alt="{{ book.title }}">
+                    {% endif %}
+                    <div class="card-body p-2 text-center">
+                        <h6 class="small mb-1">{{ book.title }}</h6>
+                        <small class="text-muted">{{ book.author }}</small>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

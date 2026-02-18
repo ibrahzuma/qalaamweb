@@ -1,0 +1,130 @@
+{% extends 'dashboard/base.html' %}
+
+{% block page_title %}Manage Categories{% endblock %}
+
+{% block main %}
+<div class="row g-4">
+    <!-- Fatwa Categories -->
+    <div class="col-md-6">
+        <div class="card card-glass border-0 shadow-sm h-100">
+            <div
+                class="card-header bg-transparent border-0 pt-4 px-4 d-flex justify-content-between align-items-center">
+                <h6 class="mb-0 fw-bold">Fatwa Categories</h6>
+                <a href="{% url 'dashboard:fatwa_category_create' %}"
+                    class="btn btn-sm btn-outline-success rounded-pill">
+                    <i class="bi bi-plus"></i>
+                </a>
+            </div>
+            <div class="card-body p-4">
+                <table class="table table-sm align-middle">
+                    <tbody>
+                        {% for cat in categories.fatwa %}
+                        <tr>
+                            <td>{{ cat.name }}</td>
+                            <td class="text-end">
+                                <a href="{% url 'dashboard:fatwa_category_edit' cat.pk %}"
+                                    class="btn btn-link py-0 text-primary"><i class="bi bi-pencil"></i></a>
+                                <a href="{% url 'dashboard:fatwa_category_delete' cat.pk %}"
+                                    class="btn btn-link py-0 text-danger"><i class="bi bi-trash"></i></a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Article Categories -->
+    <div class="col-md-6">
+        <div class="card card-glass border-0 shadow-sm h-100">
+            <div
+                class="card-header bg-transparent border-0 pt-4 px-4 d-flex justify-content-between align-items-center">
+                <h6 class="mb-0 fw-bold">Article Categories</h6>
+                <a href="{% url 'dashboard:article_category_create' %}"
+                    class="btn btn-sm btn-outline-success rounded-pill">
+                    <i class="bi bi-plus"></i>
+                </a>
+            </div>
+            <div class="card-body p-4">
+                <table class="table table-sm align-middle">
+                    <tbody>
+                        {% for cat in categories.article %}
+                        <tr>
+                            <td>{{ cat.name }}</td>
+                            <td class="text-end">
+                                <a href="{% url 'dashboard:article_category_edit' cat.pk %}"
+                                    class="btn btn-link py-0 text-primary"><i class="bi bi-pencil"></i></a>
+                                <a href="{% url 'dashboard:article_category_delete' cat.pk %}"
+                                    class="btn btn-link py-0 text-danger"><i class="bi bi-trash"></i></a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Content Categories -->
+    <div class="col-md-6">
+        <div class="card card-glass border-0 shadow-sm h-100">
+            <div
+                class="card-header bg-transparent border-0 pt-4 px-4 d-flex justify-content-between align-items-center">
+                <h6 class="mb-0 fw-bold">Multimedia Categories</h6>
+                <a href="{% url 'dashboard:content_category_create' %}"
+                    class="btn btn-sm btn-outline-success rounded-pill">
+                    <i class="bi bi-plus"></i>
+                </a>
+            </div>
+            <div class="card-body p-4">
+                <table class="table table-sm align-middle">
+                    <tbody>
+                        {% for cat in categories.content %}
+                        <tr>
+                            <td>{{ cat.name }}</td>
+                            <td class="text-end">
+                                <a href="{% url 'dashboard:content_category_edit' cat.pk %}"
+                                    class="btn btn-link py-0 text-primary"><i class="bi bi-pencil"></i></a>
+                                <a href="{% url 'dashboard:content_category_delete' cat.pk %}"
+                                    class="btn btn-link py-0 text-danger"><i class="bi bi-trash"></i></a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dua Categories -->
+    <div class="col-md-6">
+        <div class="card card-glass border-0 shadow-sm h-100">
+            <div
+                class="card-header bg-transparent border-0 pt-4 px-4 d-flex justify-content-between align-items-center">
+                <h6 class="mb-0 fw-bold">Dua Categories</h6>
+                <a href="{% url 'dashboard:dua_category_create' %}" class="btn btn-sm btn-outline-success rounded-pill">
+                    <i class="bi bi-plus"></i>
+                </a>
+            </div>
+            <div class="card-body p-4">
+                <table class="table table-sm align-middle">
+                    <tbody>
+                        {% for cat in categories.dua %}
+                        <tr>
+                            <td>{{ cat.name }}</td>
+                            <td class="text-end">
+                                <a href="{% url 'dashboard:dua_category_edit' cat.pk %}"
+                                    class="btn btn-link py-0 text-primary"><i class="bi bi-pencil"></i></a>
+                                <a href="{% url 'dashboard:dua_category_delete' cat.pk %}"
+                                    class="btn btn-link py-0 text-danger"><i class="bi bi-trash"></i></a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

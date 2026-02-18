@@ -1,0 +1,222 @@
+{% extends 'base.html' %}
+
+{% block title %}Calendar & Hijri Converter - QALAAM{% endblock %}
+
+{% block extra_css %}
+<style>
+    .converter-card {
+        border-radius: 20px;
+        border: none;
+        background: white;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
+    }
+
+    .date-box {
+        background-color: var(--secondary-color);
+        border-radius: 15px;
+        padding: 2.5rem;
+        transition: all 0.3s ease;
+    }
+
+    .date-box:hover {
+        background-color: #e2f7f3;
+    }
+
+    .nav-tabs .nav-link {
+        border: none;
+        color: #666;
+        font-weight: 600;
+        padding: 1rem 2rem;
+    }
+
+    .nav-tabs .nav-link.active {
+        color: var(--primary-color);
+        border-bottom: 3px solid var(--primary-color);
+        background: none;
+    }
+
+    .convert-btn {
+        background: var(--primary-color);
+        color: white;
+        border-radius: 50px;
+        padding: 10px 30px;
+        font-weight: 600;
+        border: none;
+        transition: all 0.3s ease;
+    }
+
+    .convert-btn:hover {
+        background: #005a4e;
+        transform: translateY(-2px);
+    }
+
+    #result-box {
+        display: none;
+        animation: fadeIn 0.5s ease;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="row mb-5 mt-4">
+    <div class="col-12 text-center">
+        <h2 class="section-title">Calendar & Hijri Converter</h2>
+        <p class="text-muted">Convert between Gregorian and Hijri calendar systems instantly.</p>
+    </div>
+</div>
+
+<div class="row justify-content-center mb-5">
+    <div class="col-md-5">
+        <div class="date-box text-center shadow-sm">
+            <h5 class="text-uppercase text-primary mb-3" style="letter-spacing: 1px;">Current Hijri Date</h5>
+            <h2 id="current-hijri" class="fw-bold mb-0">...</h2>
+        </div>
+    </div>
+    <div class="col-md-5">
+        <div class="date-box text-center shadow-sm h-100">
+            <h5 class="text-uppercase text-muted mb-3" style="letter-spacing: 1px;">Current Gregorian Date</h5>
+            <h2 id="current-gregorian" class="fw-bold mb-0">{% now "d F Y" %}</h2>
+        </div>
+    </div>
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card converter-card p-4">
+            <ul class="nav nav-tabs mb-4" id="convertTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="g-to-h-tab" data-bs-toggle="tab" data-bs-target="#g-to-h"
+                        type="button" role="tab">Gregorian to Hijri</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="h-to-g-tab" data-bs-toggle="tab" data-bs-target="#h-to-g" type="button"
+                        role="tab">Hijri to Gregorian</button>
+                </li>
+            </ul>
+
+            <div class="tab-content" id="convertTabContent">
+                <!-- G to H -->
+                <div class="tab-pane fade show active" id="g-to-h" role="tabpanel">
+                    <div class="row g-3 align-items-end">
+                        <div class="col-md-9">
+                            <label class="form-label text-muted">Select Gregorian Date</label>
+                            <input type="date" id="g-input"
+                                class="form-control form-control-lg rounded-pill border-light-subtle shadow-sm">
+                        </div>
+                        <div class="col-md-3">
+                            <button onclick="convertToHijri()" class="convert-btn w-100 py-3 shadow-sm">Convert</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- H to G -->
+                <div class="tab-pane fade" id="h-to-g" role="tabpanel">
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <label class="form-label text-muted">Day</label>
+                            <input type="number" id="h-day" class="form-control rounded-pill" min="1" max="30"
+                                value="1">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label text-muted">Month</label>
+                            <select id="h-month" class="form-select rounded-pill">
+                                <option value="1">Muharram</option>
+                                <option value="2">Safar</option>
+                                <option value="3">Rabi' al-awwal</option>
+                                <option value="4">Rabi' al-thani</option>
+                                <option value="5">Jumada al-ula</option>
+                                <option value="6">Jumada al-akhira</option>
+                                <option value="7">Rajab</option>
+                                <option value="8">Sha'ban</option>
+                                <option value="9">Ramadan</option>
+                                <option value="10">Shawwal</option>
+                                <option value="11">Dhu al-Qi'dah</option>
+                                <option value="12">Dhu al-Hijjah</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label text-muted">Year (AH)</label>
+                            <input type="number" id="h-year" class="form-control rounded-pill" value="1447">
+                        </div>
+                        <div class="col-12 mt-4 text-center">
+                            <button onclick="convertToGregorian()" class="convert-btn px-5 shadow-sm">Convert to
+                                Gregorian</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="result-box" class="mt-5 p-4 bg-light rounded-4 text-center">
+                <h5 class="text-muted mb-2">Result</h5>
+                <h3 id="result-text" class="fw-bold text-primary mb-0"></h3>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Set default date to today
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('g-input').value = today;
+
+        // Load current Hijri date
+        fetch(`https://api.aladhan.com/v1/gToH/${today.split('-').reverse().join('-')}`)
+            .then(res => res.json())
+            .then(data => {
+                const h = data.data.hijri;
+                document.getElementById('current-hijri').textContent = `${h.day} ${h.month.en} ${h.year} AH`;
+                document.getElementById('h-year').value = h.year;
+                document.getElementById('h-month').value = h.month.number;
+                document.getElementById('h-day').value = parseInt(h.day);
+            });
+    });
+
+    async function convertToHijri() {
+        const dateVal = document.getElementById('g-input').value;
+        if (!dateVal) return;
+
+        const [year, month, day] = dateVal.split('-');
+        const formattedDate = `${day}-${month}-${year}`;
+
+        const res = await fetch(`https://api.aladhan.com/v1/gToH/${formattedDate}`);
+        const data = await res.json();
+        const h = data.data.hijri;
+
+        showResult(`${h.day} ${h.month.en} ${h.year} AH`);
+    }
+
+    async function convertToGregorian() {
+        const day = document.getElementById('h-day').value;
+        const month = document.getElementById('h-month').value;
+        const year = document.getElementById('h-year').value;
+
+        const res = await fetch(`https://api.aladhan.com/v1/hToG/${day}-${month}-${year}`);
+        const data = await res.json();
+        const g = data.data.gregorian;
+
+        showResult(`${g.day} ${g.month.en} ${g.year}`);
+    }
+
+    function showResult(text) {
+        const box = document.getElementById('result-box');
+        const textElement = document.getElementById('result-text');
+        textElement.textContent = text;
+        box.style.display = 'block';
+    }
+</script>
+{% endblock %}

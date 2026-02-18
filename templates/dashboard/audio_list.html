@@ -1,0 +1,52 @@
+{% extends 'dashboard/base.html' %}
+
+{% block page_title %}Manage Audio{% endblock %}
+
+{% block main %}
+<div class="card card-glass border-0 shadow-sm">
+    <div class="card-header bg-transparent border-0 pt-4 px-4 d-flex justify-content-between align-items-center">
+        <h5 class="mb-0 fw-bold">Audio Library</h5>
+        <a href="{% url 'dashboard:audio_create' %}" class="btn btn-sm btn-success rounded-pill px-3">
+            <i class="bi bi-plus-lg"></i> New Audio
+        </a>
+    </div>
+    <div class="card-body p-4">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Title</th>
+                        <th>Speaker</th>
+                        <th>Category</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for audio in audios %}
+                    <tr>
+                        <td>#{{ audio.id }}</td>
+                        <td>
+                            <div class="fw-bold">{{ audio.title|truncatechars:50 }}</div>
+                            <small class="text-muted">Added: {{ audio.created_at|date:"M d, Y" }}</small>
+                        </td>
+                        <td>{{ audio.speaker }}</td>
+                        <td>{{ audio.category.name }}</td>
+                        <td>
+                            <a href="{% url 'dashboard:audio_edit' audio.pk %}"
+                                class="btn btn-sm btn-outline-primary"><i class="bi bi-pencil"></i></a>
+                            <a href="{% url 'dashboard:audio_delete' audio.pk %}"
+                                class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5" class="text-center py-4 text-muted">No audio files found.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

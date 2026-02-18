@@ -1,0 +1,45 @@
+<STYLE type=text/css>A:active {
+	TEXT-DECORATION: none
+}
+A:link {
+	COLOR: black; TEXT-DECORATION: none
+}
+A:visited {
+	COLOR: black; TEXT-DECORATION: none
+}
+A:hover {
+	COLOR: green; TEXT-DECORATION: none
+}
+</STYLE>
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>404 Error Page - WorldOfIslam.info</title>
+</head>
+
+<body>
+
+<p align="center"><b><font size="4" face="Verdana">Error 404 Page Not Found</font></b></p>
+<p align="center"><img border="0" src="menu/404.png" width="476" height="296"></p>
+<p align="center"><font size="2" face="Verdana">The page you were looking for 
+appears to have been moved, deleted or does not exist.</font></p>
+<p align="center"><font size="2" face="Verdana"><b>Solutions:<br>
+</b>* Try returning to the <b>
+<a target="_self" href="https://www.worldofislam.info/">Home Page</a></b> and finding the page you were 
+looking for.</font></p>
+<p align="center"><font size="2" face="Verdana">* See our <b>
+<a target="_self" href="https://www.worldofislam.info/index.php?page=site_map">Site Map</a></b> and 
+try find the page you were looking for.</font></p>
+<p align="center"><b><font size="2" face="Verdana">* Notify us of this problem 
+via our <u><a target="_self" href="http://contact.worldofislam.info/"><u>contact form</u></a></u>, so we can fix and/or help you find what you were looking 
+for.</font></b></p>
+
+</body>
+
+</html>
+<?php
+$CNSTATS404="yes";
+include_once "/home/woi2/public_html/contact/stats/cnt.php";
+?>

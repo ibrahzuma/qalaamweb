@@ -1,0 +1,219 @@
+{% extends 'base.html' %}
+
+{% block title %}Multimedia - QALAAM{% endblock %}
+
+{% block content %}
+<!-- Header Section -->
+<div class="row mb-4">
+    <div class="col-12 text-center py-5"
+        style="background: linear-gradient(135deg, #004d40 0%, #00695c 100%); border-radius: 20px; color: white;">
+        <h1 class="display-4 fw-bold">Lectures & Multimedia</h1>
+        <p class="lead opacity-75">Knowledge and Wisdom through Audio & Digital Resources</p>
+    </div>
+</div>
+
+<!-- Search & Filter bar -->
+<div class="row mb-5">
+    <div class="col-12">
+        <div class="card border-0 shadow-sm rounded-4 p-4">
+            <form method="GET" class="row g-3 align-items-center">
+                <div class="col-md-5">
+                    <div class="input-group">
+                        <span class="input-group-text bg-transparent border-end-0"><i
+                                class="bi bi-search text-muted"></i></span>
+                        <input type="text" name="q" class="form-control border-start-0"
+                            placeholder="Search by title or speaker..." value="{{ query|default:'' }}">
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <select name="category" class="form-select" onchange="this.form.submit()">
+                        <option value="">All Categories</option>
+                        {% for cat in categories %}
+                        <option value="{{ cat.slug }}" {% if cat.slug == current_category %}selected{% endif %}>{{
+                            cat.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-success w-100 rounded-pill">Search</button>
+                </div>
+            </form>
+
+            <!-- Category Pills -->
+            <div class="mt-3 d-flex flex-wrap gap-2">
+                <a href="{% url 'content:audio_list' %}"
+                    class="btn btn-sm {% if not current_category %}btn-success{% else %}btn-outline-secondary{% endif %} rounded-pill px-3">All</a>
+                {% for cat in categories %}
+                <a href="?category={{ cat.slug }}{% if query %}&q={{ query }}{% endif %}"
+                    class="btn btn-sm {% if current_category == cat.slug %}btn-success{% else %}btn-outline-secondary{% endif %} rounded-pill px-3">
+                    {{ cat.name }}
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Category Selection Grid (Only shown when no category/search selected) -->
+{% if show_categories %}
+<div class="row g-4 mb-5">
+    <div class="col-12">
+        <h3 class="fw-bold mb-4"><i class="bi bi-grid-3x3-gap me-2"></i>Select a Category</h3>
+    </div>
+    {% for cat in categories %}
+    <div class="col-md-6 col-lg-3">
+        <a href="?category={{ cat.slug }}" class="text-decoration-none">
+            <div class="card h-100 border-0 shadow-sm rounded-4 category-card text-center p-4">
+                <div class="category-icon-wrapper mb-3">
+                    <i class="bi {{ cat.icon|default:'bi-folder' }} display-4 text-success"></i>
+                </div>
+                <h5 class="fw-bold text-dark mb-1">{{ cat.name }}</h5>
+                <p class="text-muted small mb-0">{{ cat.audios.count }} Lectures</p>
+            </div>
+        </a>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+<!-- Audio Grid -->
+<div class="row g-4" {% if show_categories %}style="display: none;" {% endif %}>
+    <div class="col-12 d-flex justify-content-between align-items-center mb-2">
+        <h3 class="fw-bold mb-0">
+            {% if current_category %}
+            {% for cat in categories %}{% if cat.slug == current_category %}{{ cat.name }}{% endif %}{% endfor %}
+            {% elif query %}
+            Search Results for "{{ query }}"
+            {% endif %}
+        </h3>
+        {% if current_category or query %}
+        <a href="{% url 'content:audio_list' %}" class="btn btn-sm btn-outline-secondary rounded-pill">
+            <i class="bi bi-x-circle me-1"></i> Clear
+        </a>
+        {% endif %}
+    </div>
+
+    {% for audio in audios %}
+    <div class="col-md-6 col-lg-4">
+        <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden lecture-card">
+            <div class="card-body p-4">
+                <div class="d-flex align-items-center mb-3">
+                    <div class="bg-success bg-opacity-10 p-3 rounded-circle me-3">
+                        <i class="bi bi-mic text-success fs-3"></i>
+                    </div>
+                    <div>
+                        <span class="badge bg-light text-dark mb-1">{{ audio.category.name }}</span>
+                        <h5 class="card-title fw-bold mb-0 text-truncate" style="max-width: 200px;">{{ audio.title }}
+                        </h5>
+                    </div>
+                </div>
+
+                <p class="text-muted small mb-4">
+                    <i class="bi bi-person me-1"></i> {{ audio.speaker }}<br>
+                    <i class="bi bi-calendar-event me-1"></i> {{ audio.created_at|date:"M d, Y" }}
+                </p>
+
+                <div class="audio-player-container bg-light p-3 rounded-3 mb-3 text-center">
+                    <audio controls class="w-100" style="height: 35px;">
+                        <source src="{{ audio.file.url }}" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
+                </div>
+
+                <div class="d-flex gap-2 mt-auto">
+                    <a href="{{ audio.file.url }}" download
+                        class="btn btn-outline-success flex-grow-1 rounded-pill btn-sm">
+                        <i class="bi bi-download me-1"></i> Download
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="col-12 text-center py-5">
+        <div class="opacity-25 mb-3">
+            <i class="bi bi-mic-mute display-1"></i>
+        </div>
+        <h3 class="fw-bold">No lectures found</h3>
+        <p class="text-muted">Try adjusting your search or filters.</p>
+        <a href="{% url 'content:audio_list' %}" class="btn btn-success rounded-pill px-4">Clear All Filters</a>
+    </div>
+    {% endfor %}
+</div>
+
+<!-- Pagination (only when not showing category grid) -->
+{% if is_paginated and not show_categories %}
+<div class="row mt-5">
+    <div class="col-12">
+        <nav aria-label="Page navigation">
+            <ul class="pagination justify-content-center">
+                {% if page_obj.has_previous %}
+                <li class="page-item">
+                    <a class="page-link rounded-circle mx-1"
+                        href="?page={{ page_obj.previous_page_number }}{% if query %}&q={{ query }}{% endif %}{% if current_category %}&category={{ current_category }}{% endif %}">
+                        <i class="bi bi-chevron-left"></i>
+                    </a>
+                </li>
+                {% endif %}
+
+                <li class="page-item active"><span class="page-link rounded-circle mx-1">{{ page_obj.number }}</span>
+                </li>
+
+                {% if page_obj.has_next %}
+                <li class="page-item">
+                    <a class="page-link rounded-circle mx-1"
+                        href="?page={{ page_obj.next_page_number }}{% if query %}&q={{ query }}{% endif %}{% if current_category %}&category={{ current_category }}{% endif %}">
+                        <i class="bi bi-chevron-right"></i>
+                    </a>
+                </li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+</div>
+{% endif %}
+
+<style>
+    .lecture-card,
+    .category-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .lecture-card:hover,
+    .category-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 1rem 3rem rgba(0, 0, 0, .1) !important;
+    }
+
+    .category-card {
+        border: 1px solid rgba(0, 0, 0, .05) !important;
+    }
+
+    .category-icon-wrapper {
+        width: 80px;
+        height: 80px;
+        background: #f0fdf4;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto;
+    }
+
+    .page-link {
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #004d40;
+        border: none;
+        background: #f8f9fa;
+    }
+
+    .page-item.active .page-link {
+        background-color: #004d40;
+        color: white;
+    }
+</style>
+{% endblock %}

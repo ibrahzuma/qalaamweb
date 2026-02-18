@@ -1,0 +1,38 @@
+{% extends 'dashboard/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block page_title %}{{ title }}{% endblock %}
+
+{% block main %}
+<div class="row">
+    <div class="col-md-10 mx-auto">
+        <div class="card card-glass border-0 shadow-sm">
+            <div class="card-body p-4 p-md-5">
+                <nav aria-label="breadcrumb" class="mb-4">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{% url 'dashboard:index' %}"
+                                class="text-success text-decoration-none">Dashboard</a></li>
+                        <li class="breadcrumb-item active">{{ title }}</li>
+                    </ol>
+                </nav>
+
+                <h3 class="fw-bold mb-4">{{ title }}</h3>
+
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="row g-3">
+                        {{ form.media }}
+                        {{ form|crispy }}
+                    </div>
+
+                    <div class="mt-5 d-flex justify-content-between">
+                        <a href="javascript:history.back()"
+                            class="btn btn-outline-secondary rounded-pill px-4">Cancel</a>
+                        <button type="submit" class="btn btn-success rounded-pill px-5">Save Content</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
