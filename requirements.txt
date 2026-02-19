@@ -26,7 +26,7 @@ celery==5.6.0
 certifi
 cffi==2.0.0
 channels
-chardet==4.0.0
+chardet
 charset-normalizer==3.4.4
 click==8.3.1
 click-didyoumean==0.3.1
@@ -168,7 +168,7 @@ python-socketio==5.15.1
 pytz==2025.2
 pyvis==0.3.2
 PyYAML==6.0.3
-quran==1.0.0
+quran
 quran.py==0.1
 redis==7.1.0
 referencing==0.37.0
