@@ -1,0 +1,45 @@
+{% extends 'dashboard/base.html' %}
+
+{% block page_title %}Hadith Collections{% endblock %}
+
+{% block main %}
+<div class="card card-glass border-0 shadow-sm">
+    <div class="card-header bg-transparent border-0 pt-4 px-4 d-flex justify-content-between align-items-center">
+        <h5 class="mb-0 fw-bold">Collections</h5>
+        <a href="{% url 'dashboard:hadith_collection_create' %}" class="btn btn-sm btn-info rounded-pill px-3">
+            <i class="bi bi-plus-lg"></i> Create Collection
+        </a>
+    </div>
+    <div class="card-body p-4">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Slug</th>
+                        <th>Hadiths Count</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for coll in collections %}
+                    <tr>
+                        <td class="fw-bold">{{ coll.name }}</td>
+                        <td><code>{{ coll.slug }}</code></td>
+                        <td>{{ coll.hadiths.count }}</td>
+                        <td>
+                            <a href="{% url 'dashboard:hadith_list' %}?collection={{ coll.id }}"
+                                class="btn btn-sm btn-outline-secondary">View Hadiths</a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="4" class="text-center py-4">No collections found.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

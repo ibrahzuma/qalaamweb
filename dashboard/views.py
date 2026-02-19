@@ -5,6 +5,7 @@ from fatwa.models import Fatwa, FatwaCategory
 from articles.models import Article, ArticleCategory
 from content.models import Audio, Book, ContentCategory
 from duas.models import Dua, DuaCategory
+from hadiths.models import HadithCollection, Hadith
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
@@ -15,6 +16,7 @@ def dashboard_index(request):
     fatawa_count = Fatwa.objects.filter(status='answered').count()
     pending_fatawa = Fatwa.objects.filter(status='pending').count()
     articles_count = Article.objects.count()
+    hadiths_count = Hadith.objects.count()
     audio_count = Audio.objects.count()
     duas_count = Dua.objects.count()
     
@@ -24,22 +26,24 @@ def dashboard_index(request):
     
     recent_items = []
     for f in recent_fatawa:
-        recent_items.append({'title': f.title, 'type': 'Fatwa', 'views': f.view_count, 'date': f.created_at})
+        recent_items.append({'title': f.title, 'type': 'Fatwa', 'views': getattr(f, 'view_count', 0), 'date': f.created_at})
     for a in recent_articles:
-        recent_items.append({'title': a.title, 'type': 'Article', 'views': a.view_count, 'date': a.created_at})
+        recent_items.append({'title': a.title, 'type': 'Article', 'views': getattr(a, 'view_count', 0), 'date': a.created_at})
         
     recent_items = sorted(recent_items, key=lambda x: x['date'], reverse=True)
 
     # Popular content (highest views)
-    popular_fatawa = Fatwa.objects.order_by('-view_count')[:3]
-    popular_articles = Article.objects.order_by('-view_count')[:2]
+    popular_fatawa = Fatwa.objects.all().order_by('-view_count')[:3] if hasattr(Fatwa, 'view_count') else []
+    popular_articles = Article.objects.all().order_by('-view_count')[:2] if hasattr(Article, 'view_count') else []
     popular_items = list(popular_fatawa) + list(popular_articles)
-    popular_items = sorted(popular_items, key=lambda x: x.view_count, reverse=True)[:5]
+    if popular_items:
+        popular_items = sorted(popular_items, key=lambda x: getattr(x, 'view_count', 0), reverse=True)[:5]
 
     stats = {
         'fatawa_count': fatawa_count,
         'pending_fatawa': pending_fatawa,
         'articles_count': articles_count,
+        'hadiths_count': hadiths_count,
         'audio_count': audio_count,
         'duas_count': duas_count,
     }
@@ -354,3 +358,66 @@ class DashCategoryListView(LoginRequiredMixin, StaffRequiredMixin, ListView):
             'content': ContentCategory.objects.all(),
             'dua': DuaCategory.objects.all(),
         }
+
+# Hadith Management
+class DashHadithListView(LoginRequiredMixin, StaffRequiredMixin, ListView):
+    model = Hadith
+    template_name = 'dashboard/hadith_list.html'
+    context_object_name = 'hadiths'
+    paginate_by = 20
+    ordering = ['-id']
+
+    def get_queryset(self):
+        qs = super().get_queryset()
+        collection_id = self.request.GET.get('collection')
+        if collection_id:
+            qs = qs.filter(collection_id=collection_id)
+        return qs
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['collections'] = HadithCollection.objects.all()
+        return context
+
+class HadithCreateView(LoginRequiredMixin, StaffRequiredMixin, CreateView):
+    model = Hadith
+    fields = ['collection', 'hadith_number', 'arabic_number', 'text_arabic', 'text_english', 'text_swahili', 'section', 'grades']
+    template_name = 'dashboard/form.html'
+    success_url = reverse_lazy('dashboard:hadith_list')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = "Add New Hadith"
+        return context
+
+class HadithUpdateView(LoginRequiredMixin, StaffRequiredMixin, UpdateView):
+    model = Hadith
+    fields = ['collection', 'hadith_number', 'arabic_number', 'text_arabic', 'text_english', 'text_swahili', 'section', 'grades']
+    template_name = 'dashboard/form.html'
+    success_url = reverse_lazy('dashboard:hadith_list')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = "Edit Hadith"
+        return context
+
+class HadithDeleteView(LoginRequiredMixin, StaffRequiredMixin, DeleteView):
+    model = Hadith
+    template_name = 'dashboard/confirm_delete.html'
+    success_url = reverse_lazy('dashboard:hadith_list')
+
+class DashHadithCollectionListView(LoginRequiredMixin, StaffRequiredMixin, ListView):
+    model = HadithCollection
+    template_name = 'dashboard/hadith_collection_list.html'
+    context_object_name = 'collections'
+
+class HadithCollectionCreateView(LoginRequiredMixin, StaffRequiredMixin, CreateView):
+    model = HadithCollection
+    fields = ['name', 'slug', 'description']
+    template_name = 'dashboard/form.html'
+    success_url = reverse_lazy('dashboard:hadith_collection_list')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = "Create Hadith Collection"
+        return context

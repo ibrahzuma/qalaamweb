@@ -46,4 +46,13 @@ urlpatterns = [
     path('categories/dua/create/', views.DuaCategoryCreateView.as_view(), name='dua_category_create'),
     path('categories/dua/<int:pk>/update/', views.DuaCategoryUpdateView.as_view(), name='dua_category_edit'),
     path('categories/dua/<int:pk>/delete/', views.DuaCategoryDeleteView.as_view(), name='dua_category_delete'),
+
+    # Hadith Management
+    path('hadiths/', views.DashHadithListView.as_view(), name='hadith_list'),
+    path('hadiths/create/', views.HadithCreateView.as_view(), name='hadith_create'),
+    path('hadiths/<int:pk>/update/', views.HadithUpdateView.as_view(), name='hadith_edit'),
+    path('hadiths/<int:pk>/delete/', views.HadithDeleteView.as_view(), name='hadith_delete'),
+    
+    path('hadith-collections/', views.DashHadithCollectionListView.as_view(), name='hadith_collection_list'),
+    path('hadith-collections/create/', views.HadithCollectionCreateView.as_view(), name='hadith_collection_create'),
 ]

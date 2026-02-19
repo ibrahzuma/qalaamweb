@@ -116,6 +116,14 @@
             <a href="{% url 'dashboard:book_list' %}" class="nav-link {% if 'book' in request.path %}active{% endif %}">
                 <i class="bi bi-book text-warning"></i> Digital Library
             </a>
+            <a href="{% url 'dashboard:hadith_list' %}"
+                class="nav-link {% if 'hadiths' in request.path %}active{% endif %}">
+                <i class="bi bi-book-half text-danger"></i> Hadith Management
+            </a>
+            <a href="{% url 'dashboard:hadith_collection_list' %}"
+                class="nav-link {% if 'hadith-collections' in request.path %}active{% endif %}">
+                <i class="bi bi-collection text-info"></i> Hadith Collections
+            </a>
 
             <div class="px-4 py-2 small text-uppercase opacity-50 mt-3">Spiritual</div>
             <a href="{% url 'dashboard:dua_list' %}" class="nav-link {% if 'dua' in request.path %}active{% endif %}">
