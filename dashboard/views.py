@@ -391,7 +391,7 @@ class DashHadithListView(LoginRequiredMixin, StaffRequiredMixin, ListView):
 
 class HadithCreateView(LoginRequiredMixin, StaffRequiredMixin, CreateView):
     model = Hadith
-    fields = ['collection', 'hadith_number', 'arabic_number', 'text_arabic', 'text_english', 'text_swahili', 'section', 'grades']
+    fields = ['collection', 'book', 'hadith_number', 'arabic_number', 'text_arabic', 'text_english', 'text_swahili', 'grades']
     template_name = 'dashboard/form.html'
     success_url = reverse_lazy('dashboard:hadith_list')
 
@@ -402,7 +402,7 @@ class HadithCreateView(LoginRequiredMixin, StaffRequiredMixin, CreateView):
 
 class HadithUpdateView(LoginRequiredMixin, StaffRequiredMixin, UpdateView):
     model = Hadith
-    fields = ['collection', 'hadith_number', 'arabic_number', 'text_arabic', 'text_english', 'text_swahili', 'section', 'grades']
+    fields = ['collection', 'book', 'hadith_number', 'arabic_number', 'text_arabic', 'text_english', 'text_swahili', 'grades']
     template_name = 'dashboard/form.html'
     success_url = reverse_lazy('dashboard:hadith_list')
 

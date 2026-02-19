@@ -23,8 +23,8 @@
                         <h3 class="h5 card-title mb-0">{{ collection.name }}</h3>
                     </div>
                     <p class="text-muted small mb-4">{{ collection.description|truncatechars:100 }}</p>
-                    <a href="{% url 'hadiths:hadith_list' collection.slug %}"
-                        class="btn btn-primary w-100 stretched-link">Browse Hadiths</a>
+                    <a href="{% url 'hadiths:book_list' collection.slug %}"
+                        class="btn btn-primary w-100 stretched-link">Browse Books</a>
                 </div>
             </div>
         </div>

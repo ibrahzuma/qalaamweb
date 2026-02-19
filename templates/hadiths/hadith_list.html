@@ -33,14 +33,17 @@
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
             <li class="breadcrumb-item"><a href="{% url 'hadiths:collection_list' %}">Hadith Collections</a></li>
-            <li class="breadcrumb-item active" aria-current="page">{{ collection.name }}</li>
+            <li class="breadcrumb-item"><a href="{% url 'hadiths:book_list' collection.slug %}">{{ collection.name
+                    }}</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Book {{ book.book_number }}</li>
         </ol>
     </nav>
 
     <div class="row mb-5">
         <div class="col-12">
             <h1 class="fw-bold mb-2">{{ collection.name }}</h1>
-            <p class="text-muted">Multilingual Edition (Arabic, English, Swahili)</p>
+            <h5 class="text-primary">Book {{ book.book_number }}: {{ book.name }}</h5>
+            <p class="text-muted small">Multilingual Edition (Arabic, English, Swahili)</p>
         </div>
     </div>
 
