@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container py-5">
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'hadiths:edition_list' %}">Hadith Collections</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ edition.name }}</li>
+        </ol>
+    </nav>
+
+    <div class="row mb-5">
+        <div class="col-12">
+            <h1 class="fw-bold mb-2">{{ edition.name }}</h1>
+            <p class="text-muted">Exploring the collection in {{ edition.language|title }}</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            {% for hadith in hadiths %}
+            <div class="card border-0 shadow-sm mb-4 glass-card">
+                <div
+                    class="card-header bg-transparent border-0 pt-4 px-4 d-flex justify-content-between align-items-center">
+                    <span class="badge bg-primary">Hadith #{{ hadith.hadith_number }}</span>
+                    {% if hadith.section %}
+                    <small class="text-muted">Section: {{ hadith.section }}</small>
+                    {% endif %}
+                </div>
+                <div class="card-body p-4">
+                    <p class="hadith-text fs-5 mb-0" style="line-height: 1.8;">{{ hadith.text }}</p>
+
+                    {% if hadith.grades %}
+                    <div class="mt-4 pt-4 border-top">
+                        <h6 class="text-muted small fw-bold text-uppercase mb-2">Grades</h6>
+                        <div class="d-flex flex-wrap gap-2">
+                            {% for grade in hadith.grades %}
+                            <span class="badge rounded-pill bg-light text-dark border">
+                                {{ grade.name }}: <strong>{{ grade.grade }}</strong>
+                            </span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="card-footer bg-transparent border-0 pb-4 px-4 text-end">
+                    <a href="{% url 'hadiths:hadith_detail' hadith.pk %}" class="btn btn-sm btn-outline-primary">Share /
+                        View Details</a>
+                </div>
+            </div>
+            {% empty %}
+            <div class="text-center py-5">
+                <p class="text-muted">No hadiths found in this collection.</p>
+            </div>
+            {% endfor %}
+
+            <!-- Pagination -->
+            {% if is_paginated %}
+            <nav aria-label="Page navigation" class="mt-5">
+                <ul class="pagination justify-content-center">
+                    {% if page_obj.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    {% endif %}
+
+                    {% for num in page_obj.paginator.page_range %}
+                    {% if page_obj.number == num %}
+                    <li class="page-item active"><span class="page-link">{{ num }}</span></li>
+                    {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %} <li class="page-item"><a
+                            class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+                        {% endif %}
+                        {% endfor %}
+
+                        {% if page_obj.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                        {% endif %}
+                </ul>
+            </nav>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

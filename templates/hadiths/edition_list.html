@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row mb-5">
+        <div class="col-12 text-center">
+            <h1 class="display-4 fw-bold gradient-text mb-3">Hadith Collections</h1>
+            <p class="lead text-muted">Explore authentic sayings and actions of the Prophet Muhammad (ﷺ)</p>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        {% for edition in editions %}
+        <div class="col-md-6 col-lg-4">
+            <div class="card h-100 border-0 shadow-sm glass-card hover-lift">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="icon-box bg-primary-soft text-primary me-3">
+                            <i class="fas fa-book-open"></i>
+                        </div>
+                        <h3 class="h5 card-title mb-0">{{ edition.name }}</h3>
+                    </div>
+                    <p class="text-muted small mb-4">Language: <span class="badge bg-light text-dark">{{
+                            edition.language|title }}</span></p>
+                    <a href="{% url 'hadiths:hadith_list' edition.edition_key %}"
+                        class="btn btn-primary w-100 stretched-link">Browse Hadiths</a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12 text-center py-5">
+            <div class="alert alert-info glass-card border-0">
+                <i class="fas fa-info-circle me-2"></i> No Hadith collections have been imported yet.
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

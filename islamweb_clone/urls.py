@@ -14,6 +14,7 @@ urlpatterns = [
     path('services/', include('services.urls')), # Added services.urls
     path('ckeditor/', include('ckeditor_uploader.urls')),
     path('admin-panel/', include('dashboard.urls')),
+    path('hadiths/', include('hadiths.urls')),
 ]
 
 if settings.DEBUG:

@@ -43,16 +43,18 @@ INSTALLED_APPS = [
     'mptt',
     'crispy_forms',
     'crispy_bootstrap5',
-    'duas',
     'ckeditor',
     'ckeditor_uploader',
     
     # Local apps
     'core',
-    'fatwa',
-    'articles',
-    'content',
-    'dashboard',
+    'fatwa.apps.FatwaConfig',
+    'articles.apps.ArticlesConfig',
+    'duas.apps.DuasConfig',
+    'content.apps.ContentConfig',
+    'services.apps.ServicesConfig',
+    'dashboard.apps.DashboardConfig',
+    'hadiths.apps.HadithsConfig',
 ]
 
 MIDDLEWARE = [
