@@ -152,7 +152,7 @@
                 </div>
                 <div class="flex-grow-1 ms-3 overflow-hidden">
                     <p class="mb-0 small fw-bold text-truncate">{{ request.user.username }}</p>
-                    <a href="#" class="small text-white-50 text-decoration-none">Sign Out</a>
+                    <a href="{% url 'dashboard:logout' %}" class="small text-white-50 text-decoration-none">Sign Out</a>
                 </div>
             </div>
         </div>

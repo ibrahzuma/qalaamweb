@@ -4,6 +4,8 @@ from . import views
 app_name = 'dashboard'
 
 urlpatterns = [
+    path('login/', views.CustomLoginView.as_view(), name='login'),
+    path('logout/', views.admin_logout, name='logout'),
     path('', views.dashboard_index, name='index'),
     path('fatawa/', views.DashFatwaListView.as_view(), name='fatwa_list'),
     path('articles/', views.DashArticleListView.as_view(), name='article_list'),
