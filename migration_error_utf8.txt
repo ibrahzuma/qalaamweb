@@ -1,0 +1,275 @@
+python : Traceback 
+(most recent call 
+last):
+At line:1 char:1
++ python manage.py 
+makemigrations 
+hadiths --traceback 
+--settings=islamw 
+...
++ ~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~
+    + CategoryInfo  
+            : NotS  
+  pecified: (Trac   
+ eback (most rec    
+ent call last):    
+:String) [], Re    
+moteException
+    + FullyQualifie 
+   dErrorId : Nati  
+  veCommandError
+ 
+  File "C:\Users\adm
+in\Downloads\islam\m
+anage.py", line 22, 
+in <module>
+    main()
+    ~~~~^^
+  File "C:\Users\adm
+in\Downloads\islam\m
+anage.py", line 18, 
+in main
+    execute_from_com
+mand_line(sys.argv)
+    ~~~~~~~~~~~~~~~~
+~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\adm
+in\AppData\Roaming\P
+ython\Python314\site
+-packages\django\cor
+e\management\__init_
+_.py", line 442, in 
+execute_from_command
+_line
+    
+utility.execute()
+    
+~~~~~~~~~~~~~~~^^
+  File "C:\Users\adm
+in\AppData\Roaming\P
+ython\Python314\site
+-packages\django\cor
+e\management\__init_
+_.py", line 436, in 
+execute
+    self.fetch_comma
+nd(subcommand).run_f
+rom_argv(self.argv)
+    ~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~^^^^^^^^^^^
+  File "C:\Users\adm
+in\AppData\Roaming\P
+ython\Python314\site
+-packages\django\cor
+e\management\base.py
+", line 412, in 
+run_from_argv
+    
+self.execute(*args, 
+**cmd_options)
+    ~~~~~~~~~~~~^^^^
+^^^^^^^^^^^^^^^^^^
+  File "C:\Users\adm
+in\AppData\Roaming\P
+ython\Python314\site
+-packages\django\cor
+e\management\base.py
+", line 453, in 
+execute
+    self.check()
+    ~~~~~~~~~~^^
+  File "C:\Users\adm
+in\AppData\Roaming\P
+ython\Python314\site
+-packages\django\cor
+e\management\base.py
+", line 485, in 
+check
+    all_issues = 
+checks.run_checks(
+        app_configs=
+app_configs,
+    ...<2 lines>...
+        
+databases=databases,
+    )
+  File "C:\Users\adm
+in\AppData\Roaming\P
+ython\Python314\site
+-packages\django\cor
+e\checks\registry.py
+", line 88, in 
+run_checks
+    new_errors = che
+ck(app_configs=app_c
+onfigs, 
+databases=databases)
+  File "C:\Users\adm
+in\AppData\Roaming\P
+ython\Python314\site
+-packages\django\cor
+e\checks\urls.py", 
+line 14, in 
+check_url_config
+    return check_res
+olver(resolver)
+  File "C:\Users\adm
+in\AppData\Roaming\P
+ython\Python314\site
+-packages\django\cor
+e\checks\urls.py", 
+line 24, in 
+check_resolver
+    return 
+check_method()
+  File "C:\Users\adm
+in\AppData\Roaming\P
+ython\Python314\site
+-packages\django\url
+s\resolvers.py", 
+line 516, in check
+    for pattern in 
+self.url_patterns:
+                   
+^^^^^^^^^^^^^^^^^
+  File "C:\Users\adm
+in\AppData\Roaming\P
+ython\Python314\site
+-packages\django\uti
+ls\functional.py", 
+line 47, in __get__
+    res = instance._
+_dict__[self.name] 
+= 
+self.func(instance)
+                    
+                    
+ ~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\adm
+in\AppData\Roaming\P
+ython\Python314\site
+-packages\django\url
+s\resolvers.py", 
+line 735, in 
+url_patterns
+    patterns = getat
+tr(self.urlconf_modu
+le, "urlpatterns", 
+self.urlconf_module)
+                    
+   
+^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\adm
+in\AppData\Roaming\P
+ython\Python314\site
+-packages\django\uti
+ls\functional.py", 
+line 47, in __get__
+    res = instance._
+_dict__[self.name] 
+= 
+self.func(instance)
+                    
+                    
+ ~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\adm
+in\AppData\Roaming\P
+ython\Python314\site
+-packages\django\url
+s\resolvers.py", 
+line 728, in 
+urlconf_module
+    return import_mo
+dule(self.urlconf_na
+me)
+  File "C:\Python314
+\Lib\importlib\__ini
+t__.py", line 88, 
+in import_module
+    return _bootstra
+p._gcd_import(name[l
+evel:], package, 
+level)
+           ~~~~~~~~~
+~~~~~~~~~~~~~^^^^^^^
+^^^^^^^^^^^^^^^^^^^^
+^^^
+  File "<frozen impo
+rtlib._bootstrap>", 
+line 1398, in 
+_gcd_import
+  File "<frozen impo
+rtlib._bootstrap>", 
+line 1371, in 
+_find_and_load
+  File "<frozen impo
+rtlib._bootstrap>", 
+line 1342, in _find_
+and_load_unlocked
+  File "<frozen impo
+rtlib._bootstrap>", 
+line 938, in 
+_load_unlocked
+  File "<frozen impo
+rtlib._bootstrap_ext
+ernal>", line 762, 
+in exec_module
+  File "<frozen impo
+rtlib._bootstrap>", 
+line 491, in _call_w
+ith_frames_removed
+  File "C:\Users\adm
+in\Downloads\islam\i
+slamweb_clone\urls.p
+y", line 5, in 
+<module>
+    from core.views 
+import home
+  File "C:\Users\adm
+in\Downloads\islam\c
+ore\views.py", line 
+2, in <module>
+    from 
+fatwa.models import 
+Fatwa
+  File "C:\Users\adm
+in\Downloads\islam\f
+atwa\models.py", 
+line 5, in <module>
+    class FatwaCateg
+ory(MPTTModel):
+    ...<8 lines>...
+            return 
+self.name
+  File "C:\Users\adm
+in\AppData\Roaming\P
+ython\Python314\site
+-packages\mptt\model
+s.py", line 287, in 
+__new__
+    cls = 
+super_new(meta, 
+class_name, bases, 
+class_dict)
+  File "C:\Users\adm
+in\AppData\Roaming\P
+ython\Python314\site
+-packages\django\db\
+models\base.py", 
+line 134, in __new__
+    raise 
+RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: Model 
+class fatwa.models.F
+atwaCategory 
+doesn't declare an 
+explicit app_label 
+and isn't in an 
+application in 
+INSTALLED_APPS.

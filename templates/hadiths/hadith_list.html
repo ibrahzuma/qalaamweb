@@ -2,26 +2,52 @@
 {% load static %}
 
 {% block content %}
+<style>
+    .hadith-arabic {
+        font-family: 'Amiri', serif;
+        direction: rtl;
+        text-align: right;
+        font-size: 1.4rem;
+        line-height: 2;
+        color: #2c3e50;
+    }
+
+    .hadith-translation {
+        font-size: 1.05rem;
+        line-height: 1.6;
+        color: #555;
+    }
+
+    .lang-label {
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        color: #999;
+        margin-bottom: 0.5rem;
+        display: block;
+    }
+</style>
+
 <div class="container py-5">
     <nav aria-label="breadcrumb" class="mb-4">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
-            <li class="breadcrumb-item"><a href="{% url 'hadiths:edition_list' %}">Hadith Collections</a></li>
-            <li class="breadcrumb-item active" aria-current="page">{{ edition.name }}</li>
+            <li class="breadcrumb-item"><a href="{% url 'hadiths:collection_list' %}">Hadith Collections</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ collection.name }}</li>
         </ol>
     </nav>
 
     <div class="row mb-5">
         <div class="col-12">
-            <h1 class="fw-bold mb-2">{{ edition.name }}</h1>
-            <p class="text-muted">Exploring the collection in {{ edition.language|title }}</p>
+            <h1 class="fw-bold mb-2">{{ collection.name }}</h1>
+            <p class="text-muted">Multilingual Edition (Arabic, English, Swahili)</p>
         </div>
     </div>
 
     <div class="row">
-        <div class="col-lg-8 mx-auto">
+        <div class="col-lg-10 mx-auto">
             {% for hadith in hadiths %}
-            <div class="card border-0 shadow-sm mb-4 glass-card">
+            <div class="card border-0 shadow-sm mb-5 glass-card">
                 <div
                     class="card-header bg-transparent border-0 pt-4 px-4 d-flex justify-content-between align-items-center">
                     <span class="badge bg-primary">Hadith #{{ hadith.hadith_number }}</span>
@@ -30,11 +56,33 @@
                     {% endif %}
                 </div>
                 <div class="card-body p-4">
-                    <p class="hadith-text fs-5 mb-0" style="line-height: 1.8;">{{ hadith.text }}</p>
+                    <!-- Arabic Text -->
+                    {% if hadith.text_arabic %}
+                    <div class="mb-4 pb-4 border-bottom">
+                        <span class="lang-label">العربية (Arabic)</span>
+                        <p class="hadith-arabic mb-0">{{ hadith.text_arabic }}</p>
+                    </div>
+                    {% endif %}
+
+                    <!-- English Text -->
+                    {% if hadith.text_english %}
+                    <div class="mb-4 {% if hadith.text_swahili %}pb-4 border-bottom{% endif %}">
+                        <span class="lang-label">English</span>
+                        <p class="hadith-translation mb-0">{{ hadith.text_english }}</p>
+                    </div>
+                    {% endif %}
+
+                    <!-- Swahili Text -->
+                    {% if hadith.text_swahili %}
+                    <div class="mb-0">
+                        <span class="lang-label">Kiswahili (Swahili)</span>
+                        <p class="hadith-translation mb-0">{{ hadith.text_swahili }}</p>
+                    </div>
+                    {% endif %}
 
                     {% if hadith.grades %}
                     <div class="mt-4 pt-4 border-top">
-                        <h6 class="text-muted small fw-bold text-uppercase mb-2">Grades</h6>
+                        <h6 class="text-muted small fw-bold text-uppercase mb-2">Authenticity Grades</h6>
                         <div class="d-flex flex-wrap gap-2">
                             {% for grade in hadith.grades %}
                             <span class="badge rounded-pill bg-light text-dark border">
@@ -52,7 +100,7 @@
             </div>
             {% empty %}
             <div class="text-center py-5">
-                <p class="text-muted">No hadiths found in this collection.</p>
+                <p class="text-muted">No translations found for this collection yet.</p>
             </div>
             {% endfor %}
 

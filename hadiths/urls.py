@@ -4,7 +4,7 @@ from . import views
 app_name = 'hadiths'
 
 urlpatterns = [
-    path('', views.EditionListView.as_view(), name='edition_list'),
-    path('<str:edition_key>/', views.HadithListView.as_view(), name='hadith_list'),
+    path('', views.CollectionListView.as_view(), name='collection_list'),
+    path('<slug:slug>/', views.HadithListView.as_view(), name='hadith_list'),
     path('hadith/<int:pk>/', views.HadithDetailView.as_view(), name='hadith_detail'),
 ]

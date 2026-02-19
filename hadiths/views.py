@@ -1,10 +1,10 @@
 from django.views.generic import ListView, DetailView
-from .models import HadithEdition, Hadith
+from .models import HadithCollection, Hadith
 
-class EditionListView(ListView):
-    model = HadithEdition
-    template_name = 'hadiths/edition_list.html'
-    context_object_name = 'editions'
+class CollectionListView(ListView):
+    model = HadithCollection
+    template_name = 'hadiths/collection_list.html'
+    context_object_name = 'collections'
 
 class HadithListView(ListView):
     model = Hadith
@@ -13,11 +13,11 @@ class HadithListView(ListView):
     paginate_by = 20
 
     def get_queryset(self):
-        return Hadith.objects.filter(edition__edition_key=self.kwargs['edition_key']).order_by('id')
+        return Hadith.objects.filter(collection__slug=self.kwargs['slug']).order_by('id')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['edition'] = HadithEdition.objects.get(edition_key=self.kwargs['edition_key'])
+        context['collection'] = HadithCollection.objects.get(slug=self.kwargs['slug'])
         return context
 
 class HadithDetailView(DetailView):
