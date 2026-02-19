@@ -42,7 +42,7 @@ decorator==5.2.1
 Django==5.0.1
 django-admin-soft-dashboard==1.0.26
 django-allauth
-django-baton==5.0.3
+django-baton
 django-bootstrap5
 django-ckeditor
 django-cors-headers
@@ -143,8 +143,8 @@ pycparser==2.23
 pydantic==2.12.5
 pydantic_core==2.41.5
 Pygments==2.19.2
-pyHanko==0.32.0
-pyhanko-certvalidator==0.29.0
+pyhanko
+pyhanko-certvalidator
 PyJWT==2.10.1
 PyMuPDF==1.26.7
 PyNaCl==1.6.1
@@ -169,7 +169,7 @@ pytz==2025.2
 pyvis==0.3.2
 PyYAML==6.0.3
 quran
-quran.py==0.1
+quran.py
 redis==7.1.0
 referencing==0.37.0
 regex==2026.1.15
