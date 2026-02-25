@@ -34,3 +34,35 @@ class Book(models.Model):
 
     def __str__(self):
         return self.title
+
+class Video(models.Model):
+    title = models.CharField(max_length=500)
+    video_url = models.URLField(blank=True, help_text="Link to YouTube or Vimeo video")
+    video_file = models.FileField(upload_to='videos/', blank=True, null=True)
+    description = models.TextField(blank=True)
+    category = models.ForeignKey(ContentCategory, on_delete=models.CASCADE, related_name='videos')
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.title
+
+class Podcast(models.Model):
+    title = models.CharField(max_length=500)
+    description = models.TextField(blank=True)
+    cover_image = models.ImageField(upload_to='podcasts/covers/')
+    category = models.ForeignKey(ContentCategory, on_delete=models.CASCADE, related_name='podcasts')
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.title
+
+class PodcastEpisode(models.Model):
+    podcast = models.ForeignKey(Podcast, on_delete=models.CASCADE, related_name='episodes')
+    title = models.CharField(max_length=500)
+    audio_file = models.FileField(upload_to='podcasts/episodes/')
+    description = models.TextField(blank=True)
+    duration = models.CharField(max_length=100, blank=True, help_text="e.g. 45:20")
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.podcast.title} - {self.title}"

@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ podcast.title }} - QALAAM{% endblock %}
+
+{% block content %}
+<div class="row mb-5">
+    <!-- Podcast Info -->
+    <div class="col-md-4 mb-4">
+        <div class="card border-0 shadow-sm rounded-4 sticky-top" style="top: 20px;">
+            <img src="{{ podcast.cover_image.url }}" class="card-img-top rounded-top-4" alt="{{ podcast.title }}">
+            <div class="card-body">
+                <h3 class="fw-bold mb-3">{{ podcast.title }}</h3>
+                <span class="badge bg-primary bg-opacity-10 text-primary rounded-pill mb-3">{{ podcast.category.name
+                    }}</span>
+                <p class="text-muted">{{ podcast.description }}</p>
+                <hr>
+                <div class="d-flex align-items-center text-muted small">
+                    <i class="bi bi-calendar3 me-2"></i> Created on {{ podcast.created_at|date:"F d, Y" }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Episode List -->
+    <div class="col-md-8">
+        <h2 class="fw-bold mb-4">Episodes ({{ episodes.count }})</h2>
+        <div class="card border-0 shadow-sm rounded-4 p-3">
+            <div class="list-group list-group-flush">
+                {% for episode in episodes %}
+                <div class="list-group-item p-4 border-0 mb-3 rounded-4 episode-item"
+                    style="background-color: #f8f9fa;">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <div>
+                            <h5 class="fw-bold mb-1">{{ episode.title }}</h5>
+                            <p class="text-muted small mb-0">{{ episode.description }}</p>
+                        </div>
+                        <span class="badge bg-dark rounded-pill">{{ episode.duration }}</span>
+                    </div>
+                    <div class="d-flex align-items-center gap-3 mt-3">
+                        <audio controls class="w-100 custom-audio-player">
+                            <source src="{{ episode.audio_file.url }}" type="audio/mpeg">
+                        </audio>
+                        <a href="{{ episode.audio_file.url }}" download
+                            class="btn btn-outline-dark btn-sm rounded-circle shadow-none">
+                            <i class="bi bi-download"></i>
+                        </a>
+                    </div>
+                    <div class="mt-2">
+                        <small class="text-muted smaller">Published on {{ episode.created_at|date:"F d, Y" }}</small>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="text-center py-5">
+                    <p class="text-muted">This podcast has no episodes yet.</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .episode-item {
+        transition: transform 0.2s ease;
+    }
+
+    .episode-item:hover {
+        background-color: #e9ecef !important;
+        transform: translateX(5px);
+    }
+
+    .custom-audio-player {
+        height: 40px;
+    }
+</style>
+{% endblock %}

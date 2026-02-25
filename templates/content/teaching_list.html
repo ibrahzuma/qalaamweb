@@ -1,0 +1,137 @@
+{% extends 'base.html' %}
+
+{% block title %}Teachings - QALAAM{% endblock %}
+
+{% block content %}
+<!-- Header Section -->
+<div class="row mb-4">
+    <div class="col-12 text-center py-5"
+        style="background: linear-gradient(135deg, #1a237e 0%, #004d40 100%); border-radius: 20px; color: white; position: relative; overflow: hidden;">
+        <div style="position: absolute; top: -10%; right: -5%; opacity: 0.1;">
+            <i class="bi bi-book" style="font-size: 15rem;"></i>
+        </div>
+        <h1 class="display-3 fw-bold" style="color: #ffd700;">Islamic Teachings</h1>
+        <p class="lead opacity-75">Explore our curated collection of Quranic studies, lectures, and educational videos
+        </p>
+    </div>
+</div>
+
+<!-- Section: Recently Added Teachings -->
+<div class="row mb-5">
+    <!-- Videos Section -->
+    <div class="col-12 mb-5">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="fw-bold mb-0"><i class="bi bi-play-circle-fill text-danger me-2"></i> Featured Videos</h2>
+            <a href="{% url 'content:video_list' %}" class="btn btn-outline-dark rounded-pill">View All <i
+                    class="bi bi-chevron-right ms-1"></i></a>
+        </div>
+        <div class="row g-4">
+            {% for video in videos %}
+            <div class="col-md-6 col-lg-3">
+                <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden video-card">
+                    {% if video.video_url %}
+                    <div class="ratio ratio-16x9">
+                        <iframe src="{{ video.video_url|replace:'watch?v=,embed/' }}" allowfullscreen></iframe>
+                    </div>
+                    {% elif video.video_file %}
+                    <video controls class="card-img-top">
+                        <source src="{{ video.video_file.url }}" type="video/mp4">
+                    </video>
+                    {% endif %}
+                    <div class="card-body">
+                        <h6 class="fw-bold mb-1">{{ video.title }}</h6>
+                        <p class="text-muted small mb-0">{{ video.category.name }}</p>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12 text-center py-4 bg-light rounded-4">
+                <p class="text-muted mb-0">No videos available in Teachings yet.</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Audios Section -->
+    <div class="col-md-6 mb-5">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="fw-bold mb-0"><i class="bi bi-mic-fill text-primary me-2"></i> Audio Lessons</h2>
+            <a href="{% url 'content:audio_list' %}" class="btn btn-sm btn-outline-dark rounded-pill">Explore More</a>
+        </div>
+        <div class="list-group list-group-flush rounded-4 shadow-sm">
+            {% for audio in audios %}
+            <div class="list-group-item p-3 border-0">
+                <div class="d-flex align-items-center">
+                    <div class="bg-primary bg-opacity-10 p-2 rounded-3 me-3">
+                        <i class="bi bi-play-fill text-primary"></i>
+                    </div>
+                    <div class="flex-grow-1">
+                        <h6 class="mb-0 fw-bold">{{ audio.title }}</h6>
+                        <small class="text-muted">{{ audio.speaker }}</small>
+                    </div>
+                    <audio controls style="height: 30px; width: 100px;">
+                        <source src="{{ audio.file.url }}" type="audio/mpeg">
+                    </audio>
+                </div>
+            </div>
+            {% empty %}
+            <div class="list-group-item text-center py-4">
+                <p class="text-muted mb-0">No audio lessons found.</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Books Section -->
+    <div class="col-md-6 mb-5">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="fw-bold mb-0"><i class="bi bi-file-earmark-text-fill text-success me-2"></i> Reading Material
+            </h2>
+            <a href="{% url 'content:book_list' %}" class="btn btn-sm btn-outline-dark rounded-pill">Read More</a>
+        </div>
+        <div class="row g-3">
+            {% for book in books %}
+            <div class="col-6">
+                <div class="card h-100 border-0 shadow-sm rounded-4 book-card">
+                    <div class="row g-0">
+                        <div class="col-4">
+                            <img src="{{ book.cover_image.url }}"
+                                class="img-fluid rounded-start-4 h-100 object-fit-cover" alt="{{ book.title }}">
+                        </div>
+                        <div class="col-8">
+                            <div class="card-body p-2">
+                                <h6 class="card-title fw-bold small mb-1">{{ book.title }}</h6>
+                                <p class="card-text text-muted smaller mb-1">{{ book.author }}</p>
+                                <a href="{% url 'content:book_reader' book.pk %}"
+                                    class="btn btn-xs btn-success rounded-pill py-0 px-2 fw-bold"
+                                    style="font-size: 0.7rem;">READ</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12 text-center py-4 bg-light rounded-4">
+                <p class="text-muted mb-0">No books found in Teachings.</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<style>
+    .video-card:hover,
+    .book-card:hover {
+        transform: translateY(-5px);
+        transition: transform 0.3s ease;
+    }
+
+    .smaller {
+        font-size: 0.75rem;
+    }
+
+    .btn-xs {
+        padding: 1px 5px;
+    }
+</style>
+{% endblock %}
