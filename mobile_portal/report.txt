@@ -1,0 +1,5 @@
+Analyzing lib...                                                
+
+  error - The getter 'locationStream' isn't defined for the type 'FlutterQiblah' - lib\screens\qibla_screen.dart:14:51 - undefined_getter
+   info - 'background' is deprecated and shouldn't be used. Use surface instead. This feature was deprecated after v3.18.0-0.1.pre - lib\utils\app_theme.dart:18:9 - deprecated_member_use
+
