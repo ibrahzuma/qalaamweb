@@ -191,6 +191,11 @@ class ApiService {
     return data.map((json) => Clip.fromJson(json)).toList();
   }
 
+  Future<List<Reel>> fetchReels() async {
+    final List<dynamic> data = await get('reels/');
+    return data.map((json) => Reel.fromJson(json)).toList();
+  }
+
   Future<List<Dhikr>> fetchDhikrs() async {
     final List<dynamic> data = await get('dhikrs/');
     return data.map((json) => Dhikr.fromJson(json)).toList();
@@ -199,6 +204,14 @@ class ApiService {
   dynamic _handleResponse(http.Response response) {
     if (response.statusCode >= 200 && response.statusCode < 300) {
       return jsonDecode(response.body);
+    } else if (response.statusCode == 404) {
+      // Treat "not found" as missing data rather than an error.
+      return null;
+    } else if (response.statusCode == 401) {
+      // Stored token rejected — drop it so subsequent calls fall back to ApiKey.
+      logout();
+      debugPrint('API 401 — cleared stored auth token; falling back to ApiKey on next call.');
+      throw Exception('Server error: 401');
     } else {
       debugPrint('API Non-200 Response (${response.statusCode}): ${response.body}');
       throw Exception('Server error: ${response.statusCode}');

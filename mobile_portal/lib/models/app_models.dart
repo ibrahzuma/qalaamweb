@@ -74,12 +74,14 @@ class Fatwa {
 
   factory Fatwa.fromJson(Map<String, dynamic> json) {
     return Fatwa(
-      id: json['id'],
-      question: json['question'],
-      answer: json['answer'] ?? '',
-      category: json['category'] ?? 'General',
-      scholar: json['scholar'] ?? 'Unknown Scholar',
-      date: json['date'] ?? '',
+      id: json['id'] as int,
+      question: (json['title'] as String?) ?? (json['question'] as String?) ?? '',
+      answer: (json['answer'] as String?) ?? '',
+      category: (json['category_name'] as String?) ??
+          (json['category']?.toString() ?? 'General'),
+      scholar: (json['scholar'] as String?) ?? 'Scholar',
+      date: (json['created_at'] as String?) ??
+          (json['date'] as String?) ?? '',
     );
   }
 }
@@ -311,6 +313,32 @@ class VideoSeries {
       description: json['description'] ?? '',
       imageUrl: json['image_url'] ?? '',
       lessonCount: json['lesson_count'] ?? '0',
+    );
+  }
+}
+
+class Reel {
+  final int id;
+  final String title;
+  final String description;
+  final String videoUrl;
+  final String thumbnailUrl;
+
+  Reel({
+    required this.id,
+    required this.title,
+    required this.description,
+    required this.videoUrl,
+    required this.thumbnailUrl,
+  });
+
+  factory Reel.fromJson(Map<String, dynamic> json) {
+    return Reel(
+      id: json['id'] as int,
+      title: (json['title'] as String?) ?? '',
+      description: (json['description'] as String?) ?? '',
+      videoUrl: (json['video_file'] as String?) ?? (json['video_url'] as String?) ?? '',
+      thumbnailUrl: (json['thumbnail'] as String?) ?? '',
     );
   }
 }

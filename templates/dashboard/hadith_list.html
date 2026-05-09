@@ -11,8 +11,7 @@
                 <select name="collection" class="form-select form-select-sm" onchange="this.form.submit()">
                     <option value="">All Collections</option>
                     {% for coll in collections %}
-                    <option value="{{ coll.id }}" {% if request.GET.collection==coll.id|stringformat:"s" %}selected{%
-                        endif %}>{{ coll.name }}</option>
+                    <option value="{{ coll.id }}" {% if request.GET.collection == coll.id|stringformat:"s" %}selected{% endif %}>{{ coll.name }}</option>
                     {% endfor %}
                 </select>
             </form>

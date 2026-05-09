@@ -1,0 +1,47 @@
+{% extends 'dashboard/base.html' %}
+
+{% block page_title %}Manage Dhikrs{% endblock %}
+
+{% block main %}
+<div class="card card-glass border-0 shadow-sm">
+    <div class="card-header bg-transparent border-0 pt-4 px-4 d-flex justify-content-between align-items-center">
+        <h5 class="mb-0 fw-bold">All Dhikrs</h5>
+        <a href="{% url 'dashboard:dhikr_create' %}" class="btn btn-sm btn-success rounded-pill px-3">
+            <i class="bi bi-plus-lg"></i> New Dhikr
+        </a>
+    </div>
+    <div class="card-body p-4">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Arabic</th>
+                        <th>Translation</th>
+                        <th>Target</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for dhikr in dhikrs %}
+                    <tr>
+                        <td>#{{ dhikr.id }}</td>
+                        <td><div class="fw-bold">{{ dhikr.name }}</div></td>
+                        <td><span dir="rtl" style="font-family: serif;">{{ dhikr.arabic_text|truncatechars:40 }}</span></td>
+                        <td>{{ dhikr.translation|truncatechars:50 }}</td>
+                        <td><span class="badge bg-success rounded-pill">{{ dhikr.default_target }}</span></td>
+                        <td>
+                            <a href="{% url 'dashboard:dhikr_edit' dhikr.pk %}" class="btn btn-sm btn-outline-primary"><i class="bi bi-pencil"></i></a>
+                            <a href="{% url 'dashboard:dhikr_delete' dhikr.pk %}" class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr><td colspan="6" class="text-center py-4 text-muted">No dhikrs yet.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

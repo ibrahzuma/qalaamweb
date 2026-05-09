@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import '../utils/app_theme.dart';
 import '../services/api_service.dart';
 import '../models/app_models.dart';
+import '../widgets/qalaam_card.dart';
+import '../widgets/section_header.dart';
+import '../widgets/shimmer.dart';
+import 'podcast_detail_screen.dart';
 
 class PodcastListScreen extends StatefulWidget {
   const PodcastListScreen({super.key});
@@ -13,19 +16,19 @@ class PodcastListScreen extends StatefulWidget {
 
 class _PodcastListScreenState extends State<PodcastListScreen> {
   final ApiService _apiService = ApiService();
-  late Future<List<Podcast>> _podcastsFuture;
-  final List<String> _categories = ["All", "History", "Spirituality", "Contemporary"];
+  late Future<List<Podcast>> _future;
+  final _categories = const ['All', 'History', 'Spirituality', 'Contemporary', 'Tafsir'];
   int _selectedCategory = 0;
 
   @override
   void initState() {
     super.initState();
-    _loadData();
+    _load();
   }
 
-  void _loadData() {
+  void _load() {
     setState(() {
-      _podcastsFuture = _apiService.fetchPodcasts();
+      _future = _apiService.fetchPodcasts();
     });
   }
 
@@ -33,272 +36,256 @@ class _PodcastListScreenState extends State<PodcastListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppTheme.background,
-      appBar: AppBar(
-        leading: const Padding(
-          padding: EdgeInsets.all(8.0),
-          child: CircleAvatar(
-            backgroundImage: NetworkImage("https://via.placeholder.com/150"),
-          ),
-        ),
-        title: const Text("Qalaam"),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.notifications_none_rounded, color: AppTheme.primaryGreen),
-            onPressed: () {},
-          ),
-        ],
-      ),
       body: RefreshIndicator(
-        onRefresh: () async => _loadData(),
+        onRefresh: () async => _load(),
         color: AppTheme.primaryGreen,
-        child: SingleChildScrollView(
-          physics: const AlwaysScrollableScrollPhysics(),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Search Bar
-              Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 15),
-                  decoration: BoxDecoration(
-                    color: const Color(0xFFEBF5F1),
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  child: TextField(
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      hintText: "Search podcasts, scholars, or topics",
-                      hintStyle: GoogleFonts.outfit(color: AppTheme.textGrey, fontSize: 13),
-                      icon: const Icon(Icons.search, color: AppTheme.primaryGreen),
-                    ),
-                  ),
-                ),
-              ),
-
-              // Categories
-              SizedBox(
-                height: 40,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  padding: const EdgeInsets.only(left: 20),
-                  itemCount: _categories.length,
-                  itemBuilder: (context, index) {
-                    bool isSelected = _selectedCategory == index;
-                    return GestureDetector(
-                      onTap: () => setState(() => _selectedCategory = index),
-                      child: Container(
-                        margin: const EdgeInsets.only(right: 15),
-                        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-                        decoration: BoxDecoration(
-                          color: isSelected ? AppTheme.primaryGreen : const Color(0xFFE8F8F5),
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: Text(
-                          _categories[index],
-                          style: GoogleFonts.outfit(
-                            color: isSelected ? Colors.white : AppTheme.primaryGreen,
-                            fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
-                          ),
-                        ),
-                      ),
-                    );
-                  },
-                ),
-              ),
-
-              const SizedBox(height: 25),
-
-              FutureBuilder<List<Podcast>>(
-                future: _podcastsFuture,
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(child: Padding(padding: EdgeInsets.all(40), child: CircularProgressIndicator()));
-                  }
-                  if (snapshot.hasError) {
-                    return _buildDemoContent(); // Fallback to demo
-                  }
-                  final podcasts = snapshot.data ?? [];
-                  if (podcasts.isEmpty) {
-                    return const Center(child: Text("No podcasts found."));
-                  }
-                  return _buildDynamicContent(podcasts);
-                },
-              ),
-              const SizedBox(height: 30),
-            ],
-          ),
+        child: CustomScrollView(
+          physics: const BouncingScrollPhysics(),
+          slivers: [
+            SliverAppBar(
+              backgroundColor: AppTheme.background,
+              elevation: 0,
+              pinned: false,
+              floating: true,
+              centerTitle: false,
+              title: Text('Audio', style: AppTheme.h2()),
+              actions: [
+                IconButton(icon: const Icon(Icons.search_rounded), onPressed: () {}),
+                IconButton(icon: const Icon(Icons.headphones_rounded), onPressed: () {}),
+                const SizedBox(width: 8),
+              ],
+            ),
+            SliverToBoxAdapter(child: _buildCategoryRow()),
+            SliverToBoxAdapter(child: _buildBody()),
+            const SliverToBoxAdapter(child: SizedBox(height: 120)),
+          ],
         ),
       ),
     );
   }
 
-  Widget _buildDynamicContent(List<Podcast> podcasts) {
-    final featured = podcasts.first;
-    final popular = podcasts.skip(1).toList();
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        // Featured Show
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0),
-          child: Container(
-            height: 220,
-            width: double.infinity,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(25),
-              image: DecorationImage(
-                image: NetworkImage(featured.imageUrl.isNotEmpty ? featured.imageUrl : "https://images.unsplash.com/photo-1518005020251-58d1396a6042?auto=format&fit=crop&q=80&w=800"),
-                fit: BoxFit.cover,
-              ),
-            ),
-            child: Container(
+  Widget _buildCategoryRow() {
+    return SizedBox(
+      height: 38,
+      child: ListView.separated(
+        scrollDirection: Axis.horizontal,
+        padding: const EdgeInsets.symmetric(horizontal: AppTheme.space5),
+        itemCount: _categories.length,
+        separatorBuilder: (_, __) => const SizedBox(width: 8),
+        itemBuilder: (_, i) {
+          final selected = i == _selectedCategory;
+          return GestureDetector(
+            onTap: () => setState(() => _selectedCategory = i),
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 200),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(25),
-                gradient: LinearGradient(
-                  colors: [Colors.black.withOpacity(0.8), Colors.transparent],
-                  begin: Alignment.bottomCenter,
-                  end: Alignment.topCenter,
+                color: selected ? AppTheme.primaryGreen : AppTheme.surface,
+                borderRadius: BorderRadius.circular(99),
+                border: Border.all(color: selected ? AppTheme.primaryGreen : AppTheme.borderLight),
+              ),
+              child: Text(
+                _categories[i],
+                style: AppTheme.caption(color: selected ? Colors.white : AppTheme.textDark)
+                    .copyWith(fontWeight: FontWeight.w700),
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _buildBody() {
+    return FutureBuilder<List<Podcast>>(
+      future: _future,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Padding(
+            padding: EdgeInsets.only(top: 12),
+            child: Column(children: [
+              SkeletonList(count: 1, itemHeight: 220),
+              SizedBox(height: 24),
+              SkeletonRow(count: 3, itemWidth: 160, itemHeight: 200),
+            ]),
+          );
+        }
+        final list = snapshot.data ?? const <Podcast>[];
+        if (list.isEmpty) {
+          return _empty();
+        }
+        final featured = list.first;
+        final rest = list.skip(1).toList();
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(height: AppTheme.space5),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: AppTheme.space5),
+              child: _featuredCard(featured),
+            ),
+            SectionHeader(title: 'Popular shows', actionLabel: 'View all', onActionTap: () {}),
+            SizedBox(
+              height: 220,
+              child: ListView.separated(
+                scrollDirection: Axis.horizontal,
+                padding: const EdgeInsets.symmetric(horizontal: AppTheme.space5),
+                itemCount: rest.isEmpty ? 1 : rest.length,
+                separatorBuilder: (_, __) => const SizedBox(width: 14),
+                itemBuilder: (_, i) => _showCard(rest.isEmpty ? featured : rest[i]),
+              ),
+            ),
+            if (featured.episodes.isNotEmpty) ...[
+              const SectionHeader(title: 'Recent episodes', eyebrow: 'Continue listening'),
+              ...featured.episodes.take(4).map((ep) => Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: AppTheme.space5, vertical: 4),
+                    child: _episodeRow(ep, featured.author),
+                  )),
+            ],
+          ],
+        );
+      },
+    );
+  }
+
+  Widget _featuredCard(Podcast p) {
+    return GestureDetector(
+      onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => PodcastDetailScreen(podcast: p))),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(AppTheme.radiusXl),
+        child: Container(
+          height: 220,
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: NetworkImage(p.imageUrl.isNotEmpty
+                  ? p.imageUrl
+                  : 'https://images.unsplash.com/photo-1518005020251-58d1396a6042?auto=format&fit=crop&q=80&w=800'),
+              fit: BoxFit.cover,
+            ),
+          ),
+          child: Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [Colors.transparent, AppTheme.primaryGreenDeep.withOpacity(0.85)],
+              ),
+            ),
+            padding: const EdgeInsets.all(AppTheme.space5),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                  decoration: BoxDecoration(
+                    color: AppTheme.gold.withOpacity(0.85),
+                    borderRadius: BorderRadius.circular(99),
+                  ),
+                  child: Text('FEATURED', style: AppTheme.eyebrow(color: Colors.white).copyWith(fontSize: 10)),
                 ),
-              ),
-              padding: const EdgeInsets.all(20),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                    decoration: BoxDecoration(
-                      color: AppTheme.primaryGreen,
-                      borderRadius: BorderRadius.circular(6),
-                    ),
-                    child: Text(
-                      "FEATURED SHOW",
-                      style: GoogleFonts.outfit(color: Colors.white, fontSize: 10, fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  Text(
-                    featured.title,
-                    style: GoogleFonts.outfit(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    "Hosted by ${featured.author}",
-                    style: GoogleFonts.outfit(color: Colors.white.withOpacity(0.8), fontSize: 14),
-                  ),
-                ],
-              ),
+                const SizedBox(height: 10),
+                Text(p.title, style: AppTheme.h1(color: Colors.white).copyWith(fontSize: 24), maxLines: 2, overflow: TextOverflow.ellipsis),
+                const SizedBox(height: 4),
+                Text('Hosted by ${p.author}', style: AppTheme.body(color: Colors.white.withOpacity(0.86))),
+              ],
             ),
           ),
         ),
-
-        // Popular Shows
-        Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text("Popular Shows", style: GoogleFonts.outfit(fontSize: 18, fontWeight: FontWeight.bold)),
-              Text("See All", style: GoogleFonts.outfit(color: AppTheme.primaryGreen, fontWeight: FontWeight.bold)),
-            ],
-          ),
-        ),
-
-        SizedBox(
-          height: 230,
-          child: ListView.builder(
-            scrollDirection: Axis.horizontal,
-            padding: const EdgeInsets.only(left: 20),
-            itemCount: popular.length,
-            itemBuilder: (context, index) {
-              return _buildShowCard(popular[index]);
-            },
-          ),
-        ),
-
-        // Recent Episodes (Taking from first show for demo)
-        Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text("Recent Episodes", style: GoogleFonts.outfit(fontSize: 18, fontWeight: FontWeight.bold)),
-              Text("View History", style: GoogleFonts.outfit(color: AppTheme.primaryGreen, fontWeight: FontWeight.bold)),
-            ],
-          ),
-        ),
-
-        ...featured.episodes.take(3).map((ep) => _buildEpisodeItem(ep, featured.author)),
-      ],
-    );
-  }
-
-  Widget _buildDemoContent() {
-    // Demo data similar to initial redesign
-    return Column(
-      children: [
-        const Center(child: Text("Using demo data due to API error")),
-        const SizedBox(height: 10),
-        _buildShowCard(Podcast(id: 0, title: "Ottoman Legacies", author: "Dr. Omar Farooq", description: "", imageUrl: "https://via.placeholder.com/300", episodes: [])),
-      ],
-    );
-  }
-
-  Widget _buildShowCard(Podcast podcast) {
-    return Container(
-      width: 160,
-      margin: const EdgeInsets.only(right: 20),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(20),
-            child: Image.network(
-              podcast.imageUrl.isNotEmpty ? podcast.imageUrl : "https://via.placeholder.com/160",
-              height: 160, width: 160, fit: BoxFit.cover,
-              errorBuilder: (c, e, s) => Container(color: Colors.grey, height: 160, width: 160, child: const Icon(Icons.podcasts)),
-            ),
-          ),
-          const SizedBox(height: 12),
-          Text(podcast.title, style: GoogleFonts.outfit(fontWeight: FontWeight.bold, fontSize: 16), maxLines: 1, overflow: TextOverflow.ellipsis),
-          Text(podcast.author, style: GoogleFonts.outfit(color: AppTheme.textGrey, fontSize: 13), maxLines: 1, overflow: TextOverflow.ellipsis),
-        ],
       ),
     );
   }
 
-  Widget _buildEpisodeItem(PodcastEpisode episode, String host) {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-      padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
-        boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.03), blurRadius: 10)],
+  Widget _showCard(Podcast p) {
+    return GestureDetector(
+      onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => PodcastDetailScreen(podcast: p))),
+      child: SizedBox(
+        width: 160,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(AppTheme.radiusLg),
+              child: Container(
+                height: 160,
+                width: 160,
+                decoration: BoxDecoration(
+                  color: AppTheme.parchment,
+                  boxShadow: AppTheme.shadowSm,
+                ),
+                child: p.imageUrl.isNotEmpty
+                    ? Image.network(p.imageUrl, fit: BoxFit.cover, errorBuilder: (_, __, ___) => _audioFallback())
+                    : _audioFallback(),
+              ),
+            ),
+            const SizedBox(height: 10),
+            Text(p.title,
+                style: AppTheme.h3().copyWith(fontSize: 14),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis),
+            const SizedBox(height: 2),
+            Text(p.author, style: AppTheme.caption(), maxLines: 1, overflow: TextOverflow.ellipsis),
+          ],
+        ),
       ),
+    );
+  }
+
+  Widget _audioFallback() => Container(
+        decoration: const BoxDecoration(gradient: AppTheme.gradientPrimary),
+        child: const Center(child: Icon(Icons.podcasts_rounded, color: AppTheme.gold, size: 38)),
+      );
+
+  Widget _episodeRow(PodcastEpisode e, String host) {
+    return QalaamTappableCard(
+      padding: const EdgeInsets.all(AppTheme.space3),
+      onTap: () {},
       child: Row(
         children: [
           Container(
-            width: 60, height: 60,
-            decoration: BoxDecoration(color: const Color(0xFFF2F4F4), borderRadius: BorderRadius.circular(12)),
-            child: const Icon(Icons.mic, color: AppTheme.primaryGreen),
+            width: 50,
+            height: 50,
+            decoration: BoxDecoration(
+              gradient: AppTheme.gradientPrimary,
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: const Icon(Icons.play_arrow_rounded, color: Colors.white, size: 28),
           ),
-          const SizedBox(width: 15),
+          const SizedBox(width: 12),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(episode.title, style: GoogleFonts.outfit(fontWeight: FontWeight.bold, fontSize: 15), maxLines: 1, overflow: TextOverflow.ellipsis),
-                Text("$host • ${episode.duration}", style: GoogleFonts.outfit(color: AppTheme.textGrey, fontSize: 12)),
+                Text(e.title, style: AppTheme.h3().copyWith(fontSize: 14), maxLines: 1, overflow: TextOverflow.ellipsis),
+                const SizedBox(height: 2),
+                Text('$host · ${e.duration.isNotEmpty ? e.duration : "—"}', style: AppTheme.caption()),
               ],
             ),
           ),
           IconButton(
-            icon: const Icon(Icons.play_circle_fill_rounded, color: AppTheme.primaryGreen, size: 40),
+            icon: const Icon(Icons.bookmark_outline_rounded, color: AppTheme.textMuted),
             onPressed: () {},
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _empty() {
+    return Padding(
+      padding: const EdgeInsets.all(40),
+      child: QalaamCard(
+        padding: const EdgeInsets.all(AppTheme.space7),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Icon(Icons.podcasts_rounded, color: AppTheme.textGrey, size: 38),
+            const SizedBox(height: 12),
+            Text('No shows yet', style: AppTheme.h3()),
+            const SizedBox(height: 4),
+            Text('New audio content arriving soon.', style: AppTheme.caption()),
+          ],
+        ),
       ),
     );
   }

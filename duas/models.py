@@ -40,3 +40,13 @@ class Dua(models.Model):
 
     def __str__(self):
         return self.title
+
+class Dhikr(models.Model):
+    name = models.CharField(max_length=200)
+    arabic_text = models.TextField()
+    translation = models.TextField()
+    default_target = models.PositiveIntegerField(default=33)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.name

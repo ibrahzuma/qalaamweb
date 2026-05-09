@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_html/flutter_html.dart';
 import '../utils/app_theme.dart';
 import '../services/api_service.dart';
+import '../services/share_service.dart';
 import '../models/app_models.dart';
+import '../widgets/qalaam_card.dart';
+import '../widgets/shimmer.dart';
 
 class FatwaScreen extends StatefulWidget {
   const FatwaScreen({super.key});
@@ -13,212 +16,192 @@ class FatwaScreen extends StatefulWidget {
 
 class _FatwaScreenState extends State<FatwaScreen> {
   final ApiService _apiService = ApiService();
-  late Future<List<Fatwa>> _fatawaFuture;
+  late Future<List<Fatwa>> _future;
 
   @override
   void initState() {
     super.initState();
-    _loadData();
-  }
-
-  void _loadData() {
-    setState(() {
-      _fatawaFuture = _apiService.fetchFatawa();
-    });
+    _future = _apiService.fetchFatawa();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppTheme.background,
-      appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: AppTheme.primaryGreen),
-          onPressed: () => Navigator.pop(context),
-        ),
-        title: const Text("Fatwa & Q&A"),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 15, top: 10, bottom: 10),
-            child: ElevatedButton.icon(
-              onPressed: () {},
-              icon: const Icon(Icons.add, size: 18),
-              label: const Text("Ask Question"),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: AppTheme.primaryGreen,
-                foregroundColor: Colors.white,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                padding: const EdgeInsets.symmetric(horizontal: 12),
-                elevation: 0,
+      appBar: AppBar(title: const Text('Ask a scholar')),
+      body: FutureBuilder<List<Fatwa>>(
+        future: _future,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const SkeletonList(count: 5, itemHeight: 130);
+          }
+          final list = snapshot.data ?? const <Fatwa>[];
+          return CustomScrollView(
+            physics: const BouncingScrollPhysics(),
+            slivers: [
+              SliverToBoxAdapter(child: _buildIntro()),
+              if (list.isEmpty)
+                SliverToBoxAdapter(child: _empty())
+              else
+                SliverList.separated(
+                  itemCount: list.length,
+                  separatorBuilder: (_, __) => const SizedBox(height: AppTheme.space3),
+                  itemBuilder: (_, i) => Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: AppTheme.space5),
+                    child: _fatwaCard(list[i]),
+                  ),
+                ),
+              const SliverToBoxAdapter(child: SizedBox(height: 120)),
+            ],
+          );
+        },
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {},
+        backgroundColor: AppTheme.primaryGreen,
+        icon: const Icon(Icons.edit_outlined, color: Colors.white),
+        label: const Text('Ask question'),
+      ),
+    );
+  }
+
+  Widget _buildIntro() {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(AppTheme.space5, AppTheme.space3, AppTheme.space5, AppTheme.space5),
+      child: QalaamCard(
+        padding: const EdgeInsets.all(AppTheme.space5),
+        child: Row(
+          children: [
+            Container(
+              width: 50,
+              height: 50,
+              decoration: BoxDecoration(
+                color: AppTheme.accentGold,
+                borderRadius: BorderRadius.circular(14),
+              ),
+              child: const Icon(Icons.help_outline_rounded, color: AppTheme.gold, size: 26),
+            ),
+            const SizedBox(width: AppTheme.space4),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('Verified scholarly answers', style: AppTheme.h3()),
+                  const SizedBox(height: 2),
+                  Text('Browse questions or submit your own. Answered by qualified scholars.',
+                      style: AppTheme.caption()),
+                ],
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
-      body: RefreshIndicator(
-        onRefresh: () async => _loadData(),
-        color: AppTheme.primaryGreen,
-        child: SingleChildScrollView(
-          physics: const AlwaysScrollableScrollPhysics(),
+    );
+  }
+
+  void _openAnswer(Fatwa f) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (_) => DraggableScrollableSheet(
+        initialChildSize: 0.86,
+        minChildSize: 0.5,
+        maxChildSize: 0.95,
+        expand: false,
+        builder: (_, scrollController) => Container(
+          decoration: const BoxDecoration(
+            color: AppTheme.surface,
+            borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
+          ),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Search Bar
-              Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 15),
-                  decoration: BoxDecoration(
-                    color: const Color(0xFFF0F9F6),
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  child: TextField(
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      hintText: "Search for fatwas or questions...",
-                      hintStyle: GoogleFonts.outfit(color: AppTheme.textGrey, fontSize: 15),
-                      icon: const Icon(Icons.search, color: AppTheme.primaryGreen),
-                    ),
-                  ),
+              const SizedBox(height: 10),
+              Container(
+                width: 42,
+                height: 4,
+                decoration: BoxDecoration(
+                  color: AppTheme.borderLight,
+                  borderRadius: BorderRadius.circular(99),
                 ),
               ),
-
-              // Banner
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                child: Container(
-                  width: double.infinity,
-                  padding: const EdgeInsets.all(24),
-                  decoration: BoxDecoration(
-                    gradient: const LinearGradient(
-                      colors: [Color(0xFF1ABC9C), Color(0xFF16A085)],
-                      begin: Alignment.bottomLeft,
-                      end: Alignment.topRight,
-                    ),
-                    borderRadius: BorderRadius.circular(25),
-                    boxShadow: [
-                      BoxShadow(
-                        color: AppTheme.primaryGreen.withOpacity(0.2),
-                        blurRadius: 15,
-                        offset: const Offset(0, 8),
-                      ),
-                    ],
-                  ),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Knowledge is Light",
-                              style: GoogleFonts.outfit(
-                                color: Colors.white,
-                                fontSize: 22,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            const SizedBox(height: 10),
-                            Text(
-                              "Browse over 10,000 verified answers from leading scholars.",
-                              style: GoogleFonts.outfit(
-                                color: Colors.white.withOpacity(0.9),
-                                fontSize: 14,
-                                height: 1.4,
-                              ),
-                            ),
-                            const SizedBox(height: 20),
-                            ElevatedButton(
-                              onPressed: () {},
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.white,
-                                foregroundColor: const Color(0xFF16A085),
-                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                                padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
-                                elevation: 0,
-                              ),
-                              child: Text(
-                                "EXPLORE ARCHIVE",
-                                style: GoogleFonts.outfit(fontSize: 12, fontWeight: FontWeight.bold),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(width: 10),
-                      Icon(Icons.menu_book_rounded, color: Colors.white.withOpacity(0.2), size: 100),
-                    ],
-                  ),
-                ),
-              ),
-
-              // Categories
-              Padding(
-                padding: const EdgeInsets.all(20.0),
+                padding: const EdgeInsets.fromLTRB(AppTheme.space5, AppTheme.space4, AppTheme.space5, AppTheme.space2),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      "Categories",
-                      style: GoogleFonts.outfit(fontSize: 18, fontWeight: FontWeight.bold),
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                      decoration: BoxDecoration(
+                        color: AppTheme.accentGreen,
+                        borderRadius: BorderRadius.circular(99),
+                      ),
+                      child: Text((f.category.isNotEmpty ? f.category : 'GENERAL').toUpperCase(),
+                          style: AppTheme.eyebrow().copyWith(fontSize: 10)),
                     ),
-                    TextButton(
-                      onPressed: () {},
-                      child: Text(
-                        "View All",
-                        style: GoogleFonts.outfit(color: AppTheme.primaryGreen, fontWeight: FontWeight.w600),
+                    const Spacer(),
+                    IconButton(
+                      icon: const Icon(Icons.share_outlined, size: 20, color: AppTheme.textGrey),
+                      onPressed: () => ShareService.shareHadith(
+                        context: context,
+                        text: f.question,
+                        reference: f.scholar.isNotEmpty ? f.scholar : 'Scholar',
                       ),
                     ),
+                    IconButton(
+                      icon: const Icon(Icons.close_rounded, size: 22, color: AppTheme.textDark),
+                      onPressed: () => Navigator.of(context).pop(),
+                    ),
                   ],
                 ),
               ),
-
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                child: GridView.count(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 15,
-                  mainAxisSpacing: 15,
-                  childAspectRatio: 1.4,
+              Expanded(
+                child: ListView(
+                  controller: scrollController,
+                  padding: const EdgeInsets.fromLTRB(AppTheme.space5, 0, AppTheme.space5, AppTheme.space7),
                   children: [
-                    _buildCategoryCard("Marriage", Icons.favorite, const Color(0xFFFFEBEE), Colors.redAccent),
-                    _buildCategoryCard("Finance", Icons.account_balance, const Color(0xFFE8EAF6), Colors.indigoAccent),
-                    _buildCategoryCard("Worship", Icons.mosque_rounded, const Color(0xFFE8F5E9), Colors.green),
-                    _buildCategoryCard("Inheritance", Icons.groups_rounded, const Color(0xFFFFF3E0), Colors.orangeAccent),
+                    Text('Question', style: AppTheme.eyebrow()),
+                    const SizedBox(height: 8),
+                    Text(f.question, style: AppTheme.h2().copyWith(fontSize: 19, height: 1.35)),
+                    const SizedBox(height: AppTheme.space5),
+                    Container(height: 1, color: AppTheme.borderLight),
+                    const SizedBox(height: AppTheme.space5),
+                    Row(
+                      children: [
+                        Container(
+                          width: 32,
+                          height: 32,
+                          decoration: BoxDecoration(
+                            gradient: AppTheme.gradientPrimary,
+                            shape: BoxShape.circle,
+                          ),
+                          alignment: Alignment.center,
+                          child: const Icon(Icons.auto_awesome_rounded, size: 16, color: AppTheme.gold),
+                        ),
+                        const SizedBox(width: 10),
+                        Text('Scholar\'s answer', style: AppTheme.eyebrow()),
+                      ],
+                    ),
+                    const SizedBox(height: 12),
+                    if (f.answer.trim().isNotEmpty)
+                      Html(
+                        data: f.answer,
+                        style: {
+                          'body': Style(
+                            fontFamily: 'Manrope',
+                            fontSize: FontSize(15),
+                            color: AppTheme.textBody,
+                            lineHeight: const LineHeight(1.6),
+                            margin: Margins.zero,
+                          ),
+                          'p': Style(margin: Margins.only(bottom: 14)),
+                        },
+                      )
+                    else
+                      Text('No answer available yet.',
+                          style: AppTheme.body().copyWith(fontStyle: FontStyle.italic)),
                   ],
                 ),
               ),
-
-              // Recently Answered
-              Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Text(
-                  "Recently Answered",
-                  style: GoogleFonts.outfit(fontSize: 18, fontWeight: FontWeight.bold),
-                ),
-              ),
-
-              FutureBuilder<List<Fatwa>>(
-                future: _fatawaFuture,
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(child: Padding(padding: EdgeInsets.all(20), child: CircularProgressIndicator()));
-                  }
-                  if (snapshot.hasError) {
-                    return _buildDemoFatwaList(); // Demo list if backend fails
-                  }
-                  final fatawa = snapshot.data ?? [];
-                  if (fatawa.isEmpty) {
-                    return const Center(child: Text("No fatawa found."));
-                  }
-                  return Column(
-                    children: fatawa.map((f) => _buildFatwaCard(f)).toList(),
-                  );
-                },
-              ),
-              const SizedBox(height: 30),
             ],
           ),
         ),
@@ -226,129 +209,72 @@ class _FatwaScreenState extends State<FatwaScreen> {
     );
   }
 
-  Widget _buildDemoFatwaList() {
-    return Column(
-      children: [
-        _buildFatwaCard(Fatwa(
-          id: 0,
-          category: "Finance",
-          date: "2 hours ago",
-          question: "Is it permissible to trade cryptocurrency for long-term investment?",
-          answer: "In principle, trading is permissible provided the assets do not involve Riba...",
-          scholar: "Mufti A. Rahman",
-        )),
-        _buildFatwaCard(Fatwa(
-          id: 1,
-          category: "Marriage",
-          date: "5 hours ago",
-          question: "The status of a marriage contract performed via video conference?",
-          answer: "Scholars have discussed the modern application of Nikah through digital means...",
-          scholar: "Dr. Sarah Khalil",
-        )),
-      ],
-    );
-  }
-
-  Widget _buildCategoryCard(String label, IconData icon, Color bgColor, Color iconColor) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(15),
-        boxShadow: [
-          BoxShadow(color: Colors.black.withOpacity(0.02), blurRadius: 8, offset: const Offset(0, 2)),
-        ],
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Container(
-            padding: const EdgeInsets.all(12),
-            decoration: BoxDecoration(color: bgColor, shape: BoxShape.circle),
-            child: Icon(icon, color: iconColor, size: 24),
-          ),
-          const SizedBox(height: 10),
-          Text(
-            label,
-            textAlign: TextAlign.center,
-            style: GoogleFonts.outfit(fontSize: 14, fontWeight: FontWeight.w600, color: AppTheme.textDark),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildFatwaCard(Fatwa fatwa) {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
-        boxShadow: [
-          BoxShadow(color: Colors.black.withOpacity(0.03), blurRadius: 10, offset: const Offset(0, 4)),
-        ],
-      ),
+  Widget _fatwaCard(Fatwa f) {
+    return QalaamTappableCard(
+      padding: const EdgeInsets.all(AppTheme.space4),
+      onTap: () => _openAnswer(f),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                 decoration: BoxDecoration(
-                  color: fatwa.category == "Finance" ? const Color(0xFFE0F2F1) : const Color(0xFFFFEBEE),
-                  borderRadius: BorderRadius.circular(6),
+                  color: AppTheme.accentGreen,
+                  borderRadius: BorderRadius.circular(99),
                 ),
-                child: Text(
-                  fatwa.category.toUpperCase(),
-                  style: GoogleFonts.outfit(
-                    color: fatwa.category == "Finance" ? const Color(0xFF00796B) : Colors.redAccent,
-                    fontSize: 10,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+                child: Text((f.category.isNotEmpty ? f.category : 'GENERAL').toUpperCase(),
+                    style: AppTheme.eyebrow().copyWith(fontSize: 9, letterSpacing: 1.2)),
               ),
-              Text(
-                fatwa.date, // Backend usually returns relative time string or we format it
-                style: GoogleFonts.outfit(color: AppTheme.textGrey, fontSize: 12),
-              ),
+              const Spacer(),
+              const Icon(Icons.bookmark_outline_rounded, color: AppTheme.textMuted, size: 18),
             ],
           ),
-          const SizedBox(height: 15),
-          Text(
-            fatwa.question,
-            style: GoogleFonts.outfit(fontSize: 16, fontWeight: FontWeight.bold, height: 1.4),
-          ),
-          const SizedBox(height: 10),
-          Text(
-            fatwa.answer,
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
-            style: GoogleFonts.outfit(color: AppTheme.textGrey, fontSize: 14, height: 1.5),
-          ),
-          const SizedBox(height: 20),
+          const SizedBox(height: AppTheme.space3),
+          Text(f.question, style: AppTheme.h3(), maxLines: 2, overflow: TextOverflow.ellipsis),
+          const SizedBox(height: 6),
+          Text(f.answer.isNotEmpty ? f.answer : 'Tap to view scholarly response',
+              style: AppTheme.body(), maxLines: 3, overflow: TextOverflow.ellipsis),
+          const SizedBox(height: AppTheme.space3),
           Row(
             children: [
               Container(
-                padding: const EdgeInsets.all(6),
-                decoration: const BoxDecoration(color: Color(0xFFE8F8F5), shape: BoxShape.circle),
-                child: const Icon(Icons.check_circle, color: AppTheme.primaryGreen, size: 16),
+                width: 26,
+                height: 26,
+                decoration: BoxDecoration(
+                  color: AppTheme.parchment,
+                  borderRadius: BorderRadius.circular(99),
+                ),
+                child: const Icon(Icons.person_outline_rounded, color: AppTheme.primaryGreen, size: 14),
               ),
               const SizedBox(width: 8),
-              Text(
-                fatwa.scholar,
-                style: GoogleFonts.outfit(fontSize: 14, fontWeight: FontWeight.w500, color: AppTheme.textDark),
-              ),
+              Text(f.scholar.isNotEmpty ? f.scholar : 'Scholar', style: AppTheme.caption()),
               const Spacer(),
-              Text(
-                "Read More",
-                style: GoogleFonts.outfit(fontSize: 13, fontWeight: FontWeight.bold, color: AppTheme.primaryGreen),
-              ),
-              const Icon(Icons.chevron_right, color: AppTheme.primaryGreen, size: 18),
+              Text('Read answer', style: AppTheme.caption(color: AppTheme.primaryGreen).copyWith(fontWeight: FontWeight.w800)),
+              const Icon(Icons.arrow_forward_rounded, color: AppTheme.primaryGreen, size: 16),
             ],
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _empty() {
+    return Padding(
+      padding: const EdgeInsets.all(40),
+      child: QalaamCard(
+        padding: const EdgeInsets.all(AppTheme.space7),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Icon(Icons.help_outline_rounded, color: AppTheme.textGrey, size: 38),
+            const SizedBox(height: 12),
+            Text('No answered questions yet', style: AppTheme.h3(), textAlign: TextAlign.center),
+            const SizedBox(height: 4),
+            Text('Be the first to ask.', style: AppTheme.caption()),
+          ],
+        ),
       ),
     );
   }

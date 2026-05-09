@@ -93,53 +93,94 @@
             <h4 class="fw-bold mb-0">QALAAM ADMIN</h4>
             <small class="opacity-50 text-uppercase">Content Manager</small>
         </div>
-        <nav class="nav flex-column mb-auto">
+        <nav class="nav flex-column mb-auto" style="overflow-y: auto;">
             <a href="{% url 'dashboard:index' %}"
                 class="nav-link {% if request.resolver_match.url_name == 'index' %}active{% endif %}">
                 <i class="bi bi-speedometer2"></i> Dashboard
             </a>
-            <div class="px-4 py-2 small text-uppercase opacity-50 mt-3">Content Management</div>
+
+            <div class="px-4 py-2 small text-uppercase opacity-50 mt-3">Editorial</div>
             <a href="{% url 'dashboard:fatwa_list' %}"
                 class="nav-link {% if 'fatwa' in request.path %}active{% endif %}">
                 <i class="bi bi-patch-question text-success"></i> Fatwa Queries
             </a>
-
             <a href="{% url 'dashboard:article_list' %}"
                 class="nav-link {% if 'article' in request.path %}active{% endif %}">
                 <i class="bi bi-journal-text text-primary"></i> Article Portal
             </a>
 
+            <div class="px-4 py-2 small text-uppercase opacity-50 mt-3">Media</div>
             <a href="{% url 'dashboard:audio_list' %}"
-                class="nav-link {% if 'audio' in request.path %}active{% endif %}">
-                <i class="bi bi-mic text-danger"></i> Audio & Media
+                class="nav-link {% if '/audio/' in request.path %}active{% endif %}">
+                <i class="bi bi-mic text-danger"></i> Audio Lectures
             </a>
-            <a href="{% url 'dashboard:book_list' %}" class="nav-link {% if 'book' in request.path %}active{% endif %}">
+            <a href="{% url 'dashboard:video_list' %}"
+                class="nav-link {% if '/videos/' in request.path %}active{% endif %}">
+                <i class="bi bi-camera-video text-primary"></i> Videos
+            </a>
+            <a href="{% url 'dashboard:podcast_list' %}"
+                class="nav-link {% if '/podcasts/' in request.path %}active{% endif %}">
+                <i class="bi bi-broadcast text-info"></i> Podcasts
+            </a>
+            <a href="{% url 'dashboard:podcast_episode_list' %}"
+                class="nav-link {% if '/podcast-episodes/' in request.path %}active{% endif %}">
+                <i class="bi bi-mic-mute text-info"></i> Podcast Episodes
+            </a>
+            <a href="{% url 'dashboard:reel_list' %}"
+                class="nav-link {% if '/reels/' in request.path %}active{% endif %}">
+                <i class="bi bi-play-circle text-warning"></i> Reels
+            </a>
+            <a href="{% url 'dashboard:book_list' %}"
+                class="nav-link {% if '/books/' in request.path %}active{% endif %}">
                 <i class="bi bi-book text-warning"></i> Digital Library
             </a>
+
+            <div class="px-4 py-2 small text-uppercase opacity-50 mt-3">Quran &amp; Hadith</div>
+            <a href="{% url 'dashboard:quran_list' %}"
+                class="nav-link {% if '/quran/' in request.path %}active{% endif %}">
+                <i class="bi bi-book-fill text-success"></i> Quran (Surahs)
+            </a>
             <a href="{% url 'dashboard:hadith_list' %}"
-                class="nav-link {% if 'hadiths' in request.path %}active{% endif %}">
-                <i class="bi bi-book-half text-danger"></i> Hadith Management
+                class="nav-link {% if '/hadiths/' in request.path and '/hadith-collections/' not in request.path %}active{% endif %}">
+                <i class="bi bi-book-half text-danger"></i> Hadiths
             </a>
             <a href="{% url 'dashboard:hadith_collection_list' %}"
-                class="nav-link {% if 'hadith-collections' in request.path %}active{% endif %}">
+                class="nav-link {% if '/hadith-collections/' in request.path %}active{% endif %}">
                 <i class="bi bi-collection text-info"></i> Hadith Collections
             </a>
 
             <div class="px-4 py-2 small text-uppercase opacity-50 mt-3">Spiritual</div>
-            <a href="{% url 'dashboard:dua_list' %}" class="nav-link {% if 'dua' in request.path %}active{% endif %}">
+            <a href="{% url 'dashboard:dua_list' %}"
+                class="nav-link {% if '/duas/' in request.path %}active{% endif %}">
                 <i class="bi bi-hands-pray text-info"></i> Dua Library
             </a>
+            <a href="{% url 'dashboard:dhikr_list' %}"
+                class="nav-link {% if '/dhikrs/' in request.path %}active{% endif %}">
+                <i class="bi bi-gem text-warning"></i> Dhikrs
+            </a>
 
-            <div class="px-4 py-2 small text-uppercase opacity-50 mt-4">Settings</div>
+            <div class="px-4 py-2 small text-uppercase opacity-50 mt-3">Services</div>
+            <a href="{% url 'dashboard:mosque_list' %}"
+                class="nav-link {% if '/mosques/' in request.path %}active{% endif %}">
+                <i class="bi bi-geo-alt text-success"></i> Mosques
+            </a>
+
+            <div class="px-4 py-2 small text-uppercase opacity-50 mt-3">Admin</div>
+            <a href="{% url 'dashboard:users' %}"
+                class="nav-link {% if '/users/' in request.path %}active{% endif %}">
+                <i class="bi bi-people"></i> Users
+            </a>
             <a href="{% url 'dashboard:category_list' %}"
                 class="nav-link {% if 'categories' in request.path %}active{% endif %}">
-                <i class="bi bi-grid-3x3-gap"></i> Manage Categories
+                <i class="bi bi-grid-3x3-gap"></i> Categories
+            </a>
+            <a href="{% url 'dashboard:content' %}"
+                class="nav-link {% if request.resolver_match.url_name == 'content' %}active{% endif %}">
+                <i class="bi bi-collection-play"></i> Content Hub
             </a>
             <a href="/admin/" class="nav-link text-white-50">
                 <i class="bi bi-shield-lock"></i> Django Admin
             </a>
-
-            <div class="px-4 py-2 small text-uppercase opacity-50 mt-3">System</div>
             <a href="{% url 'home' %}" class="nav-link" target="_blank">
                 <i class="bi bi-arrow-up-right-square"></i> View Website
             </a>

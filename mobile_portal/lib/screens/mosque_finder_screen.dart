@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:geolocator/geolocator.dart';
 import '../utils/app_theme.dart';
 import '../services/api_service.dart';
 import '../models/app_models.dart';
+import '../widgets/qalaam_card.dart';
+import '../widgets/shimmer.dart';
 
 class MosqueFinderScreen extends StatefulWidget {
   const MosqueFinderScreen({super.key});
@@ -14,48 +15,41 @@ class MosqueFinderScreen extends StatefulWidget {
 
 class _MosqueFinderScreenState extends State<MosqueFinderScreen> {
   final ApiService _apiService = ApiService();
-  late Future<List<Mosque>> _mosquesFuture;
-  Position? _currentPosition;
-  final List<String> _filters = ["All Nearby", "Open Now", "Jumu'ah Prayer"];
+  Future<List<Mosque>>? _mosquesFuture;
+  Position? _pos;
+  final _filters = const ['All nearby', 'Open now', 'Jumu\'ah'];
   int _selectedFilter = 0;
 
   @override
   void initState() {
     super.initState();
-    _determinePosition().then((pos) {
-      setState(() {
-        _currentPosition = pos;
-        _mosquesFuture = _apiService.fetchMosques(lat: pos.latitude, lng: pos.longitude);
-      });
-    }).catchError((e) {
-      setState(() {
-        _mosquesFuture = _apiService.fetchMosques(); // Fallback to general mosques
-      });
-    });
+    _bootstrap();
   }
 
-  Future<Position> _determinePosition() async {
-    bool serviceEnabled;
-    LocationPermission permission;
-
-    serviceEnabled = await Geolocator.isLocationServiceEnabled();
-    if (!serviceEnabled) {
-      return Future.error('Location services are disabled.');
+  Future<void> _bootstrap() async {
+    try {
+      final pos = await _resolvePosition();
+      setState(() {
+        _pos = pos;
+        _mosquesFuture = _apiService.fetchMosques(lat: pos.latitude, lng: pos.longitude);
+      });
+    } catch (_) {
+      setState(() {
+        _mosquesFuture = _apiService.fetchMosques();
+      });
     }
+  }
 
-    permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied) {
-        return Future.error('Location permissions are denied');
-      }
+  Future<Position> _resolvePosition() async {
+    final enabled = await Geolocator.isLocationServiceEnabled();
+    if (!enabled) throw 'Location services disabled';
+    var perm = await Geolocator.checkPermission();
+    if (perm == LocationPermission.denied) {
+      perm = await Geolocator.requestPermission();
+      if (perm == LocationPermission.denied) throw 'Location denied';
     }
-    
-    if (permission == LocationPermission.deniedForever) {
-      return Future.error('Location permissions are permanently denied, we cannot request permissions.');
-    } 
-
-    return await Geolocator.getCurrentPosition();
+    if (perm == LocationPermission.deniedForever) throw 'Location permanently denied';
+    return Geolocator.getCurrentPosition();
   }
 
   @override
@@ -63,285 +57,297 @@ class _MosqueFinderScreenState extends State<MosqueFinderScreen> {
     return Scaffold(
       backgroundColor: AppTheme.background,
       appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_rounded, color: AppTheme.textDark),
-          onPressed: () => Navigator.pop(context),
-        ),
-        title: const Text("Nearby Mosques"),
+        title: const Text('Nearby mosques'),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.search_rounded, color: AppTheme.textDark),
-            onPressed: () {},
+          IconButton(icon: const Icon(Icons.search_rounded), onPressed: () {}),
+        ],
+      ),
+      body: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
+        padding: const EdgeInsets.fromLTRB(0, AppTheme.space3, 0, AppTheme.space7),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _buildMapPreview(),
+            const SizedBox(height: AppTheme.space5),
+            _filterRow(),
+            const SizedBox(height: AppTheme.space5),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: AppTheme.space5),
+              child: Row(
+                children: [
+                  Text('Closest to you', style: AppTheme.h2()),
+                  const Spacer(),
+                  if (_pos != null)
+                    Text(
+                      '${_pos!.latitude.toStringAsFixed(2)}, ${_pos!.longitude.toStringAsFixed(2)}',
+                      style: AppTheme.caption(),
+                    ),
+                ],
+              ),
+            ),
+            const SizedBox(height: AppTheme.space3),
+            FutureBuilder<List<Mosque>>(
+              future: _mosquesFuture,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const SkeletonList(count: 4, itemHeight: 160);
+                }
+                final list = snapshot.data ?? const <Mosque>[];
+                if (list.isEmpty) {
+                  return _emptyMosques();
+                }
+                return Column(children: list.map(_mosqueCard).toList());
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildMapPreview() {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: AppTheme.space5),
+      height: 180,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(AppTheme.radiusXl),
+        gradient: const LinearGradient(
+          colors: [Color(0xFF1F8460), Color(0xFF0E5C44)],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+        boxShadow: AppTheme.shadowMd,
+      ),
+      child: Stack(
+        children: [
+          // Faint grid lines as a stylized map
+          ...List.generate(8, (i) => Positioned(
+                top: 22.0 * i,
+                left: 0,
+                right: 0,
+                child: Container(height: 0.6, color: Colors.white.withOpacity(0.06)),
+              )),
+          ...List.generate(10, (i) => Positioned(
+                left: 36.0 * i,
+                top: 0,
+                bottom: 0,
+                child: Container(width: 0.6, color: Colors.white.withOpacity(0.06)),
+              )),
+          // Pin
+          Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    color: AppTheme.gold,
+                    shape: BoxShape.circle,
+                    boxShadow: AppTheme.shadowGlow(AppTheme.gold),
+                  ),
+                  child: const Icon(Icons.mosque_rounded, color: Colors.white, size: 22),
+                ),
+                const SizedBox(height: 6),
+                Container(width: 2, height: 18, color: AppTheme.gold),
+              ],
+            ),
+          ),
+          Positioned(
+            top: 14,
+            right: 14,
+            child: Column(
+              children: [
+                _mapBtn(Icons.my_location_rounded),
+                const SizedBox(height: 8),
+                _mapBtn(Icons.layers_rounded),
+              ],
+            ),
+          ),
+          Positioned(
+            left: 16,
+            bottom: 14,
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+              decoration: BoxDecoration(
+                color: Colors.black.withOpacity(0.4),
+                borderRadius: BorderRadius.circular(99),
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Icon(Icons.location_on_outlined, size: 14, color: Colors.white),
+                  const SizedBox(width: 4),
+                  Text('Map preview', style: AppTheme.caption(color: Colors.white).copyWith(fontWeight: FontWeight.w700)),
+                ],
+              ),
+            ),
           ),
         ],
       ),
-      body: Column(
-        children: [
-          // Map View Area
-          Expanded(
-            flex: 2,
-            child: Stack(
+    );
+  }
+
+  Widget _mapBtn(IconData icon) => Container(
+        padding: const EdgeInsets.all(8),
+        decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(10)),
+        child: Icon(icon, color: AppTheme.primaryGreen, size: 18),
+      );
+
+  Widget _filterRow() {
+    return SizedBox(
+      height: 36,
+      child: ListView.separated(
+        padding: const EdgeInsets.symmetric(horizontal: AppTheme.space5),
+        scrollDirection: Axis.horizontal,
+        itemCount: _filters.length,
+        separatorBuilder: (_, __) => const SizedBox(width: 8),
+        itemBuilder: (context, i) {
+          final selected = _selectedFilter == i;
+          return GestureDetector(
+            onTap: () => setState(() => _selectedFilter = i),
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 180),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              decoration: BoxDecoration(
+                color: selected ? AppTheme.primaryGreen : AppTheme.surface,
+                borderRadius: BorderRadius.circular(99),
+                border: Border.all(
+                  color: selected ? AppTheme.primaryGreen : AppTheme.borderLight,
+                ),
+              ),
+              child: Text(
+                _filters[i],
+                style: AppTheme.caption(color: selected ? Colors.white : AppTheme.textDark)
+                    .copyWith(fontWeight: FontWeight.w700),
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _mosqueCard(Mosque m) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(AppTheme.space5, 0, AppTheme.space5, 12),
+      child: QalaamTappableCard(
+        padding: const EdgeInsets.all(AppTheme.space4),
+        onTap: () {},
+        child: Column(
+          children: [
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  width: double.infinity,
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
-                      image: NetworkImage("https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&q=80&w=1000"),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(AppTheme.radiusMd),
+                  child: m.imageUrl.isNotEmpty
+                      ? Image.network(
+                          m.imageUrl,
+                          width: 78,
+                          height: 78,
+                          fit: BoxFit.cover,
+                          errorBuilder: (_, __, ___) => _imgFallback(),
+                        )
+                      : _imgFallback(),
                 ),
-                // Custom Marker Placeholder
-                Center(
+                const SizedBox(width: AppTheme.space4),
+                Expanded(
                   child: Column(
-                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                        decoration: BoxDecoration(
-                          color: AppTheme.primaryGreen,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Icon(Icons.mosque, color: Colors.white, size: 16),
-                            SizedBox(width: 8),
-                            Text(
-                              "Masjid Al-Haram",
-                              style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 12),
+                      Row(
+                        children: [
+                          Expanded(child: Text(m.name, style: AppTheme.h3())),
+                          Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                            decoration: BoxDecoration(
+                              color: AppTheme.accentGreen,
+                              borderRadius: BorderRadius.circular(99),
                             ),
-                          ],
-                        ),
+                            child: Text('${m.distance.toStringAsFixed(1)} km',
+                                style: AppTheme.caption(color: AppTheme.primaryGreen)
+                                    .copyWith(fontWeight: FontWeight.w700)),
+                          ),
+                        ],
                       ),
-                      Icon(Icons.arrow_drop_down, color: AppTheme.primaryGreen, size: 30),
-                    ],
-                  ),
-                ),
-                // Map Controls
-                Positioned(
-                  right: 20,
-                  top: 20,
-                  child: Column(
-                    children: [
-                      _buildMapControl(Icons.my_location_rounded),
-                      const SizedBox(height: 12),
-                      _buildMapControl(Icons.layers_rounded),
+                      const SizedBox(height: 2),
+                      Text(m.address, style: AppTheme.caption(), maxLines: 1, overflow: TextOverflow.ellipsis),
+                      const SizedBox(height: 6),
+                      Row(
+                        children: [
+                          const Icon(Icons.access_time_filled_rounded, color: AppTheme.primaryGreen, size: 13),
+                          const SizedBox(width: 4),
+                          Text('Next: Asr · 15:45',
+                              style: AppTheme.caption(color: AppTheme.primaryGreen).copyWith(fontWeight: FontWeight.w700)),
+                        ],
+                      ),
                     ],
                   ),
                 ),
               ],
             ),
-          ),
-
-          // Bottom Content Area
-          Expanded(
-            flex: 3,
-            child: Container(
-              width: double.infinity,
-              decoration: const BoxDecoration(
-                color: AppTheme.background,
-                borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
-              ),
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // Filter Chips
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 20.0),
-                      child: SizedBox(
-                        height: 40,
-                        child: ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          padding: const EdgeInsets.only(left: 20),
-                          itemCount: _filters.length,
-                          itemBuilder: (context, index) {
-                            bool isSelected = _selectedFilter == index;
-                            return GestureDetector(
-                              onTap: () => setState(() => _selectedFilter = index),
-                              child: Container(
-                                margin: const EdgeInsets.only(right: 12),
-                                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-                                decoration: BoxDecoration(
-                                  color: isSelected ? AppTheme.primaryGreen : const Color(0xFFE8F8F5),
-                                  borderRadius: BorderRadius.circular(20),
-                                  border: Border.all(color: isSelected ? AppTheme.primaryGreen : Colors.transparent),
-                                ),
-                                child: Text(
-                                  _filters[index],
-                                  style: GoogleFonts.outfit(
-                                    color: isSelected ? Colors.white : AppTheme.primaryGreen,
-                                    fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
-                                  ),
-                                ),
-                              ),
-                            );
-                          },
-                        ),
-                      ),
-                    ),
-
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                      child: Text(
-                        "Closest to You",
-                        style: GoogleFonts.outfit(fontSize: 18, fontWeight: FontWeight.bold),
-                      ),
-                    ),
-
-                    FutureBuilder<List<Mosque>>(
-                      future: _mosquesFuture,
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState == ConnectionState.waiting) {
-                          return const Center(child: Padding(padding: EdgeInsets.all(40), child: CircularProgressIndicator()));
-                        }
-                        if (snapshot.hasError) {
-                          return _buildDemoMosqueList(); // Fallback to demo
-                        }
-                        final mosques = snapshot.data ?? [];
-                        if (mosques.isEmpty) {
-                          return const Center(child: Text("No mosques found nearby."));
-                        }
-                        return Column(
-                          children: mosques.map((m) => _buildMosqueCard(m)).toList(),
-                        );
-                      },
-                    ),
-                    const SizedBox(height: 30),
-                  ],
-                ),
-              ),
+            const SizedBox(height: AppTheme.space4),
+            Row(
+              children: [
+                _slot('FAJR', m.prayerTimes['FAJR'] ?? '--:--'),
+                _slot('DHUHR', m.prayerTimes['DHUHR'] ?? '--:--'),
+                _slot('ASR', m.prayerTimes['ASR'] ?? '--:--', active: true),
+                _slot('MAGH', m.prayerTimes['MAGHRIB'] ?? m.prayerTimes['MAGH'] ?? '--:--'),
+                _slot('ISHA', m.prayerTimes['ISHA'] ?? '--:--'),
+              ],
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
 
-  Widget _buildDemoMosqueList() {
-    return Column(
-      children: [
-        _buildMosqueCard(Mosque(
-          id: 0,
-          name: "Masjid Al-Haram",
-          address: "123 Faith Street, Central District",
-          latitude: 0, longitude: 0,
-          distance: 0.5,
-          imageUrl: "https://via.placeholder.com/300",
-          prayerTimes: {"FAJR": "05:15", "DHUHR": "12:30", "ASR": "15:45", "MAGH": "18:15", "ISHA": "19:45"},
-        )),
-      ],
-    );
-  }
+  Widget _imgFallback() => Container(
+        width: 78,
+        height: 78,
+        decoration: BoxDecoration(color: AppTheme.parchment, borderRadius: BorderRadius.circular(AppTheme.radiusMd)),
+        child: const Icon(Icons.mosque_rounded, color: AppTheme.primaryGreen, size: 36),
+      );
 
-  Widget _buildMapControl(IconData icon) {
-    return Container(
-      padding: const EdgeInsets.all(8),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(8),
-        boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.1), blurRadius: 4)],
-      ),
-      child: Icon(icon, color: AppTheme.primaryGreen, size: 24),
-    );
-  }
-
-  Widget _buildMosqueCard(Mosque mosque) {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-      padding: const EdgeInsets.all(15),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
-        boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.03), blurRadius: 10)],
-      ),
-      child: Column(
-        children: [
-          Row(
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(12),
-                child: Image.network(
-                  mosque.imageUrl.isNotEmpty ? mosque.imageUrl : "https://via.placeholder.com/80",
-                  width: 80, height: 80, fit: BoxFit.cover,
-                  errorBuilder: (c, e, s) => Container(color: Colors.grey, width: 80, height: 80, child: const Icon(Icons.mosque)),
-                ),
-              ),
-              const SizedBox(width: 15),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(mosque.name, style: GoogleFonts.outfit(fontWeight: FontWeight.bold, fontSize: 16)),
-                        Text("${mosque.distance} km", style: GoogleFonts.outfit(color: AppTheme.primaryGreen, fontWeight: FontWeight.bold, fontSize: 14)),
-                      ],
-                    ),
-                    const SizedBox(height: 4),
-                    Text(mosque.address, style: GoogleFonts.outfit(color: AppTheme.textGrey, fontSize: 12), maxLines: 1, overflow: TextOverflow.ellipsis),
-                    const SizedBox(height: 8),
-                    Row(
-                      children: [
-                        const Icon(Icons.access_time_filled_rounded, color: AppTheme.primaryGreen, size: 14),
-                        const SizedBox(width: 6),
-                        Text(
-                          "Next: Asr at 15:45", // Generic for now or calculated from mosque.prayerTimes
-                          style: GoogleFonts.outfit(color: AppTheme.primaryGreen, fontWeight: FontWeight.w600, fontSize: 12),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 15),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              _buildPrayerScheduleItem("FAJR", mosque.prayerTimes["FAJR"] ?? "--:--"),
-              _buildPrayerScheduleItem("DHUHR", mosque.prayerTimes["DHUHR"] ?? "--:--"),
-              _buildPrayerScheduleItem("ASR", mosque.prayerTimes["ASR"] ?? "--:--", isActive: true),
-              _buildPrayerScheduleItem("MAGH", mosque.prayerTimes["MAGH"] ?? "--:--"),
-              _buildPrayerScheduleItem("ISHA", mosque.prayerTimes["ISHA"] ?? "--:--"),
-            ],
-          ),
-        ],
+  Widget _slot(String name, String time, {bool active = false}) {
+    return Expanded(
+      child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 2),
+        padding: const EdgeInsets.symmetric(vertical: 8),
+        decoration: BoxDecoration(
+          color: active ? AppTheme.primaryGreen : AppTheme.parchment,
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Column(
+          children: [
+            Text(name,
+                style: AppTheme.caption(color: active ? Colors.white.withOpacity(0.85) : AppTheme.textGrey)
+                    .copyWith(fontSize: 9.5, fontWeight: FontWeight.w800, letterSpacing: 0.6)),
+            const SizedBox(height: 2),
+            Text(time,
+                style: AppTheme.caption(color: active ? Colors.white : AppTheme.textDark)
+                    .copyWith(fontWeight: FontWeight.w800, fontSize: 11)),
+          ],
+        ),
       ),
     );
   }
 
-  Widget _buildPrayerScheduleItem(String name, String time, {bool isActive = false}) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-      decoration: BoxDecoration(
-        color: isActive ? AppTheme.primaryGreen : const Color(0xFFF8F9FA),
-        borderRadius: BorderRadius.circular(10),
-        border: Border.all(color: isActive ? AppTheme.primaryGreen : Colors.grey.withOpacity(0.1)),
-      ),
-      child: Column(
-        children: [
-          Text(
-            name,
-            style: GoogleFonts.outfit(
-              color: isActive ? Colors.white : AppTheme.textGrey,
-              fontSize: 10,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          const SizedBox(height: 4),
-          Text(
-            time,
-            style: GoogleFonts.outfit(
-              color: isActive ? Colors.white : AppTheme.textDark,
-              fontSize: 12,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ],
+  Widget _emptyMosques() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: AppTheme.space5, vertical: 20),
+      child: QalaamCard(
+        padding: const EdgeInsets.all(AppTheme.space6),
+        child: Column(
+          children: [
+            const Icon(Icons.mosque_outlined, color: AppTheme.textGrey, size: 32),
+            const SizedBox(height: 12),
+            Text('No mosques found nearby', style: AppTheme.h3()),
+            const SizedBox(height: 4),
+            Text('Try adjusting filters or check back later.', style: AppTheme.caption(), textAlign: TextAlign.center),
+          ],
+        ),
       ),
     );
   }

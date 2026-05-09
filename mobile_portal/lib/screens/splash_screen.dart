@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import '../utils/app_theme.dart';
 import '../services/api_service.dart';
-import 'home_screen.dart';
+import '../widgets/geometric_pattern.dart';
 import 'login_screen.dart';
+import 'main_navigation_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -12,139 +12,196 @@ class SplashScreen extends StatefulWidget {
   State<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
-  late Animation<double> _progressAnimation;
+class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMixin {
+  late final AnimationController _entry;
+  late final AnimationController _progress;
   final ApiService _apiService = ApiService();
 
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(
-      vsync: this,
-      duration: const Duration(seconds: 3),
-    );
-
-    _progressAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.easeInOut),
-    );
-
-    _controller.forward();
-    _navigateToNextScreen();
+    _entry = AnimationController(vsync: this, duration: const Duration(milliseconds: 1100))..forward();
+    _progress = AnimationController(vsync: this, duration: const Duration(milliseconds: 2400))..forward();
+    _navigate();
   }
 
-  Future<void> _navigateToNextScreen() async {
-    await Future.delayed(const Duration(seconds: 4));
+  Future<void> _navigate() async {
+    await Future.delayed(const Duration(milliseconds: 2700));
     final token = await _apiService.getAuthToken();
-    
-    if (mounted) {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => token != null ? const HomeScreen() : const LoginScreen(),
-        ),
-      );
-    }
+    if (!mounted) return;
+    Navigator.pushReplacement(
+      context,
+      PageRouteBuilder(
+        transitionDuration: const Duration(milliseconds: 500),
+        pageBuilder: (_, __, ___) => token != null ? const MainNavigationScreen() : const LoginScreen(),
+        transitionsBuilder: (_, anim, __, child) =>
+            FadeTransition(opacity: anim, child: child),
+      ),
+    );
   }
 
   @override
   void dispose() {
-    _controller.dispose();
+    _entry.dispose();
+    _progress.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        width: double.infinity,
-        height: double.infinity,
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Color(0xFF032616), Color(0xFF01120A)],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
+      body: Stack(
+        fit: StackFit.expand,
+        children: [
+          // Deep gradient base
+          const DecoratedBox(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [Color(0xFF0A4734), Color(0xFF051E15)],
+              ),
+            ),
           ),
-        ),
-        child: Column(
-          children: [
-            const Spacer(flex: 3),
-            // Logo Card
-            Container(
-              padding: const EdgeInsets.all(25),
+          // Soft radial glow
+          Positioned(
+            top: -120,
+            right: -80,
+            child: Container(
+              width: 360,
+              height: 360,
               decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(25),
-                boxShadow: [
-                  BoxShadow(
-                    color: AppTheme.primaryGreen.withOpacity(0.2),
-                    blurRadius: 30,
-                    spreadRadius: 5,
-                  ),
-                ],
-              ),
-              child: const Icon(Icons.menu_book_rounded, color: AppTheme.primaryGreen, size: 60),
-            ),
-            const SizedBox(height: 30),
-            // Title
-            Text(
-              "Qalaam",
-              style: GoogleFonts.outfit(
-                fontSize: 54,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-                letterSpacing: 1.5,
+                shape: BoxShape.circle,
+                gradient: RadialGradient(colors: [
+                  AppTheme.gold.withOpacity(0.18),
+                  Colors.transparent,
+                ]),
               ),
             ),
-            // Slogan Divider
-            Container(height: 4, width: 40, color: AppTheme.primaryGreen),
-            const SizedBox(height: 15),
-            Text(
-              "A SCHOLARLY BRIDGE",
-              style: GoogleFonts.outfit(
-                fontSize: 14,
-                fontWeight: FontWeight.bold,
-                color: AppTheme.primaryGreen,
-                letterSpacing: 6,
-              ),
-            ),
-            const Spacer(flex: 2),
-            // Progress Section
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 60),
+          ),
+          // Geometric pattern overlay
+          const GeometricPattern(opacity: 0.05, cell: 64),
+
+          // Content
+          SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.all(AppTheme.space7),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text(
-                    "Your Gateway to Knowledge",
-                    style: GoogleFonts.outfit(color: Colors.white.withOpacity(0.5), fontSize: 13),
-                  ),
-                  const SizedBox(height: 15),
-                  AnimatedBuilder(
-                    animation: _progressAnimation,
-                    builder: (context, child) {
-                      return LinearProgressIndicator(
-                        value: _progressAnimation.value,
-                        backgroundColor: Colors.white.withOpacity(0.05),
-                        valueColor: const AlwaysStoppedAnimation<Color>(AppTheme.primaryGreen),
-                        minHeight: 4,
-                        borderRadius: BorderRadius.circular(10),
-                      );
-                    },
-                  ),
-                  const SizedBox(height: 15),
-                  Text(
-                    "LOADING WISDOM...",
-                    style: GoogleFonts.outfit(
-                      color: AppTheme.primaryGreen,
-                      fontSize: 10,
-                      fontWeight: FontWeight.w900,
-                      letterSpacing: 2,
+                  const Spacer(flex: 3),
+                  _Mark(animation: _entry),
+                  const SizedBox(height: AppTheme.space7),
+                  FadeTransition(
+                    opacity: CurvedAnimation(parent: _entry, curve: const Interval(0.4, 1.0)),
+                    child: Column(
+                      children: [
+                        Text(
+                          'Qalaam',
+                          style: AppTheme.display(color: Colors.white).copyWith(
+                            fontSize: 56,
+                            letterSpacing: 1.2,
+                            height: 1.0,
+                          ),
+                        ),
+                        const SizedBox(height: AppTheme.space3),
+                        Container(width: 36, height: 2, color: AppTheme.gold),
+                        const SizedBox(height: AppTheme.space4),
+                        Text(
+                          'A SCHOLARLY BRIDGE',
+                          style: AppTheme.eyebrow(color: AppTheme.gold).copyWith(letterSpacing: 6),
+                        ),
+                      ],
                     ),
                   ),
+                  const Spacer(flex: 2),
+                  // Progress
+                  FadeTransition(
+                    opacity: CurvedAnimation(parent: _entry, curve: const Interval(0.6, 1.0)),
+                    child: Column(
+                      children: [
+                        Text(
+                          'Your gateway to knowledge',
+                          style: AppTheme.caption(color: Colors.white.withOpacity(0.55)),
+                        ),
+                        const SizedBox(height: AppTheme.space4),
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(99),
+                          child: SizedBox(
+                            width: 180,
+                            child: AnimatedBuilder(
+                              animation: _progress,
+                              builder: (_, __) => LinearProgressIndicator(
+                                value: _progress.value,
+                                minHeight: 3,
+                                backgroundColor: Colors.white.withOpacity(0.08),
+                                valueColor: const AlwaysStoppedAnimation<Color>(AppTheme.gold),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: AppTheme.space8),
                 ],
               ),
             ),
-            const SizedBox(height: 60),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _Mark extends StatelessWidget {
+  final AnimationController animation;
+  const _Mark({required this.animation});
+
+  @override
+  Widget build(BuildContext context) {
+    return ScaleTransition(
+      scale: CurvedAnimation(parent: animation, curve: Curves.easeOutBack),
+      child: Container(
+        width: 110,
+        height: 110,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [Colors.white, AppTheme.parchment],
+          ),
+          borderRadius: BorderRadius.circular(28),
+          boxShadow: [
+            BoxShadow(
+              color: AppTheme.gold.withOpacity(0.35),
+              blurRadius: 36,
+              spreadRadius: 4,
+            ),
+          ],
+        ),
+        child: Stack(
+          alignment: Alignment.center,
+          children: [
+            // Inner crescent + book glyph
+            Container(
+              width: 78,
+              height: 78,
+              decoration: BoxDecoration(
+                gradient: AppTheme.gradientPrimary,
+                borderRadius: BorderRadius.circular(22),
+              ),
+              child: const Icon(Icons.menu_book_rounded, color: Colors.white, size: 40),
+            ),
+            Positioned(
+              top: 18,
+              right: 18,
+              child: Container(
+                width: 14,
+                height: 14,
+                decoration: const BoxDecoration(color: AppTheme.gold, shape: BoxShape.circle),
+              ),
+            ),
           ],
         ),
       ),

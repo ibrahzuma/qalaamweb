@@ -384,23 +384,22 @@ class PrayerTimeAPIView(APIView):
         lng = request.query_params.get('lng')
         today = _date.today()
 
-        # Try the nearest mosque's PrayerTime entry for today first
         try:
             lat_f = float(lat) if lat is not None else None
             lng_f = float(lng) if lng is not None else None
         except (TypeError, ValueError):
             lat_f = lng_f = None
 
+        # 1) Prefer admin-curated PrayerTime entry from the nearest mosque for today.
         record = None
         if lat_f is not None and lng_f is not None:
             from .geo import haversine_km
             mosques = list(Mosque.objects.all())
             mosques.sort(key=lambda m: haversine_km(lat_f, lng_f, float(m.latitude), float(m.longitude)))
-            for mosque in mosques:
+            for mosque in mosques[:5]:  # only the 5 nearest
                 record = PrayerTime.objects.filter(mosque=mosque, date=today).first()
                 if record:
                     break
-
         if record is None:
             record = PrayerTime.objects.filter(date=today).first()
 
@@ -408,21 +407,58 @@ class PrayerTimeAPIView(APIView):
             return t.strftime('%H:%M') if t else '--:--'
 
         if record is not None:
-            payload = {
+            return response.Response({
                 'fajr': fmt(record.fajr),
                 'dhuhr': fmt(record.dhuhr),
                 'asr': fmt(record.asr),
                 'maghrib': fmt(record.maghrib),
                 'isha': fmt(record.isha),
                 'date': today.isoformat(),
-            }
-        else:
-            payload = {
-                'fajr': '--:--', 'dhuhr': '--:--', 'asr': '--:--',
-                'maghrib': '--:--', 'isha': '--:--',
-                'date': today.isoformat(),
-            }
-        return response.Response(payload)
+                'source': 'mosque',
+                'mosque': record.mosque.name if record.mosque_id else None,
+            })
+
+        # 2) No DB record — calculate via aladhan.com (free, no API key).
+        if lat_f is not None and lng_f is not None:
+            try:
+                import urllib.request
+                import json as _json
+                url = (
+                    f'https://api.aladhan.com/v1/timings/'
+                    f'{today.strftime("%d-%m-%Y")}'
+                    f'?latitude={lat_f}&longitude={lng_f}&method=2'
+                )
+                req = urllib.request.Request(url, headers={'User-Agent': 'qalaam-server/1.0'})
+                with urllib.request.urlopen(req, timeout=8) as r:
+                    data = _json.loads(r.read())
+                t = data.get('data', {}).get('timings', {})
+                if t:
+                    def short(v):
+                        if not v:
+                            return '--:--'
+                        return v.split(' ')[0]  # strip " (EAT)" etc.
+                    return response.Response({
+                        'fajr': short(t.get('Fajr')),
+                        'dhuhr': short(t.get('Dhuhr')),
+                        'asr': short(t.get('Asr')),
+                        'maghrib': short(t.get('Maghrib')),
+                        'isha': short(t.get('Isha')),
+                        'date': today.isoformat(),
+                        'source': 'calculated',
+                        'method': 'ISNA (method=2)',
+                    })
+            except Exception as exc:
+                # Fall through to placeholder.
+                import logging
+                logging.getLogger(__name__).warning(f'aladhan fetch failed: {exc}')
+
+        # 3) Final fallback — placeholder.
+        return response.Response({
+            'fajr': '--:--', 'dhuhr': '--:--', 'asr': '--:--',
+            'maghrib': '--:--', 'isha': '--:--',
+            'date': today.isoformat(),
+            'source': 'unavailable',
+        })
 
 class VideoSeriesViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = VideoSeries.objects.all()

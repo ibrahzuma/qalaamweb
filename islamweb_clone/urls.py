@@ -11,10 +11,11 @@ urlpatterns = [
     path('articles/', include('articles.urls')),
     path('duas/', include('duas.urls')),
     path('content/', include('content.urls')),
-    path('services/', include('services.urls')), # Added services.urls
+    path('services/', include('services.urls')),
     path('ckeditor/', include('ckeditor_uploader.urls')),
     path('admin-panel/', include('dashboard.urls')),
     path('hadiths/', include('hadiths.urls')),
+    path('api/v1/', include('api.urls')),
 ]
 
 if settings.DEBUG:

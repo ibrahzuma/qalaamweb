@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import '../utils/app_theme.dart';
+import '../services/notification_service.dart';
+import '../widgets/qalaam_card.dart';
+import 'bookmarks_screen.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -9,154 +12,221 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
-  static const Color qalaamGreen = Color(0xFF2ECC71);
-  bool _notificationsEnabled = true;
+  bool _prayerNotifEnabled = false;
+  bool _loaded = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadPrefs();
+  }
+
+  Future<void> _loadPrefs() async {
+    final enabled = await NotificationService.isEnabled();
+    if (mounted) setState(() {
+      _prayerNotifEnabled = enabled;
+      _loaded = true;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF8F9FA),
-      appBar: AppBar(
-        title: Text(
-          "Settings",
-          style: GoogleFonts.outfit(fontWeight: FontWeight.bold, color: Colors.black87),
-        ),
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        centerTitle: true,
-      ),
+      backgroundColor: AppTheme.background,
+      appBar: AppBar(title: const Text('Settings')),
       body: ListView(
-        padding: const EdgeInsets.all(20),
+        physics: const BouncingScrollPhysics(),
+        padding: const EdgeInsets.fromLTRB(AppTheme.space5, AppTheme.space3, AppTheme.space5, AppTheme.space9),
         children: [
-          _buildProfileSection(),
-          const SizedBox(height: 30),
-          _buildSectionHeader("Account"),
-          _buildSettingTile(Icons.person_outline, "Edit Profile", "Change name, email and phone", () {}),
-          _buildSettingTile(Icons.lock_outline, "Privacy & Security", "Change password and security settings", () {}),
-          const SizedBox(height: 20),
-          _buildSectionHeader("Preferences"),
-          _buildSwitchTile(Icons.notifications_none, "Push Notifications", "Receive prayer alerts and news", _notificationsEnabled, (val) {
-            setState(() => _notificationsEnabled = val);
+          _profileCard(),
+          const SizedBox(height: AppTheme.space6),
+          _sectionHeader('Account'),
+          _tile(Icons.person_outline_rounded, 'Edit profile', 'Name, email, phone', () {}),
+          _tile(Icons.lock_outline_rounded, 'Privacy & security', 'Change password', () {}),
+          const SizedBox(height: AppTheme.space5),
+          _sectionHeader('Preferences'),
+          _switchTile(
+            Icons.notifications_active_outlined,
+            'Prayer reminders',
+            'Daily local notifications at fajr, dhuhr, asr, maghrib, isha',
+            _loaded ? _prayerNotifEnabled : false,
+            (val) async {
+              final newVal = await NotificationService.setEnabled(val);
+              if (mounted) setState(() => _prayerNotifEnabled = newVal);
+              if (mounted) {
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  backgroundColor: AppTheme.primaryGreenDeep,
+                  content: Text(
+                    newVal
+                        ? 'Prayer reminders enabled — they\'ll trigger after the next prayer-time fetch'
+                        : 'Prayer reminders disabled',
+                    style: AppTheme.body(color: Colors.white),
+                  ),
+                  behavior: SnackBarBehavior.floating,
+                ));
+              }
+            },
+          ),
+          _tile(Icons.volume_up_rounded, 'Test adhan', 'Play the adhan now to verify audio', () async {
+            await NotificationService.playAdhan();
+            if (mounted) {
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                backgroundColor: AppTheme.primaryGreenDeep,
+                content: Row(children: [
+                  const Icon(Icons.volume_up_rounded, color: Colors.white, size: 18),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: Text('Playing adhan — tap "Stop" to silence',
+                        style: AppTheme.body(color: Colors.white)),
+                  ),
+                ]),
+                behavior: SnackBarBehavior.floating,
+                duration: const Duration(seconds: 6),
+                action: SnackBarAction(
+                  label: 'STOP',
+                  textColor: AppTheme.gold,
+                  onPressed: NotificationService.stopAdhan,
+                ),
+              ));
+            }
           }),
-          _buildSettingTile(Icons.language, "App Language", "English (US)", () {}),
-          _buildSettingTile(Icons.location_on_outlined, "Location", "Manage location permissions", () {}),
-          const SizedBox(height: 20),
-          _buildSectionHeader("Support"),
-          _buildSettingTile(Icons.help_outline, "Help Center", "FAQs and support guides", () {}),
-          _buildSettingTile(Icons.info_outline, "About Qalaam Pro", "Version 2.0.1", () {}),
-          const SizedBox(height: 40),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: OutlinedButton(
-              onPressed: () {},
-              style: OutlinedButton.styleFrom(
-                foregroundColor: Colors.redAccent,
-                side: const BorderSide(color: Colors.redAccent),
-                padding: const EdgeInsets.symmetric(vertical: 16),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-              ),
-              child: Text("LOGOUT", style: GoogleFonts.outfit(fontWeight: FontWeight.bold)),
+          _tile(Icons.bookmark_outline_rounded, 'Bookmarks', 'Saved ayahs', () {
+            Navigator.push(context, MaterialPageRoute(builder: (_) => const BookmarksScreen()));
+          }),
+          _tile(Icons.language_rounded, 'App language', 'English (US)', () {}),
+          _tile(Icons.location_on_outlined, 'Location', 'Manage location permission', () {}),
+          const SizedBox(height: AppTheme.space5),
+          _sectionHeader('Support'),
+          _tile(Icons.help_outline_rounded, 'Help center', 'FAQs and support', () {}),
+          _tile(Icons.info_outline_rounded, 'About Qalaam', 'Version 2.0.1', () {}),
+          const SizedBox(height: AppTheme.space7),
+          OutlinedButton.icon(
+            onPressed: () {},
+            icon: const Icon(Icons.logout_rounded, size: 18),
+            label: const Text('Sign out'),
+            style: OutlinedButton.styleFrom(
+              foregroundColor: AppTheme.error,
+              side: const BorderSide(color: AppTheme.error, width: 1.4),
+              padding: const EdgeInsets.symmetric(vertical: 14),
             ),
           ),
-          const SizedBox(height: 40),
         ],
       ),
     );
   }
 
-  Widget _buildProfileSection() {
-    return Container(
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(25),
-        boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.04), blurRadius: 15, offset: const Offset(0, 5))],
-      ),
+  Widget _profileCard() {
+    return QalaamCard(
+      padding: const EdgeInsets.all(AppTheme.space4),
       child: Row(
         children: [
-          CircleAvatar(
-            radius: 35,
-            backgroundColor: qalaamGreen.withOpacity(0.1),
-            child: const Icon(Icons.person, size: 35, color: qalaamGreen),
+          Container(
+            width: 56,
+            height: 56,
+            decoration: BoxDecoration(
+              gradient: AppTheme.gradientPrimary,
+              borderRadius: BorderRadius.circular(16),
+            ),
+            child: const Icon(Icons.person_rounded, size: 28, color: Colors.white),
           ),
-          const SizedBox(width: 20),
+          const SizedBox(width: AppTheme.space4),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  "Assalamu Alaikum,",
-                  style: GoogleFonts.outfit(color: Colors.grey, fontSize: 13),
-                ),
-                Text(
-                  "Ibrahim Zuma",
-                  style: GoogleFonts.outfit(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black87),
-                ),
-                const SizedBox(height: 4),
+                Text('As-salaamu alaykum', style: AppTheme.caption()),
+                const SizedBox(height: 2),
+                Text('Guest user', style: AppTheme.h3()),
+                const SizedBox(height: 6),
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                   decoration: BoxDecoration(
-                    color: qalaamGreen.withOpacity(0.1),
-                    borderRadius: BorderRadius.circular(10),
+                    color: AppTheme.accentGold,
+                    borderRadius: BorderRadius.circular(99),
                   ),
-                  child: Text(
-                    "PRO MEMBER",
-                    style: GoogleFonts.outfit(color: qalaamGreen, fontSize: 10, fontWeight: FontWeight.bold),
-                  ),
+                  child: Text('PRO MEMBER',
+                      style: AppTheme.eyebrow(color: AppTheme.gold).copyWith(fontSize: 9)),
                 ),
               ],
             ),
           ),
           IconButton(
             onPressed: () {},
-            icon: const Icon(Icons.edit_outlined, color: Colors.grey),
+            icon: const Icon(Icons.edit_outlined, color: AppTheme.textGrey),
           ),
         ],
       ),
     );
   }
 
-  Widget _buildSectionHeader(String title) {
+  Widget _sectionHeader(String title) {
     return Padding(
-      padding: const EdgeInsets.only(left: 10, bottom: 15),
-      child: Text(
-        title,
-        style: GoogleFonts.outfit(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black54),
-      ),
+      padding: const EdgeInsets.only(left: 6, bottom: 10, top: 6),
+      child: Text(title.toUpperCase(), style: AppTheme.eyebrow().copyWith(fontSize: 11, letterSpacing: 1.4)),
     );
   }
 
-  Widget _buildSettingTile(IconData icon, String title, String subtitle, VoidCallback onTap) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 12),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(15),
-      ),
-      child: ListTile(
+  Widget _tile(IconData icon, String title, String subtitle, VoidCallback onTap) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8),
+      child: QalaamTappableCard(
         onTap: onTap,
-        leading: Icon(icon, color: qalaamGreen),
-        title: Text(title, style: GoogleFonts.outfit(fontWeight: FontWeight.w600)),
-        subtitle: Text(subtitle, style: GoogleFonts.outfit(fontSize: 12, color: Colors.grey)),
-        trailing: const Icon(Icons.chevron_right, size: 20, color: Colors.grey),
+        padding: const EdgeInsets.symmetric(horizontal: AppTheme.space4, vertical: AppTheme.space3),
+        child: Row(
+          children: [
+            Container(
+              width: 38,
+              height: 38,
+              decoration: BoxDecoration(color: AppTheme.accentGreen, borderRadius: BorderRadius.circular(11)),
+              child: Icon(icon, color: AppTheme.primaryGreen, size: 20),
+            ),
+            const SizedBox(width: AppTheme.space3),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(title, style: AppTheme.h3().copyWith(fontSize: 15)),
+                  Text(subtitle, style: AppTheme.caption(), maxLines: 1, overflow: TextOverflow.ellipsis),
+                ],
+              ),
+            ),
+            const Icon(Icons.chevron_right_rounded, color: AppTheme.textMuted),
+          ],
+        ),
       ),
     );
   }
 
-  Widget _buildSwitchTile(IconData icon, String title, String subtitle, bool value, ValueChanged<bool> onChanged) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 12),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(15),
-      ),
-      child: SwitchListTile(
-        activeColor: qalaamGreen,
-        value: value,
-        onChanged: onChanged,
-        secondary: Icon(icon, color: qalaamGreen),
-        title: Text(title, style: GoogleFonts.outfit(fontWeight: FontWeight.w600)),
-        subtitle: Text(subtitle, style: GoogleFonts.outfit(fontSize: 12, color: Colors.grey)),
+  Widget _switchTile(IconData icon, String title, String subtitle, bool value, ValueChanged<bool> onChanged) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8),
+      child: QalaamCard(
+        padding: const EdgeInsets.symmetric(horizontal: AppTheme.space4, vertical: AppTheme.space2),
+        child: Row(
+          children: [
+            Container(
+              width: 38,
+              height: 38,
+              decoration: BoxDecoration(color: AppTheme.accentGreen, borderRadius: BorderRadius.circular(11)),
+              child: Icon(icon, color: AppTheme.primaryGreen, size: 20),
+            ),
+            const SizedBox(width: AppTheme.space3),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(title, style: AppTheme.h3().copyWith(fontSize: 15)),
+                  Text(subtitle, style: AppTheme.caption()),
+                ],
+              ),
+            ),
+            Switch(
+              value: value,
+              onChanged: onChanged,
+              activeThumbColor: AppTheme.primaryGreen,
+            ),
+          ],
+        ),
       ),
     );
   }

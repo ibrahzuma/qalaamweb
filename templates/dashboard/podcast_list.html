@@ -1,0 +1,71 @@
+{% extends 'dashboard/base.html' %}
+
+{% block page_title %}Manage Podcasts{% endblock %}
+
+{% block main %}
+<div class="card card-glass border-0 shadow-sm mb-4">
+    <div class="card-header bg-transparent border-0 pt-4 px-4 d-flex justify-content-between align-items-center">
+        <h5 class="mb-0 fw-bold">Podcast Shows</h5>
+        <a href="{% url 'dashboard:podcast_create' %}" class="btn btn-sm btn-success rounded-pill px-3">
+            <i class="bi bi-plus-lg"></i> New Podcast Show
+        </a>
+    </div>
+    <div class="card-body p-4">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Cover</th>
+                        <th>Title</th>
+                        <th>Category</th>
+                        <th>Episodes</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for podcast in podcasts %}
+                    <tr>
+                        <td>#{{ podcast.id }}</td>
+                        <td>
+                            {% if podcast.cover_image %}
+                            <img src="{{ podcast.cover_image.url }}" class="rounded" width="40" height="40"
+                                style="object-fit: cover;">
+                            {% else %}
+                            <div class="bg-light rounded d-flex align-items-center justify-content-center" width="40"
+                                height="40" style="width: 40px; height: 40px;">
+                                <i class="bi bi-mic text-muted"></i>
+                            </div>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <div class="fw-bold">{{ podcast.title }}</div>
+                            <small class="text-muted">Added: {{ podcast.created_at|date:"M d, Y" }}</small>
+                        </td>
+                        <td>{{ podcast.category.name }}</td>
+                        <td>
+                            <a href="{% url 'dashboard:podcast_episode_list' %}?podcast={{ podcast.id }}"
+                                class="badge bg-secondary text-decoration-none">
+                                {{ podcast.episodes.count }} Episodes
+                            </a>
+                            <a href="{% url 'dashboard:podcast_episode_create' %}?podcast={{ podcast.id }}"
+                                class="btn btn-sm btn-link p-0 ms-2">Add New</a>
+                        </td>
+                        <td>
+                            <a href="{% url 'dashboard:podcast_edit' podcast.pk %}"
+                                class="btn btn-sm btn-outline-primary"><i class="bi bi-pencil"></i></a>
+                            <a href="{% url 'dashboard:podcast_delete' podcast.pk %}"
+                                class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="6" class="text-center py-4 text-muted">No podcast shows found.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
