@@ -94,13 +94,45 @@ class HadithViewSet(viewsets.ReadOnlyModelViewSet):
         queryset = Hadith.objects.all()
         collection_slug = self.request.query_params.get('collection')
         book_number = self.request.query_params.get('book')
-        
+        search = self.request.query_params.get('search')
+
         if collection_slug:
             queryset = queryset.filter(collection__slug=collection_slug)
         if book_number:
             queryset = queryset.filter(book__book_number=book_number)
-            
+        if search:
+            queryset = queryset.filter(
+                Q(text_english__icontains=search) |
+                Q(text_arabic__icontains=search) |
+                Q(hadith_number__icontains=search)
+            )
+
         return queryset.order_by('id')
+
+    def list(self, request, *args, **kwargs):
+        # Hadith collections are huge (Bukhari = 7,500+). Default to a sane
+        # page size to avoid 13 MB responses + mobile timeouts. Clients can
+        # paginate via ?offset= and ?limit=.
+        try:
+            limit = int(request.query_params.get('limit') or 100)
+            offset = int(request.query_params.get('offset') or 0)
+        except (TypeError, ValueError):
+            limit, offset = 100, 0
+        limit = max(1, min(limit, 500))
+        offset = max(0, offset)
+
+        qs = self.filter_queryset(self.get_queryset())
+        total = qs.count()
+        page = qs[offset:offset + limit]
+        serializer = self.get_serializer(page, many=True)
+        # Keep response shape backwards-compat: still a list, but expose
+        # totals via headers for clients that want to paginate.
+        from django.http import HttpResponse
+        resp = response.Response(serializer.data)
+        resp['X-Total-Count'] = str(total)
+        resp['X-Offset'] = str(offset)
+        resp['X-Limit'] = str(limit)
+        return resp
 
     @action(detail=False, methods=['get'])
     def daily(self, request):

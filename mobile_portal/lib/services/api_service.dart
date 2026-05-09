@@ -32,7 +32,7 @@ class ApiService {
       final response = await http.get(
         url,
         headers: _authHeaders(token),
-      ).timeout(const Duration(seconds: 15));
+      ).timeout(const Duration(seconds: 60));
 
       return _handleResponse(response);
     } catch (e) {
@@ -51,7 +51,7 @@ class ApiService {
         url,
         headers: _authHeaders(token),
         body: jsonEncode(body),
-      ).timeout(const Duration(seconds: 15));
+      ).timeout(const Duration(seconds: 60));
 
       return _handleResponse(response);
     } catch (e) {
