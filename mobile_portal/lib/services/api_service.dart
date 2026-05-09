@@ -7,21 +7,31 @@ import '../models/dua.dart';
 import '../models/sura.dart';
 
 class ApiService {
-  static const String baseUrl = 'https://qalaam.co.tz/api';
-  static const String apiKey = 'PRO_SECRET_KEY_2026';
+  static const String baseUrl = String.fromEnvironment(
+    'QALAAM_API_BASE_URL',
+    defaultValue: 'http://qalaam.co.tz/api/v1',
+  );
+  static const String apiKey = String.fromEnvironment('QALAAM_API_KEY');
+
+  Map<String, String> _authHeaders(String? token) {
+    final headers = <String, String>{'Content-Type': 'application/json'};
+    if (token != null) {
+      headers['Authorization'] = 'Token $token';
+    } else if (apiKey.isNotEmpty) {
+      headers['Authorization'] = 'ApiKey $apiKey';
+    }
+    return headers;
+  }
 
   Future<dynamic> get(String endpoint) async {
     final token = await getAuthToken();
     final url = Uri.parse('$baseUrl/$endpoint');
     debugPrint('API GET: $url');
-    
+
     try {
       final response = await http.get(
         url,
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': token != null ? 'Bearer $token' : 'ApiKey $apiKey',
-        },
+        headers: _authHeaders(token),
       ).timeout(const Duration(seconds: 15));
 
       return _handleResponse(response);
@@ -35,14 +45,11 @@ class ApiService {
     final token = await getAuthToken();
     final url = Uri.parse('$baseUrl/$endpoint');
     debugPrint('API POST: $url');
-    
+
     try {
       final response = await http.post(
         url,
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': token != null ? 'Bearer $token' : 'ApiKey $apiKey',
-        },
+        headers: _authHeaders(token),
         body: jsonEncode(body),
       ).timeout(const Duration(seconds: 15));
 
@@ -116,6 +123,11 @@ class ApiService {
     // Al-Quran Cloud proxy or Qalaam's own Surah list
     final List<dynamic> data = await get('quran/surahs/');
     return data.map((json) => Surah.fromJson(json)).toList();
+  }
+
+  Future<List<dynamic>> fetchAyahs(int surahNumber) async {
+    final List<dynamic> data = await get('quran/surahs/$surahNumber/ayahs/');
+    return data;
   }
 
   Future<List<Mosque>> fetchMosques({double? lat, double? lng}) async {

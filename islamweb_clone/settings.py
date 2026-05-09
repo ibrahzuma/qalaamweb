@@ -28,6 +28,10 @@ DEBUG = config('DEBUG', default=True, cast=bool)
 
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='', cast=Csv())
 
+# Shared API key used by the mobile client when no user token is present.
+# When unset, ApiKey-authenticated requests are rejected.
+API_KEY = config('API_KEY', default='')
+
 
 # Application definition
 
@@ -55,7 +59,20 @@ INSTALLED_APPS = [
     'services.apps.ServicesConfig',
     'dashboard.apps.DashboardConfig',
     'hadiths.apps.HadithsConfig',
+    'rest_framework',
+    'rest_framework.authtoken',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'api.authentication.ApiKeyAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -164,3 +181,5 @@ CKEDITOR_CONFIGS = {
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+AUTH_USER_MODEL = 'core.User'
