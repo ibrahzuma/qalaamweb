@@ -25,6 +25,7 @@ import 'surah_detail_screen.dart';
 import 'quran_screen.dart';
 import 'hadith_screen.dart';
 import 'dua_screen.dart';
+import 'settings_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -207,7 +208,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 .then((_) => _refreshLastRead()),
           ),
           const SizedBox(width: 8),
-          _IconButton(icon: Icons.search_rounded, onTap: () {}),
+          _IconButton(
+            icon: Icons.settings_outlined,
+            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const SettingsScreen())),
+          ),
         ],
       ),
     );
