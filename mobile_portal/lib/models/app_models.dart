@@ -207,22 +207,25 @@ class Hadith {
 class HadithCollection {
   final int id;
   final String name;
+  final String slug;
   final String count;
   final String description;
 
   HadithCollection({
     required this.id,
     required this.name,
+    required this.slug,
     required this.count,
     required this.description,
   });
 
   factory HadithCollection.fromJson(Map<String, dynamic> json) {
     return HadithCollection(
-      id: json['id'],
-      name: json['name'],
-      count: json['count'] ?? '0',
-      description: json['description'] ?? '',
+      id: json['id'] as int,
+      name: (json['name'] as String?) ?? '',
+      slug: (json['slug'] as String?) ?? '',
+      count: (json['count']?.toString()) ?? '0',
+      description: (json['description'] as String?) ?? '',
     );
   }
 }

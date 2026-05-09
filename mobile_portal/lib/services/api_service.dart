@@ -151,6 +151,16 @@ class ApiService {
     return data.map((json) => HadithCollection.fromJson(json)).toList();
   }
 
+  Future<List<Hadith>> fetchHadiths({String? collectionSlug, String? bookNumber, String? search}) async {
+    final params = <String, String>{};
+    if (collectionSlug != null && collectionSlug.isNotEmpty) params['collection'] = collectionSlug;
+    if (bookNumber != null && bookNumber.isNotEmpty) params['book'] = bookNumber;
+    if (search != null && search.isNotEmpty) params['search'] = search;
+    final qs = params.isEmpty ? '' : '?${params.entries.map((e) => "${e.key}=${Uri.encodeComponent(e.value)}").join("&")}';
+    final List<dynamic> data = await get('hadiths/$qs');
+    return data.map((json) => Hadith.fromJson(json)).toList();
+  }
+
   Future<List<Article>> fetchArticles() async {
     final List<dynamic> data = await get('articles/');
     return data.map((json) => Article.fromJson(json)).toList();
