@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:just_audio/just_audio.dart';
 import '../utils/app_theme.dart';
 import '../services/api_service.dart';
+import '../services/share_service.dart';
 import '../models/dua.dart';
+import '../widgets/qalaam_card.dart';
+import '../widgets/geometric_pattern.dart';
+import '../widgets/shimmer.dart';
 
 class DuaScreen extends StatefulWidget {
   const DuaScreen({super.key});
@@ -14,18 +18,20 @@ class DuaScreen extends StatefulWidget {
 class _DuaScreenState extends State<DuaScreen> {
   final ApiService _apiService = ApiService();
   late Future<List<Dua>> _duasFuture;
-  late Future<Dua?> _dailyDuaFuture;
+  late Future<Dua?> _dailyFuture;
+  String _query = '';
+  String _selectedCategory = 'All';
 
   @override
   void initState() {
     super.initState();
-    _loadData();
+    _load();
   }
 
-  void _loadData() {
+  void _load() {
     setState(() {
       _duasFuture = _apiService.fetchDuas();
-      _dailyDuaFuture = _apiService.fetchDailyDua();
+      _dailyFuture = _apiService.fetchDailyDua();
     });
   }
 
@@ -33,351 +39,434 @@ class _DuaScreenState extends State<DuaScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppTheme.background,
-      appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.menu_rounded, color: AppTheme.primaryGreen),
-          onPressed: () {},
-        ),
-        title: const Text("Daily Duas"),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.notifications_none_rounded, color: AppTheme.primaryGreen),
-            onPressed: () {},
-          ),
-        ],
-      ),
+      appBar: AppBar(title: const Text('Duas')),
       body: RefreshIndicator(
-        onRefresh: () async => _loadData(),
         color: AppTheme.primaryGreen,
-        child: SingleChildScrollView(
-          physics: const AlwaysScrollableScrollPhysics(),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Search Bar
-              Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 15),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(15),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.04),
-                        blurRadius: 10,
-                        offset: const Offset(0, 4),
-                      ),
-                    ],
-                  ),
-                  child: TextField(
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      hintText: "Search for a specific Dua",
-                      hintStyle: GoogleFonts.outfit(color: AppTheme.textGrey, fontSize: 13),
-                      icon: const Icon(Icons.search, color: AppTheme.primaryGreen),
-                    ),
-                  ),
-                ),
-              ),
-
-              // Featured "Dua of the Day"
-              FutureBuilder<Dua?>(
-                future: _dailyDuaFuture,
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(child: Padding(padding: EdgeInsets.all(20), child: CircularProgressIndicator()));
-                  }
-                  if (snapshot.hasError || snapshot.data == null) {
-                    return _buildDemoFeaturedCard(); // Fallback to demo if error
-                  }
-                  return _buildFeaturedCard(snapshot.data!);
-                },
-              ),
-
-              // Categories
-              Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "Categories",
-                      style: GoogleFonts.outfit(fontSize: 18, fontWeight: FontWeight.bold),
-                    ),
-                    TextButton(
-                      onPressed: () {},
-                      child: Text(
-                        "View All",
-                        style: GoogleFonts.outfit(color: AppTheme.primaryGreen, fontWeight: FontWeight.w600),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                child: GridView.count(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 15,
-                  mainAxisSpacing: 15,
-                  childAspectRatio: 1.4,
-                  children: [
-                    _buildCategoryCard("Morning & Evening", Icons.wb_sunny_rounded, const Color(0xFFE8F8F5)),
-                    _buildCategoryCard("Travel & Trip", Icons.airplanemode_active_rounded, const Color(0xFFEBF5FB)),
-                    _buildCategoryCard("Health & Shifa", Icons.medical_services_rounded, const Color(0xFFF4ECF7)),
-                    _buildCategoryCard("Dhikr & Remembrance", Icons.favorite_rounded, const Color(0xFFFEF9E7)),
-                  ],
-                ),
-              ),
-
-              // Favorites
-              Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Text(
-                  "Favorites",
-                  style: GoogleFonts.outfit(fontSize: 18, fontWeight: FontWeight.bold),
-                ),
-              ),
-
-              FutureBuilder<List<Dua>>(
-                future: _duasFuture,
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(child: CircularProgressIndicator());
-                  }
-                  if (snapshot.hasError) {
-                    return const Center(child: Text("Error loading favorites"));
-                  }
-                  final favorites = snapshot.data?.where((d) => d.isFavorite).toList() ?? [];
-                  if (favorites.isEmpty) {
-                    return _buildFavoriteItem("For Forgiveness", "Astaghfirullahal 'azim...", Icons.sentiment_satisfied_rounded);
-                  }
-                  return Column(
-                    children: favorites.map((dua) => _buildFavoriteItem(dua.title, dua.translation, Icons.favorite)).toList(),
+        onRefresh: () async => _load(),
+        child: CustomScrollView(
+          physics: const BouncingScrollPhysics(),
+          slivers: [
+            SliverToBoxAdapter(child: _dailyHero()),
+            SliverToBoxAdapter(child: _searchBar()),
+            SliverToBoxAdapter(child: _categoryChips()),
+            const SliverToBoxAdapter(child: SizedBox(height: AppTheme.space2)),
+            FutureBuilder<List<Dua>>(
+              future: _duasFuture,
+              builder: (context, snap) {
+                if (snap.connectionState == ConnectionState.waiting) {
+                  return const SliverToBoxAdapter(
+                    child: SkeletonList(count: 6, itemHeight: 120),
                   );
-                },
-              ),
-              const SizedBox(height: 30),
-            ],
-          ),
+                }
+                final all = snap.data ?? const <Dua>[];
+                final list = all.where((d) {
+                  if (_selectedCategory != 'All' && d.category != _selectedCategory) return false;
+                  if (_query.isEmpty) return true;
+                  return d.title.toLowerCase().contains(_query) ||
+                      d.translation.toLowerCase().contains(_query) ||
+                      d.transliteration.toLowerCase().contains(_query) ||
+                      d.arabic.contains(_query);
+                }).toList();
+                if (list.isEmpty) {
+                  return SliverToBoxAdapter(
+                    child: Padding(
+                      padding: const EdgeInsets.all(40),
+                      child: Center(
+                        child: Text(
+                          _query.isNotEmpty ? 'No duas match "$_query"' : 'No duas in this category',
+                          style: AppTheme.body(),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ),
+                  );
+                }
+                return SliverList.separated(
+                  itemCount: list.length,
+                  separatorBuilder: (_, __) => const SizedBox(height: 10),
+                  itemBuilder: (_, i) => Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: AppTheme.space5),
+                    child: _duaCard(list[i]),
+                  ),
+                );
+              },
+            ),
+            const SliverToBoxAdapter(child: SizedBox(height: AppTheme.space7)),
+          ],
         ),
       ),
     );
   }
 
-  Widget _buildFeaturedCard(Dua dua) {
+  // ── Daily dua hero ─────────────────────────────────────────
+  Widget _dailyHero() {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20.0),
-      child: Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(20),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.05),
-              blurRadius: 15,
-              offset: const Offset(0, 8),
-            ),
-          ],
-        ),
-        child: Column(
-          children: [
-            Container(
-              padding: const EdgeInsets.all(20),
-              decoration: const BoxDecoration(
-                color: Color(0xFFD1F2EB),
-                borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-              ),
+      padding: const EdgeInsets.fromLTRB(AppTheme.space5, AppTheme.space3, AppTheme.space5, AppTheme.space3),
+      child: FutureBuilder<Dua?>(
+        future: _dailyFuture,
+        builder: (context, snap) {
+          if (snap.connectionState == ConnectionState.waiting) {
+            return const Shimmer(child: ShimmerBox(width: double.infinity, height: 220, radius: AppTheme.radiusXl));
+          }
+          final d = snap.data;
+          return ClipRRect(
+            borderRadius: BorderRadius.circular(AppTheme.radiusXl),
+            child: Container(
+              decoration: AppTheme.cardHero,
+              padding: const EdgeInsets.all(AppTheme.space6),
               child: Stack(
                 children: [
+                  const Positioned.fill(child: GeometricPattern(opacity: 0.07, cell: 50)),
+                  Positioned(
+                    top: -20,
+                    right: -20,
+                    child: Container(
+                      width: 130,
+                      height: 130,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        gradient: RadialGradient(colors: [AppTheme.gold.withOpacity(0.18), Colors.transparent]),
+                      ),
+                    ),
+                  ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                         decoration: BoxDecoration(
-                          color: AppTheme.primaryGreen,
-                          borderRadius: BorderRadius.circular(8),
+                          color: AppTheme.gold.withOpacity(0.18),
+                          borderRadius: BorderRadius.circular(99),
+                          border: Border.all(color: AppTheme.gold.withOpacity(0.45), width: 0.8),
                         ),
-                        child: Text(
-                          "FEATURED",
-                          style: GoogleFonts.outfit(
-                            color: Colors.white,
-                            fontSize: 10,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 12),
-                      Text(
-                        dua.title,
-                        style: GoogleFonts.outfit(
-                          color: const Color(0xFF16A085),
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const Icon(Icons.volunteer_activism_rounded, color: AppTheme.gold, size: 13),
+                            const SizedBox(width: 5),
+                            Text('DUA OF THE DAY',
+                                style: AppTheme.eyebrow(color: AppTheme.gold).copyWith(fontSize: 10)),
+                          ],
                         ),
                       ),
-                    ],
-                  ),
-                  const Positioned(
-                    right: 0,
-                    top: 0,
-                    child: Icon(Icons.auto_awesome, color: Color(0xFF76D7C4), size: 40),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Column(
-                children: [
-                  Text(
-                    dua.arabic,
-                    textAlign: TextAlign.center,
-                    style: AppTheme.arabicStyle.copyWith(fontSize: 22, height: 1.6),
-                  ),
-                  const SizedBox(height: 15),
-                  Text(
-                    dua.transliteration,
-                    textAlign: TextAlign.center,
-                    style: GoogleFonts.outfit(
-                      color: AppTheme.primaryGreen,
-                      fontSize: 13,
-                      fontWeight: FontWeight.w500,
-                      fontStyle: FontStyle.italic,
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  Text(
-                    "\"${dua.translation}\"",
-                    textAlign: TextAlign.center,
-                    style: GoogleFonts.outfit(
-                      color: AppTheme.textGrey,
-                      fontSize: 14,
-                      height: 1.4,
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                  const Divider(height: 1),
-                  const SizedBox(height: 20),
-                  Row(
-                    children: [
-                      IconButton(
-                        icon: const Icon(Icons.share_outlined, color: AppTheme.primaryGreen),
-                        onPressed: () {},
-                      ),
-                      IconButton(
-                        icon: Icon(dua.isFavorite ? Icons.bookmark_rounded : Icons.bookmark_outline, color: AppTheme.primaryGreen),
-                        onPressed: () {},
-                      ),
-                      const Spacer(),
-                      ElevatedButton.icon(
-                        onPressed: () {},
-                        icon: const Icon(Icons.play_arrow_rounded, color: Colors.white),
-                        label: const Text("Listen"),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: AppTheme.primaryGreen,
-                          foregroundColor: Colors.white,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                      const SizedBox(height: AppTheme.space5),
+                      if (d == null)
+                        Text('No daily dua set',
+                            style: AppTheme.h2(color: Colors.white).copyWith(fontSize: 19))
+                      else ...[
+                        if (d.arabic.isNotEmpty)
+                          Text(d.arabic,
+                              style: AppTheme.arabicLarge(color: Colors.white).copyWith(fontSize: 22),
+                              textAlign: TextAlign.right),
+                        const SizedBox(height: AppTheme.space3),
+                        Text(
+                          d.translation.isNotEmpty ? d.translation : d.title,
+                          style: AppTheme.bodyLarge(color: Colors.white.withOpacity(0.9))
+                              .copyWith(fontStyle: FontStyle.italic, height: 1.5),
+                          maxLines: 4,
+                          overflow: TextOverflow.ellipsis,
                         ),
-                      ),
+                        const SizedBox(height: AppTheme.space4),
+                        Row(
+                          children: [
+                            if (d.reference.isNotEmpty) ...[
+                              Container(width: 22, height: 2, color: AppTheme.gold),
+                              const SizedBox(width: 8),
+                              Expanded(
+                                child: Text(d.reference,
+                                    style: AppTheme.caption(color: AppTheme.gold).copyWith(fontWeight: FontWeight.w800),
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis),
+                              ),
+                            ] else
+                              const Spacer(),
+                            _heroBtn(Icons.share_rounded, () => ShareService.shareHadith(
+                                  context: context,
+                                  text: d.translation.isNotEmpty ? d.translation : d.title,
+                                  reference: d.category,
+                                  arabic: d.arabic,
+                                )),
+                            const SizedBox(width: 6),
+                            _heroBtn(Icons.refresh_rounded, _load),
+                          ],
+                        ),
+                      ],
                     ],
                   ),
                 ],
               ),
             ),
-          ],
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _heroBtn(IconData icon, VoidCallback onTap) {
+    return Material(
+      color: Colors.white.withOpacity(0.13),
+      shape: const CircleBorder(),
+      child: InkWell(
+        customBorder: const CircleBorder(),
+        onTap: onTap,
+        child: Padding(
+          padding: const EdgeInsets.all(8),
+          child: Icon(icon, color: Colors.white, size: 16),
         ),
       ),
     );
   }
 
-  Widget _buildDemoFeaturedCard() {
-    // Return the same featured card but with dummy data if backend fails
-    return _buildFeaturedCard(Dua(
-      id: 0,
-      title: "Dua of the Day",
-      arabic: "اللَّهُمَّ إِنِّي أَسْأَلُكَ عِلْمًا نَافِعًا، وَرِزْقًا طَيِّبًا، وَعَمَلًا مُتَقَبَّلًا",
-      transliteration: "Allahumma inni as'aluka 'ilman nafi'an...",
-      translation: "O Allah, I ask You for knowledge that is of benefit...",
-      category: "Daily",
-    ));
+  // ── Search bar ─────────────────────────────────────────────
+  Widget _searchBar() {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(AppTheme.space5, AppTheme.space2, AppTheme.space5, 0),
+      child: Container(
+        decoration: BoxDecoration(
+          color: AppTheme.surface,
+          borderRadius: BorderRadius.circular(AppTheme.radiusMd),
+          border: Border.all(color: AppTheme.borderLight),
+        ),
+        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 2),
+        child: TextField(
+          onChanged: (v) => setState(() => _query = v.toLowerCase().trim()),
+          style: AppTheme.body(color: AppTheme.textDark),
+          decoration: InputDecoration(
+            border: InputBorder.none,
+            hintText: 'Search a dua, topic or word',
+            hintStyle: AppTheme.body(color: AppTheme.textMuted),
+            icon: const Icon(Icons.search_rounded, color: AppTheme.primaryGreen, size: 20),
+          ),
+        ),
+      ),
+    );
   }
 
-  Widget _buildCategoryCard(String label, IconData icon, Color color) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(15),
-        boxShadow: [
-          BoxShadow(color: Colors.black.withOpacity(0.03), blurRadius: 8, offset: const Offset(0, 2)),
-        ],
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Container(
-            padding: const EdgeInsets.all(12),
-            decoration: BoxDecoration(color: color, shape: BoxShape.circle),
-            child: Icon(icon, color: AppTheme.primaryGreen, size: 24),
+  // ── Category chips ─────────────────────────────────────────
+  Widget _categoryChips() {
+    return FutureBuilder<List<Dua>>(
+      future: _duasFuture,
+      builder: (context, snap) {
+        final cats = <String>{'All'};
+        if (snap.hasData) {
+          for (final d in snap.data!) {
+            if (d.category.isNotEmpty) cats.add(d.category);
+          }
+        }
+        final list = cats.toList();
+        return SizedBox(
+          height: 48,
+          child: ListView.separated(
+            scrollDirection: Axis.horizontal,
+            padding: const EdgeInsets.symmetric(horizontal: AppTheme.space5, vertical: 6),
+            itemCount: list.length,
+            separatorBuilder: (_, __) => const SizedBox(width: 8),
+            itemBuilder: (_, i) {
+              final cat = list[i];
+              final selected = _selectedCategory == cat;
+              return GestureDetector(
+                onTap: () => setState(() => _selectedCategory = cat),
+                child: AnimatedContainer(
+                  duration: const Duration(milliseconds: 180),
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  decoration: BoxDecoration(
+                    color: selected ? AppTheme.primaryGreen : AppTheme.surface,
+                    borderRadius: BorderRadius.circular(99),
+                    border: Border.all(color: selected ? AppTheme.primaryGreen : AppTheme.borderLight),
+                  ),
+                  child: Text(
+                    cat.length > 30 ? '${cat.substring(0, 30)}…' : cat,
+                    style: AppTheme.caption(color: selected ? Colors.white : AppTheme.textDark)
+                        .copyWith(fontWeight: FontWeight.w700),
+                  ),
+                ),
+              );
+            },
           ),
-          const SizedBox(height: 10),
+        );
+      },
+    );
+  }
+
+  // ── Dua card ──────────────────────────────────────────────
+  Widget _duaCard(Dua d) {
+    return QalaamTappableCard(
+      padding: const EdgeInsets.all(AppTheme.space4),
+      onTap: () => _openDua(d),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Flexible(
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                  decoration: BoxDecoration(
+                    color: AppTheme.accentGreen,
+                    borderRadius: BorderRadius.circular(99),
+                  ),
+                  child: Text(
+                    d.category.length > 28 ? '${d.category.substring(0, 28)}…' : d.category,
+                    style: AppTheme.eyebrow().copyWith(fontSize: 9.5, letterSpacing: 1.0),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+              ),
+              const Spacer(),
+              if (d.audioUrl.isNotEmpty)
+                const Icon(Icons.play_circle_outline_rounded, color: AppTheme.primaryGreen, size: 20),
+            ],
+          ),
+          if (d.arabic.isNotEmpty) ...[
+            const SizedBox(height: 10),
+            Text(d.arabic,
+                style: AppTheme.arabicStyle.copyWith(fontSize: 22, height: 1.6, color: AppTheme.textDark),
+                textAlign: TextAlign.right,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis),
+          ],
+          const SizedBox(height: 6),
           Text(
-            label,
-            textAlign: TextAlign.center,
-            style: GoogleFonts.outfit(fontSize: 14, fontWeight: FontWeight.w600, color: AppTheme.textDark),
+            d.translation.isNotEmpty ? d.translation : d.title,
+            style: AppTheme.body(),
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
           ),
         ],
       ),
     );
   }
 
-  Widget _buildFavoriteItem(String title, String subtitle, IconData icon) {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(15),
-        boxShadow: [
-          BoxShadow(color: Colors.black.withOpacity(0.03), blurRadius: 8),
-        ],
-      ),
-      child: Row(
-        children: [
-          Container(
-            padding: const EdgeInsets.all(10),
-            decoration: BoxDecoration(color: const Color(0xFFF2F4F4), borderRadius: BorderRadius.circular(12)),
-            child: Icon(icon, color: AppTheme.primaryGreen),
-          ),
-          const SizedBox(width: 15),
-          Expanded(
+  void _openDua(Dua d) {
+    final audio = AudioPlayer();
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (_) => StatefulBuilder(builder: (sheetCtx, setSheet) {
+        bool playing = false;
+        return DraggableScrollableSheet(
+          initialChildSize: 0.86,
+          minChildSize: 0.5,
+          maxChildSize: 0.95,
+          expand: false,
+          builder: (_, ctrl) => Container(
+            decoration: const BoxDecoration(
+              color: AppTheme.surface,
+              borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
+            ),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  title,
-                  style: GoogleFonts.outfit(fontWeight: FontWeight.bold, fontSize: 16),
+                const SizedBox(height: 10),
+                Container(
+                  width: 42,
+                  height: 4,
+                  decoration: BoxDecoration(color: AppTheme.borderLight, borderRadius: BorderRadius.circular(99)),
                 ),
-                Text(
-                  subtitle,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: GoogleFonts.outfit(color: AppTheme.textGrey, fontSize: 13),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(AppTheme.space5, AppTheme.space4, AppTheme.space5, AppTheme.space2),
+                  child: Row(
+                    children: [
+                      Flexible(
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                          decoration: BoxDecoration(
+                            color: AppTheme.accentGreen,
+                            borderRadius: BorderRadius.circular(99),
+                          ),
+                          child: Text(d.category,
+                              style: AppTheme.eyebrow().copyWith(fontSize: 10),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis),
+                        ),
+                      ),
+                      const Spacer(),
+                      if (d.audioUrl.isNotEmpty)
+                        IconButton(
+                          icon: Icon(playing ? Icons.pause_circle_filled_rounded : Icons.play_circle_filled_rounded,
+                              color: AppTheme.primaryGreen, size: 30),
+                          onPressed: () async {
+                            if (playing) {
+                              await audio.pause();
+                              setSheet(() => playing = false);
+                            } else {
+                              try {
+                                await audio.setUrl(d.audioUrl);
+                                await audio.play();
+                                setSheet(() => playing = true);
+                              } catch (_) {}
+                            }
+                          },
+                        ),
+                      IconButton(
+                        icon: const Icon(Icons.share_outlined, color: AppTheme.textGrey),
+                        onPressed: () => ShareService.shareHadith(
+                          context: context,
+                          text: d.translation.isNotEmpty ? d.translation : d.title,
+                          reference: d.reference.isNotEmpty ? d.reference : d.category,
+                          arabic: d.arabic,
+                        ),
+                      ),
+                      IconButton(
+                        icon: const Icon(Icons.close_rounded, color: AppTheme.textDark),
+                        onPressed: () {
+                          audio.dispose();
+                          Navigator.pop(context);
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+                Expanded(
+                  child: ListView(
+                    controller: ctrl,
+                    padding: const EdgeInsets.fromLTRB(AppTheme.space5, 0, AppTheme.space5, AppTheme.space7),
+                    children: [
+                      Text(d.title, style: AppTheme.h2()),
+                      const SizedBox(height: AppTheme.space5),
+                      if (d.arabic.isNotEmpty) ...[
+                        Container(height: 1, color: AppTheme.borderLight),
+                        const SizedBox(height: AppTheme.space5),
+                        Text(d.arabic,
+                            style: AppTheme.arabicStyle.copyWith(fontSize: 26, height: 2.0, color: AppTheme.textDark),
+                            textAlign: TextAlign.right),
+                      ],
+                      if (d.transliteration.isNotEmpty) ...[
+                        const SizedBox(height: AppTheme.space4),
+                        Text(d.transliteration,
+                            style: AppTheme.body().copyWith(fontStyle: FontStyle.italic, height: 1.6, color: AppTheme.textGrey)),
+                      ],
+                      if (d.translation.isNotEmpty) ...[
+                        const SizedBox(height: AppTheme.space4),
+                        Text('Translation', style: AppTheme.eyebrow().copyWith(fontSize: 10)),
+                        const SizedBox(height: 6),
+                        Text(d.translation, style: AppTheme.bodyLarge().copyWith(height: 1.55)),
+                      ],
+                      if (d.reference.isNotEmpty) ...[
+                        const SizedBox(height: AppTheme.space5),
+                        Container(
+                          padding: const EdgeInsets.all(AppTheme.space3),
+                          decoration: BoxDecoration(
+                            color: AppTheme.accentGold,
+                            borderRadius: BorderRadius.circular(AppTheme.radiusMd),
+                          ),
+                          child: Row(children: [
+                            const Icon(Icons.menu_book_rounded, color: AppTheme.gold, size: 18),
+                            const SizedBox(width: 8),
+                            Expanded(child: Text(d.reference,
+                                style: AppTheme.caption(color: AppTheme.textDark).copyWith(fontWeight: FontWeight.w700))),
+                          ]),
+                        ),
+                      ],
+                    ],
+                  ),
                 ),
               ],
             ),
           ),
-          const Icon(Icons.favorite, color: AppTheme.primaryGreen),
-        ],
-      ),
-    );
+        );
+      }),
+    ).whenComplete(() => audio.dispose());
   }
 }
