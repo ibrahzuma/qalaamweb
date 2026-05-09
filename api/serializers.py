@@ -162,18 +162,42 @@ class PodcastEpisodeSerializer(serializers.ModelSerializer):
 
 class QuranSurahSerializer(serializers.ModelSerializer):
     number = serializers.IntegerField(source='surah_number')
-    name = serializers.CharField(source='surah_name')
-    english_name = serializers.CharField(source='surah_name')
-    english_name_translation = serializers.CharField(default='The Opening') # Placeholder
+    name = serializers.SerializerMethodField()                  # Arabic script
+    english_name = serializers.SerializerMethodField()          # Transliteration
+    english_name_translation = serializers.SerializerMethodField()
     number_of_ayahs = serializers.SerializerMethodField()
-    revelation_type = serializers.CharField(default='MECCAN')
+    revelation_type = serializers.SerializerMethodField()
+    juz_number = serializers.IntegerField()
 
     class Meta:
         model = QuranSurah
-        fields = ['id', 'number', 'name', 'english_name', 'english_name_translation', 'number_of_ayahs', 'revelation_type']
+        fields = ['id', 'number', 'name', 'english_name', 'english_name_translation',
+                  'number_of_ayahs', 'revelation_type', 'juz_number']
 
     def get_number_of_ayahs(self, obj):
         return obj.ayahs.count()
+
+    def _meta(self, obj):
+        from content.surah_meta import get_meta
+        return get_meta(obj.surah_number)
+
+    def get_name(self, obj):
+        # Prefer the value persisted on the model if it's actual Arabic script,
+        # else fall back to our static table.
+        stored = obj.surah_name_arabic or ''
+        if stored and any('؀' <= c <= 'ۿ' for c in stored):
+            return stored
+        return self._meta(obj).get('arabic', obj.surah_name)
+
+    def get_english_name(self, obj):
+        # Prefer model surah_name (the user-provided transliteration), else fallback.
+        return obj.surah_name or self._meta(obj).get('transliteration', '')
+
+    def get_english_name_translation(self, obj):
+        return self._meta(obj).get('translation', '')
+
+    def get_revelation_type(self, obj):
+        return self._meta(obj).get('type', 'MECCAN')
 
 class AyahSerializer(serializers.ModelSerializer):
     class Meta:

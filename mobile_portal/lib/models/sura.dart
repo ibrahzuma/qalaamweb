@@ -1,10 +1,11 @@
 class Surah {
   final int number;
-  final String name;
-  final String englishName;
-  final String englishNameTranslation;
+  final String name; // Arabic
+  final String englishName; // Transliteration
+  final String englishNameTranslation; // English meaning
   final int numberOfAyahs;
   final String revelationType;
+  final int juzNumber;
 
   Surah({
     required this.number,
@@ -13,16 +14,18 @@ class Surah {
     required this.englishNameTranslation,
     required this.numberOfAyahs,
     required this.revelationType,
+    this.juzNumber = 1,
   });
 
   factory Surah.fromJson(Map<String, dynamic> json) {
     return Surah(
-      number: json['number'],
-      name: json['name'],
-      englishName: json['english_name'] ?? json['name_english'] ?? '',
-      englishNameTranslation: json['english_name_translation'] ?? '',
-      numberOfAyahs: json['number_of_ayahs'] ?? 0,
-      revelationType: (json['revelation_type'] ?? '').toUpperCase(),
+      number: json['number'] as int,
+      name: (json['name'] as String?) ?? '',
+      englishName: (json['english_name'] as String?) ?? (json['name_english'] as String?) ?? '',
+      englishNameTranslation: (json['english_name_translation'] as String?) ?? '',
+      numberOfAyahs: (json['number_of_ayahs'] as int?) ?? 0,
+      revelationType: ((json['revelation_type'] as String?) ?? '').toUpperCase(),
+      juzNumber: (json['juz_number'] as int?) ?? 1,
     );
   }
 }

@@ -308,15 +308,57 @@ class _QuranScreenState extends State<QuranScreen> {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const SkeletonList(count: 8, itemHeight: 78);
         }
-        final list = (snapshot.data ?? _demoSurahs())
-            .where((s) =>
-                _query.isEmpty ||
-                s.englishName.toLowerCase().contains(_query) ||
-                s.englishNameTranslation.toLowerCase().contains(_query))
-            .toList();
-        return Column(
-          children: list.map(_surahTile).toList(),
-        );
+        final all = snapshot.data ?? _demoSurahs();
+        final list = all.where((s) {
+          if (_query.isEmpty) return true;
+          final num = s.number.toString();
+          return s.englishName.toLowerCase().contains(_query) ||
+              s.englishNameTranslation.toLowerCase().contains(_query) ||
+              s.name.contains(_query) ||
+              num == _query;
+        }).toList();
+        if (list.isEmpty) {
+          return Padding(
+            padding: const EdgeInsets.all(40),
+            child: Center(
+              child: Text('No surahs match "$_query"', style: AppTheme.body()),
+            ),
+          );
+        }
+        if (_selectedTab == 1) {
+          // Group by Juz
+          final groups = <int, List<Surah>>{};
+          for (final s in list) {
+            groups.putIfAbsent(s.juzNumber, () => []).add(s);
+          }
+          final juzKeys = groups.keys.toList()..sort();
+          return Column(
+            children: [
+              for (final juz in juzKeys) ...[
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(AppTheme.space5, AppTheme.space5, AppTheme.space5, AppTheme.space2),
+                  child: Row(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                        decoration: BoxDecoration(
+                          gradient: AppTheme.gradientPrimary,
+                          borderRadius: BorderRadius.circular(99),
+                        ),
+                        child: Text('JUZ $juz',
+                            style: AppTheme.eyebrow(color: Colors.white).copyWith(fontSize: 11)),
+                      ),
+                      const SizedBox(width: 10),
+                      Expanded(child: Container(height: 1, color: AppTheme.borderLight)),
+                    ],
+                  ),
+                ),
+                ...groups[juz]!.map(_surahTile),
+              ],
+            ],
+          );
+        }
+        return Column(children: list.map(_surahTile).toList());
       },
     );
   }
@@ -328,11 +370,12 @@ class _QuranScreenState extends State<QuranScreen> {
       ];
 
   Widget _surahTile(Surah surah) {
+    final isMeccan = surah.revelationType == 'MECCAN';
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: AppTheme.space5, vertical: 6),
+      padding: const EdgeInsets.symmetric(horizontal: AppTheme.space5, vertical: 5),
       child: QalaamTappableCard(
         padding: const EdgeInsets.symmetric(horizontal: AppTheme.space4, vertical: AppTheme.space3),
-        onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => SurahDetailScreen(surah: surah))),
+        onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => SurahDetailScreen(surah: surah))).then((_) => _refreshLastRead()),
         child: Row(
           children: [
             Stack(
@@ -350,12 +393,38 @@ class _QuranScreenState extends State<QuranScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(surah.englishName, style: AppTheme.h3()),
+                  Row(
+                    children: [
+                      Flexible(
+                        child: Text(surah.englishName,
+                            style: AppTheme.h3(),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis),
+                      ),
+                      const SizedBox(width: 6),
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 1),
+                        decoration: BoxDecoration(
+                          color: isMeccan ? AppTheme.accentGold : AppTheme.accentGreen,
+                          borderRadius: BorderRadius.circular(99),
+                        ),
+                        child: Text(isMeccan ? 'M' : 'D',
+                            style: AppTheme.caption(color: isMeccan ? AppTheme.gold : AppTheme.primaryGreen)
+                                .copyWith(fontWeight: FontWeight.w800, fontSize: 9)),
+                      ),
+                    ],
+                  ),
                   const SizedBox(height: 2),
                   Row(
                     children: [
-                      Text(surah.englishNameTranslation,
-                          style: AppTheme.caption()),
+                      Flexible(
+                        child: Text(surah.englishNameTranslation.isNotEmpty
+                                ? surah.englishNameTranslation
+                                : 'Surah ${surah.number}',
+                            style: AppTheme.caption(),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis),
+                      ),
                       Container(
                         margin: const EdgeInsets.symmetric(horizontal: 6),
                         width: 3,
@@ -370,7 +439,8 @@ class _QuranScreenState extends State<QuranScreen> {
             ),
             Text(
               surah.name,
-              style: AppTheme.arabicLarge(color: AppTheme.primaryGreen).copyWith(fontSize: 22, height: 1.0),
+              style: AppTheme.arabicLarge(color: AppTheme.primaryGreen).copyWith(fontSize: 24, height: 1.0),
+              textAlign: TextAlign.right,
             ),
           ],
         ),
